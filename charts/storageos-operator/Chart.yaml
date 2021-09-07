@@ -2,7 +2,7 @@ apiVersion: v2
 appVersion: "v2.4.0"
 description: Cloud Native storage for containers
 name: storageos-operator
-version: 0.4.6
+version: 0.4.7
 keywords:
 - storage
 - block-storage
@@ -15,5 +15,3 @@ sources:
 maintainers:
 - name: croomes
   email: simon.croome@storageos.com
-- name: darkowlzz
-  email: sunny.gogoi@storageos.com
