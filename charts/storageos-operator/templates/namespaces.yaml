@@ -1,11 +1,15 @@
+{{- if .Values.cluster.createNamespace }}
+
 apiVersion: v1
-kind: ServiceAccount
+kind: Namespace
 metadata:
-  name: {{ template "storageos.serviceAccountName" . }}
-  namespace: {{ .Release.Namespace }}
+  name: {{ .Values.cluster.namespace }}
   labels:
     app: {{ template "storageos.name" . }}
     app.kubernetes.io/component: operator
+    control-plane: storageos-operator
     chart: {{ template "storageos.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
+
+{{- end }}
