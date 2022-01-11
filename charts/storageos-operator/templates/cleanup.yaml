@@ -113,7 +113,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: "storageos-storageoscluster-cleanup"
-  namespace: {{ .namespace }}
+  namespace: {{ .Release.Namespace }}
   annotations:
     "helm.sh/hook": post-delete
     "helm.sh/hook-delete-policy": "hook-succeeded, before-hook-creation"
@@ -128,10 +128,10 @@ spec:
         command:
           - kubectl
           - -n
-          - {{ $.Release.Namespace }}
+          - {{ .Values.cluster.namespace | quote }}
           - patch
           - stos
-          - {{ $.Values.cluster.name }}
+          - {{ .Values.cluster.name | quote }}
           - --type=merge
           - --patch={"metadata":{"finalizers":null}}
       restartPolicy: Never
@@ -148,11 +148,11 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: "storageos-{{ .name }}-cleanup"
-  namespace: {{ .namespace }}
+  namespace: {{ $.Release.Namespace }}
   annotations:
     "helm.sh/hook": post-delete
     "helm.sh/hook-delete-policy": "hook-succeeded, before-hook-creation"
-    "helm.sh/hook-weight": "3"
+    "helm.sh/hook-weight": "4"
 spec:
   template:
     spec:
@@ -163,7 +163,7 @@ spec:
         command:
           - kubectl
           - -n
-          - {{ $.Values.cluster.namespace }}
+          - {{ .namespace | default $.Release.Namespace | quote }}
           - delete
           {{- range .command }}
           - {{ . | quote }}

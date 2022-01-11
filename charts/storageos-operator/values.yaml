@@ -86,7 +86,8 @@ cluster:
   # StorageOS configuration information is collected.
   disableTelemetry: false
 
-  storageClassName: storageos
+  # Using a YAML anchor to delete the custom storageClass
+  storageClassName: &storageClassName storageos
 
   images:
     apiManager:
@@ -121,6 +122,13 @@ cluster:
 
 # The following is used for cleaning up unmanaged cluster resources when
 # auto-install is enabled.
+# If a namespace is not specified, the Release namespace is used.
+#
+# Note: I think most of this is now uneccessary, the job to remove the
+# finalizer unsures the removal of most of these resources.
+# However, some are still needed (the storageos-operator-webhook secret &
+# storageclass, for example) and that justifies the functionality remaining in
+# my eyes.
 cleanup:
   images:
     kubectl:
@@ -128,81 +136,87 @@ cleanup:
       tag: 1.18.2
   resources:
     - name: daemonset
+      namespace: *cluster-ns
       command:
         - "daemonset"
         - "storageos-node"
-    - name: statefulset
-      command:
-        - "statefulset"
-        - "storageos-statefulset"
     - name: csi-helper
+      namespace: *cluster-ns
       command:
         - "deployment"
         - "storageos-csi-helper"
     - name: scheduler
+      namespace: *cluster-ns
       command:
         - "deployment"
         - "storageos-scheduler"
     - name: api-manager
+      namespace: *cluster-ns
       command:
         - "deployment"
         - "storageos-api-manager"
-    - name: configmap
+    - name: cluster-configmaps
+      namespace: *cluster-ns
       command:
         - "configmap"
-        - "storageos-scheduler-config"
-        - "storageos-scheduler-policy"
-        - "storageos-api-manager-lease"
-        - "storageos-node-config"
-    - name: serviceaccount
+        - "storageos-api-manager-leader"
+        - "storageos-node"
+    - name: operator-configmaps
+      command:
+        - "configmap"
+        - "operator"
+        - "storageos-operator"
+        - "storageos-related-images"
+    - name: cluster-serviceaccounts
+      namespace: *cluster-ns
       command:
         - "serviceaccount"
-        - "storageos-daemonset-sa"
-        - "storageos-statefulset-sa"
-        - "storageos-csi-helper-sa"
-        - "storageos-scheduler-sa"
-        - "storageos-api-manager-sa"
-    - name: secret
+        - "storageos-api-manager"
+        - "storageos-csi-helper"
+        - "storageos-node"
+        - "storageos-scheduler"
+    - name: operator-serviceaccounts
+      command:
+        - "serviceaccount"
+        - "storageos-operator"
+    - name: operator-secrets
       command:
         - "secret"
-        - "init-secret"
+        - "storageos-operator-webhook"
     - name: service
+      namespace: *cluster-ns
       command:
         - "service"
         - "storageos"
-    - name: api-manager-service
-      command:
-        - "service"
-        - "storageos-api-manager-metrics"
-        - "storageos-webhook"
     - name: clusterrole
       command:
         - "clusterrole"
-        - "storageos:driver-registrar"
+        - "storageos:api-manager"
         - "storageos:csi-attacher"
         - "storageos:csi-provisioner"
-        - "storageos:pod-fencer"
-        - "storageos:scheduler-extender"
-        - "storageos:init"
-        - "storageos:api-manager"
-        - "storageos:nfs-provisioner"
         - "storageos:csi-resizer"
+        - "storageos:driver-registrar"
+        - "storageos:init"
         - "storageos:key-management"
+        - "storageos:metrics-reader"
+        - "storageos:node"
+        - "storageos:proxy"
+        - "storageos:scheduler-extender"
     - name: clusterrolebinding
       command:
         - "clusterrolebinding"
-        - "storageos:csi-provisioner"
-        - "storageos:csi-attacher"
-        - "storageos:driver-registrar"
-        - "storageos:k8s-driver-registrar"
-        - "storageos:pod-fencer"
-        - "storageos:scheduler-extender"
-        - "storageos:init"
         - "storageos:api-manager"
-        - "storageos:nfs-provisioner"
+        - "storageos:csi-attacher"
+        - "storageos:csi-provisioner"
         - "storageos:csi-resizer"
+        - "storageos:driver-registrar"
+        - "storageos:init"
         - "storageos:key-management"
+        - "storageos:node"
+        - "storageos:proxy"
+        - "storageos:scheduler-extender"
     - name: storageclass
       command:
         - "storageclass"
-        - "fast"
+        # Using a YAML anchor to delete the custom storageClass
+        - *storageClassName
