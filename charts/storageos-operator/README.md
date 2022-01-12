@@ -23,10 +23,10 @@ StorageOS is extremely lightweight - minimum requirements are a reserved CPU
 core and 2GB of free memory. There are minimal external dependencies, and no
 custom kernel modules.
 
-After StorageOS is installed, please register for a free Developer license to
-enable 5TiB of capacity and HA with synchronous replication by following the
+After StorageOS is installed, please register for a free personal license to
+enable 1TiB of capacity and HA with synchronous replication by following the
 instructions [here](https://docs.storageos.com/docs/operations/licensing). For
-additional capacity, features and support plans contact sales@storageos.com.
+additional capacity, features and support plans contact sales@ondat.io.
 
 ## Highlighted Features
 
@@ -59,7 +59,7 @@ StorageOS is a software-defined cloud native storage platform delivering
 persistent storage for Kubernetes. StorageOS is built from the ground-up with
 no legacy restrictions to give enterprises working with cloud native workloads
 a scalable storage platform with no compromise on performance, availability or
-security. For additional information, visit www.storageos.com.
+security. For additional information, visit www.ondat.io.
 
 This chart installs a StorageOS Cluster Operator which helps deploy and
 configure a StorageOS cluster on kubernetes.
@@ -67,7 +67,7 @@ configure a StorageOS cluster on kubernetes.
 ## Prerequisites
 
 - Helm 3
-- Kubernetes 1.13+
+- Kubernetes 1.18+
 - Privileged mode containers (enabled by default)
 - Etcd cluster
 
@@ -89,9 +89,15 @@ $ helm install my-storageos storageos/storageos-operator \
 
 This will install the StorageOS cluster operator in `storageos-operator`
 namespace and deploys StorageOS with a minimal configuration. Etcd address
-(kvBackend) and admin password are mandatory values to install the chart. To
-avoid passing the password as a flag, create a values.yaml file and pass the
-file name with `--values` flag.
+(kvBackend) and admin password are mandatory values to install the chart.
+
+The password must be at least 8 characters long and the default username is
+`storageos`, which can be changed like the above values. Find more information
+about installing etcd in our [etcd
+docs](https://docs.storageos.com/docs/prerequisites/etcd/).
+
+To avoid passing the password as a flag, install the chart with the values file.
+Create a values.yaml file and pass the file name with `--values` flag.
 
 ```yaml
 cluster:
@@ -100,41 +106,12 @@ cluster:
   admin:
     password: <password>
 ```
-
-The password must be at least 8 characters long and the default username is
-`storageos`, which can be changed like the above values. Find more information
-about installing etcd in our [etcd
-docs](https://docs.storageos.com/docs/prerequisites/etcd/).
-
-Install the chart with the values file:
 
 ```console
 $ helm install storageos/storageos-operator \
     --namespace storageos-operator \
     --values <values-file>
 ```
-
-```yaml
-cluster:
-  kvBackend:
-    address: <etcd-node-ip>:2379
-  admin:
-    password: <password>
-```
-
-The password must be at least 8 characters long and the default username is
-`storageos`, which can be changed like the above values. Find more information
-about installing etcd in our [etcd
-docs](https://docs.storageos.com/docs/prerequisites/etcd/).
-
-Install the chart with the values file:
-
-```console
-$ helm install my-storageos storageos/storageos-operator \
-    --namespace storageos-operator \
-    --values <values-file>
-```
-
 > **Tip**: List all releases using `helm list -A`
 
 ## Creating a StorageOS cluster manually
@@ -159,55 +136,42 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: "storageos-api"
-  namespace: "storageos-operator"
+  namespace: <storageos-cluster-namespace>
   labels:
     app: "storageos"
 type: "kubernetes.io/storageos"
 data:
   # echo -n '<secret>' | base64
-  apiUsername: c3RvcmFnZW9z
-  apiPassword: c3RvcmFnZW9z
-  csiProvisionUsername: c3RvcmFnZW9z
-  csiProvisionPassword: c3RvcmFnZW9z
-  csiControllerPublishUsername: c3RvcmFnZW9z
-  csiControllerPublishPassword: c3RvcmFnZW9z
-  csiNodePublishUsername: c3RvcmFnZW9z
-  csiNodePublishPassword: c3RvcmFnZW9z
-  csiControllerExpandUsername: c3RvcmFnZW9z
-  csiControllerExpandPassword: c3RvcmFnZW9z
+  username: c3RvcmFnZW9z
+  password: c3RvcmFnZW9z
 ```
 
-Create a `StorageOSCluster` custom resource and refer the above secret in
-`secretRefName` and `secretRefNamespace` fields.
+Create a `StorageOSCluster` custom resource and refer the above secret in the
+`secretRefName` field.
 
 ```yaml
 apiVersion: "storageos.com/v1"
 kind: "StorageOSCluster"
 metadata:
   name: "example-storageos"
-  namespace: "default"
+  namespace: <storageos-cluster-namespace>
 spec:
   secretRefName: "storageos-api"
-  secretRefNamespace: "storageos-operator"
   kvBackend:
     address: "etcd-client.etcd.svc.cluster.local:2379"
     # address: '10.42.15.23:2379,10.42.12.22:2379,10.42.13.16:2379' # You can set ETCD server IPs.
+  storageClassName: "storageos"
 ```
 
-Once the `StorageOSCluster` configuration is applied, the StorageOSCluster
-operator will create a StorageOS cluster in the `kube-system` namespace by
-default. Installing into the kube-system namespace is recommended so that the
-storage containers can be marked as system-node-critical. This reduces the risk
-that the storage containers get evicted before applications that require the
-storage they provide.
-
+<!--- TODO: replace this when an equivalent specification exsists for the new
+operator, ticket has been created -->
 Learn more about advanced configuration options
 [here](https://github.com/storageos/cluster-operator/blob/master/README.md#storageoscluster-resource-configuration).
 
 To check cluster status, run:
 
 ```console
-$ kubectl get storageoscluster --namespace storageos-operator
+$ kubectl get storageoscluster --namespace <storageos-cluster-namespace>
 NAME                READY     STATUS    AGE
 example-storageos   3/3       Running   4m
 ```
@@ -216,7 +180,7 @@ All the events related to this cluster are logged as part of the cluster object
 and can be viewed by describing the object.
 
 ```console
-$ kubectl describe storageoscluster example-storageos
+$ kubectl describe storageoscluster example-storageos --namespace <storageos-cluster-namespace>
 Name:         example-storageos
 Namespace:    default
 Labels:       <none>
@@ -236,14 +200,15 @@ Operator chart and their default values.
 
 Parameter | Description | Default
 --------- | ----------- | -------
-`operator.image.repository` | StorageOS Operator container image repository | `storageos/cluster-operator`
-`operator.image.tag` | StorageOS Operator container image tag | `v2.4.0`
+`operator.image.repository` | StorageOS Operator container image repository | `storageos/operator`
+`operator.image.tag` | StorageOS Operator container image tag | `v2.5.0`
 `operator.image.pullPolicy` | StorageOS Operator container image pull policy | `IfNotPresent`
 `podSecurityPolicy.enabled` | If true, create & use PodSecurityPolicy resources | `false`
 `podSecurityPolicy.annotations` | Specify pod annotations in the pod security policy | `{}`
 `cluster.create` | If true, auto-create the StorageOS cluster | `true`
 `cluster.name` | Name of the storageos deployment | `storageos`
 `cluster.namespace` | Namespace to install the StorageOS cluster into | `kube-system`
+`cluster.createNamespace` | If true, create the namespace used by the cluster | `true`
 `cluster.secretRefName` | Name of the secret containing StorageOS API credentials | `storageos-api`
 `cluster.admin.username` | Username to authenticate to the StorageOS API with | `storageos`
 `cluster.admin.password` | Password to authenticate to the StorageOS API with |
@@ -257,38 +222,33 @@ Parameter | Description | Default
 `cluster.toleration.key` | Key of the pod toleration parameter |
 `cluster.toleration.value` | Value of the pod toleration parameter |
 `cluster.disableTelemetry` | If true, no telemetry data will be collected from the cluster | `false`
-`cluster.images.node.repository` | StorageOS Node container image repository |
-`cluster.images.node.tag` | StorageOS Node container image tag |
+`cluster.storageClassName` | Name of the StorageClass to be created | `storageos`
 `cluster.images.apiManager.repository` | StorageOS API Manager container image repository |
 `cluster.images.apiManager.tag` | StorageOS API Manager container image tag |
-`cluster.images.init.repository` | StorageOS init container image repository |
-`cluster.images.init.tag` | StorageOS init container image tag |
-`cluster.images.csiV1ClusterDriverRegistrar.repository` | CSI v1 Cluster Driver Registrar image repository |
-`cluster.images.csiV1ClusterDriverRegistrar.tag` | CSI v1 Cluster Driver Registrar image tag |
-`cluster.images.csiV1NodeDriverRegistrar.repository` | CSI v1 Node Driver Registrar image repository |
-`cluster.images.csiV1NodeDriverRegistrar.tag` | CSI v1 Node Driver Registrar image tag |
+`cluster.images.csiV1ExternalAttacherV3.repository` | CSI v1 External Attacher v3 image repository |
+`cluster.images.csiV1ExternalAttacherV3.tag` | CSI v1 External Attacher v3 image tag |
 `cluster.images.csiV1ExternalProvisioner.repository` | CSI v1 External Provisioner image repository |
 `cluster.images.csiV1ExternalProvisioner.tag` | CSI v1 External Provisioner image tag |
-`cluster.images.csiV1ExternalAttacher.repository` | CSI v1 External Attacher image repository |
-`cluster.images.csiV1ExternalAttacher.tag` | CSI v1 External Attacher image tag |
-`cluster.images.csiV1ExternalAttacherV2.repository` | CSI v1 External Attacher v2 image repository |
-`cluster.images.csiV1ExternalAttacherV2.tag` | CSI v1 External Attacher v2 image tag |
-`cluster.images.csiV1LivenessProbe.repository` | CSI v1 Liveness Probe image repository |
-`cluster.images.csiV1LivenessProbe.tag` | CSI v1 Liveness Probe image tag |
 `cluster.images.csiV1ExternalResizer.repository` | CSI v1 External Resizer image repository |
 `cluster.images.csiV1ExternalResizer.tag` | CSI v1 External Resizer image tag |
-`cluster.images.kubeScheduler.repository` | Kube Scheduler container image repository |
-`cluster.images.kubeScheduler.tag` | Kube Scheduler container image tag |
+`cluster.images.csiV1LivenessProbe.repository` | CSI v1 Liveness Probe image repository |
+`cluster.images.csiV1LivenessProbe.tag` | CSI v1 Liveness Probe image tag |
+`cluster.images.csiV1NodeDriverRegistrar.repository` | CSI v1 Node Driver Registrar image repository |
+`cluster.images.csiV1NodeDriverRegistrar.tag` | CSI v1 Node Driver Registrar image tag |
+`cluster.images.init.repository` | StorageOS init container image repository |
+`cluster.images.init.tag` | StorageOS init container image tag |
+`cluster.images.node.repository` | StorageOS Node container image repository |
+`cluster.images.node.tag` | StorageOS Node container image tag |
 
 ## Deleting a StorageOS Cluster
 
 Deleting the `StorageOSCluster` custom resource object would delete the
-storageos cluster and all the associated resources.
+storageos cluster and its associated resources.
 
 In the above example,
 
 ```console
-$ kubectl delete storageoscluster example-storageos
+$ kubectl delete storageoscluster example-storageos --namespace <storageos-cluster-namespace>
 ```
 
 would delete the custom resource and the cluster.
@@ -305,4 +265,4 @@ If the chart was installed with cluster auto-provisioning enabled, chart
 uninstall will clean-up the installed StorageOS cluster resources as well.
 
 Learn more about configuring the StorageOS Operator on
-[GitHub](https://github.com/storageos/cluster-operator).
+[GitHub](https://github.com/storageos/operator).

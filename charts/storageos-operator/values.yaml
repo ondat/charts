@@ -86,7 +86,8 @@ cluster:
   # StorageOS configuration information is collected.
   disableTelemetry: false
 
-  # Using a YAML anchor to delete the custom storageClass
+  # The name of the StorageClass to be created
+  # Using a YAML anchor to allow deletion of the custom storageClass
   storageClassName: &storageClassName storageos
 
   images:
@@ -116,9 +117,6 @@ cluster:
     node:
       repository: storageos/node
       tag: v2.5.0
-
-  csi:
-    deploymentStrategy: deployment
 
 # The following is used for cleaning up unmanaged cluster resources when
 # auto-install is enabled.

@@ -58,7 +58,18 @@ questions:
     default: "storageos"
     description: "Name of the StorageOS cluster deployment"
     type: string
-    label: Name
+    label: Cluster Name
+  - variable: cluster.namespace
+    default: "storageos"
+    description: "Namespace of the StorageOS cluster deployment"
+    type: string
+    label: Cluster Namespace
+  - variable: cluster.createNamespace
+    default: true
+    description: "If true, create the namespace for the cluster deployment"
+    type: boolean
+    label: Create Cluster Namespace
+
 
   # Node container image.
   - variable: cluster.images.node.repository
