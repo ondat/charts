@@ -65,7 +65,6 @@ cluster:
 
   # Key-Value store backend.
   kvBackend:
-    embedded: false
     address:
     backend: etcd
     tlsSecretName:
