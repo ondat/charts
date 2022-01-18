@@ -1,6 +1,13 @@
+{{- if .Values.cluster.create }}
+
+As you enabled automatic cluster creation, your StorageOS cluster is spinning
+up in the {{ .Values.cluster.namespace }} namespace.
+
+{{- else }}
+
 StorageOS Operator deployed.
 
-If you disabled automatic cluster creation, you can deploy a StorageOS cluster
+As you disabled automatic cluster creation, you can deploy a StorageOS cluster
 by creating a custom StorageOSCluster resource:
 
 1. Create a secret containing StorageOS cluster credentials. This secret
@@ -22,8 +29,8 @@ data:
   password: c3RvcmFnZW9z
 
 2. Create a StorageOS custom resource that references the secret created
-above (storageos-api in the above example). When the resource is created, the
-cluster will be deployed.
+above (storageos-api in the above example). They must share a namespace.
+When the resource is created, the cluster will be deployed.
 
 apiVersion: storageos.com/v1
 kind: StorageOSCluster
@@ -32,6 +39,7 @@ metadata:
   namespace: storageos
 spec:
   secretRefName: storageos-api
+  storageClassName: storageos
   kvBackend:
     address: <etcd-endpoint>
 
@@ -40,3 +48,4 @@ instructions on applying our free developer license, or obtaining a commercial
 license, please see our documentation at
 https://docs.storageos.com/docs/reference/licence/.
 
+{{- end }}
