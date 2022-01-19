@@ -33,12 +33,12 @@ questions:
       - Always
       - Never
   - variable: operator.image.repository
-    default: "storageos/cluster-operator"
+    default: "storageos/operator"
     description: "StorageOS operator image name"
     type: string
     label: StorageOS Operator Image Name
   - variable: operator.image.tag
-    default: "v2.4.0"
+    default: "v2.5.0"
     description: "StorageOS Operator image tag"
     type: string
     label: StorageOS Operator Image Tag
@@ -58,12 +58,18 @@ questions:
     default: "storageos"
     description: "Name of the StorageOS cluster deployment"
     type: string
-    label: Name
+    label: Cluster Name
   - variable: cluster.namespace
-    default: "kube-system"
-    description: "Namespace of the StorageOS cluster deployment. `kube-system` recommended to avoid pre-emption when node is under load."
+    default: "storageos"
+    description: "Namespace of the StorageOS cluster deployment"
     type: string
-    label: Namespace
+    label: Cluster Namespace
+  - variable: cluster.createNamespace
+    default: true
+    description: "If true, create the namespace for the cluster deployment"
+    type: boolean
+    label: Create Cluster Namespace
+
 
   # Node container image.
   - variable: cluster.images.node.repository
@@ -72,7 +78,7 @@ questions:
     type: string
     label: StorageOS Node Container Image Name
   - variable: cluster.images.node.tag
-    default: "v2.4.0"
+    default: "v2.5.0"
     description: "StorageOS Node container image tag"
     type: string
     label: StorageOS Node Container Image Tag
@@ -162,3 +168,10 @@ questions:
     description: "Shared Directory should be set if running kubelet in a container. This should be the path shared into to kubelet container, typically: '/var/lib/kubelet/plugins/kubernetes.io~storageos'.  If not set, defaults will be used."
     type: string
     label: Shared Directory
+
+  # Cluster metadata.
+  - variable: cluster.storageClassName
+    default: "storageos"
+    description: "Name of the default StorageOS StorageClass"
+    type: string
+    label: StorageClass Name

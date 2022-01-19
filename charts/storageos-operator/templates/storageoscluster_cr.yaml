@@ -4,12 +4,12 @@ apiVersion: storageos.com/v1
 kind: StorageOSCluster
 metadata:
   name: {{ .Values.cluster.name }}
-  namespace: {{ .Release.Namespace }}
-spec:
   namespace: {{ .Values.cluster.namespace }}
+spec:
   secretRefName: {{ .Values.cluster.secretRefName }}
-  secretRefNamespace: {{ .Release.Namespace }}
   disableTelemetry: {{ .Values.cluster.disableTelemetry }}
+  storageClassName: {{ .Values.cluster.storageClassName }}
+
 
   {{- if .Values.k8sDistro }}
   k8sDistro: {{ .Values.k8sDistro }}

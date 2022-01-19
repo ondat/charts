@@ -19,10 +19,11 @@ StorageOS is extremely lightweight - minimum requirements are a reserved CPU
 core and 2GB of free memory. There are minimal external dependencies, and no
 custom kernel modules.
 
-After StorageOS is installed, please register for a free Developer license to
-enable 5TiB of capacity and HA with synchronous replication by following the
+
+After StorageOS is installed, please register for a free personal license to
+enable 1TiB of capacity and HA with synchronous replication by following the
 instructions [here](https://docs.storageos.com/docs/operations/licensing). For
-additional capacity, features and support plans contact sales@storageos.com.
+additional capacity, features and support plans contact sales@ondat.io.
 
 ## Highlighted Features
 
@@ -64,17 +65,11 @@ setting up an etcd cluster in our [etcd
 docs](https://docs.storageos.com/docs/prerequisites/etcd/).
 
 By default, a minimal configuration of StorageOS is installed. To set advanced
-configurations, disable the default installation of StorageOS and create a
-custom StorageOSCluster resource
-([documentation](https://docs.storageos.com/docs/reference/cluster-operator/examples)).
+configurations, disable the default installation of the StorageOS cluster
+and create a custom StorageOSCluster resource, documentation
+[here](https://github.com/storageos/charts/blob/main/charts/storageos-operator/README.md#creating-a-storageos-cluster-manually)
 
 Newly installed StorageOS clusters require a license to function. For
 instructions on applying our free developer license, or obtaining a commercial
 license, please see our documentation at
-https://docs.storageos.com/docs/reference/licence/.
-
-> **Notes**:
-> - The StorageOS Operator must be installed in the System Project with Cluster
-> Role.
-> - To upgrade from StorageOS version 1.x to 2.x, please contact support
-> for assistance.
+https://docs.ondat.io/docs/reference/licence/.
