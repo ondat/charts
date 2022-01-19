@@ -2,7 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-name: storageos-operator
+name: ondat-operator
 
 k8sDistro: default
 

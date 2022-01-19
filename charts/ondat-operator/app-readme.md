@@ -1,4 +1,4 @@
-# StorageOS Operator
+# Ondat Operator
 
 StorageOS is a cloud native, software-defined storage platform that transforms
 commodity server or cloud based disk capacity into enterprise-class persistent
@@ -8,7 +8,7 @@ message queues, and other mission-critical stateful solutions. StorageOS
 Project edition also offers ReadWriteMany volumes that are concurrently
 accessible by multiple applications.
 
-The StorageOS Operator installs and manages StorageOS within a cluster. Cluster
+The Ondat Operator installs and manages StorageOS within a cluster. Cluster
 nodes may contribute local or attached disk-based storage into a distributed
 pool, which is then available to all cluster members via a global namespace.
 
@@ -22,7 +22,7 @@ custom kernel modules.
 
 After StorageOS is installed, please register for a free personal license to
 enable 1TiB of capacity and HA with synchronous replication by following the
-instructions [here](https://docs.storageos.com/docs/operations/licensing). For
+instructions [here](https://docs.ondat.io/docs/operations/licensing). For
 additional capacity, features and support plans contact sales@ondat.io.
 
 ## Highlighted Features
@@ -56,13 +56,13 @@ StorageOS is a software-defined cloud native storage platform delivering
 persistent storage for Kubernetes. StorageOS is built from the ground-up with
 no legacy restrictions to give enterprises working with cloud native workloads
 a scalable storage platform with no compromise on performance, availability or
-security. For additional information, visit www.storageos.com.
+security. For additional information, visit www.ondat.io.
 
 ## Installation
 
 StorageOS requires an etcd cluster in order to function. Find out more about
 setting up an etcd cluster in our [etcd
-docs](https://docs.storageos.com/docs/prerequisites/etcd/).
+docs](https://docs.ondat.io/docs/prerequisites/etcd/).
 
 By default, a minimal configuration of StorageOS is installed. To set advanced
 configurations, disable the default installation of the StorageOS cluster

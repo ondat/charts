@@ -1,4 +1,4 @@
-# StorageOS Operator Helm Chart
+# Ondat Operator Helm Chart
 
 > **Note**: This chart requires Helm 3 and defaults to StorageOS v2. To upgrade
 > from a previous chart or from StorageOS version 1.x to 2.x, please contact
@@ -12,7 +12,7 @@ message queues, and other mission-critical stateful solutions. StorageOS
 Project edition also offers ReadWriteMany volumes that are concurrently
 accessible by multiple applications.
 
-The StorageOS Operator installs and manages StorageOS within a cluster. Cluster
+The Ondat Operator installs and manages StorageOS within a cluster. Cluster
 nodes may contribute local or attached disk-based storage into a distributed
 pool, which is then available to all cluster members via a global namespace.
 
@@ -25,7 +25,7 @@ custom kernel modules.
 
 After StorageOS is installed, please register for a free personal license to
 enable 1TiB of capacity and HA with synchronous replication by following the
-instructions [here](https://docs.storageos.com/docs/operations/licensing). For
+instructions [here](https://docs.ondat.io/docs/operations/licensing). For
 additional capacity, features and support plans contact sales@ondat.io.
 
 ## Highlighted Features
@@ -61,7 +61,7 @@ no legacy restrictions to give enterprises working with cloud native workloads
 a scalable storage platform with no compromise on performance, availability or
 security. For additional information, visit www.ondat.io.
 
-This chart installs a StorageOS Cluster Operator which helps deploy and
+This chart installs a Ondat Cluster Operator which helps deploy and
 configure a StorageOS cluster on kubernetes.
 
 ## Prerequisites
@@ -72,29 +72,32 @@ configure a StorageOS cluster on kubernetes.
 - Etcd cluster
 
 Refer to the [StorageOS prerequisites
-docs](https://docs.storageos.com/docs/prerequisites/) for more information.
+docs](https://docs.ondat.io/docs/prerequisites/) for more information.
 
 ## Installing the chart
 
+<!-- TODO: which URL should I use to refrence the chart? The below also
+works at time of writing -->
+
 ```console
-# Add storageos charts repo.
-$ helm repo add storageos https://charts.storageos.com
+# Add ondat charts repo.
+$ helm repo add ondat https://charts.ondat.io
 # Install the chart in a namespace.
-$ kubectl create namespace storageos-operator
-$ helm install my-storageos storageos/storageos-operator \
-    --namespace storageos-operator \
+$ kubectl create namespace ondat-operator
+$ helm install my-ondat ondat/ondat-operator \
+    --namespace ondat-operator \
     --set cluster.kvBackend.address=<etcd-node-ip>:2379 \
     --set cluster.admin.password=<password>
 ```
 
-This will install the StorageOS cluster operator in `storageos-operator`
+This will install the Ondat cluster operator in `ondat-operator`
 namespace and deploys StorageOS with a minimal configuration. Etcd address
 (kvBackend) and admin password are mandatory values to install the chart.
 
 The password must be at least 8 characters long and the default username is
 `storageos`, which can be changed like the above values. Find more information
 about installing etcd in our [etcd
-docs](https://docs.storageos.com/docs/prerequisites/etcd/).
+docs](https://docs.ondat.io/docs/prerequisites/etcd/).
 
 To avoid passing the password as a flag, install the chart with the values file.
 Create a values.yaml file and pass the file name with `--values` flag.
@@ -108,8 +111,8 @@ cluster:
 ```
 
 ```console
-$ helm install storageos/storageos-operator \
-    --namespace storageos-operator \
+$ helm install ondat/ondat-operator \
+    --namespace ondat-operator \
     --values <values-file>
 ```
 > **Tip**: List all releases using `helm list -A`
@@ -164,7 +167,7 @@ spec:
 ```
 
 <!--- TODO: replace this when an equivalent specification exsists for the new
-operator, ticket has been created -->
+operator, ticket has been created. Also replace in app-readme -->
 Learn more about advanced configuration options
 [here](https://github.com/storageos/cluster-operator/blob/master/README.md#storageoscluster-resource-configuration).
 
@@ -258,7 +261,7 @@ would delete the custom resource and the cluster.
 To uninstall/delete the storageos cluster operator deployment:
 
 ```console
-$ helm uninstall <release-name> --namespace storageos-operator
+$ helm uninstall <release-name> --namespace ondat-operator
 ```
 
 If the chart was installed with cluster auto-provisioning enabled, chart

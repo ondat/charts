@@ -1,17 +1,18 @@
 apiVersion: v2
 appVersion: "v2.5.0"
 description: Cloud Native storage for containers
-name: storageos-operator
+name: ondat-operator
 version: 0.5.0
 keywords:
 - storage
 - block-storage
 - volume
 - operator
-home: https://storageos.com
+home: https://ondat.io
+# TODO: change
 icon: https://docs.storageos.com/images/logo-helm.svg
 sources:
-- https://github.com/storageos
+- https://github.com/ondat
 maintainers:
 - name: DavidMarchant
   email: david@ondat.io
