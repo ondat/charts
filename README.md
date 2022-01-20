@@ -15,4 +15,4 @@ helm repo add ondat https://ondat.github.io/charts
 helm repo update
 ```
 
-Run `helm search repo storageos` to list the available charts.
+Run `helm search repo ondat` to list the available charts.

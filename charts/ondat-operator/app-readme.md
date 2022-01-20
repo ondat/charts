@@ -67,7 +67,7 @@ docs](https://docs.ondat.io/docs/prerequisites/etcd/).
 By default, a minimal configuration of StorageOS is installed. To set advanced
 configurations, disable the default installation of the StorageOS cluster
 and create a custom StorageOSCluster resource, documentation
-[here](https://github.com/storageos/charts/blob/main/charts/storageos-operator/README.md#creating-a-storageos-cluster-manually)
+[here](https://github.com/ondat/charts/blob/main/charts/ondat-operator/README.md#creating-a-storageos-cluster-manually)
 
 Newly installed StorageOS clusters require a license to function. For
 instructions on applying our free developer license, or obtaining a commercial
