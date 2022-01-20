@@ -9,8 +9,7 @@ keywords:
 - volume
 - operator
 home: https://ondat.io
-# TODO: change
-icon: https://docs.storageos.com/images/logo-helm.svg
+icon: https://docs.ondat.io/images/generic/Ondat_logo.svg
 sources:
 - https://github.com/ondat
 maintainers:
