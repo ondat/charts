@@ -70,14 +70,15 @@ cluster:
     tlsSecretName:
     tlsSecretNamespace:
 
-  # Resource requessts and limits for the node container
+  # Resource requests and limits for the node container
   resources: {}
 #    requests:
 #      cpu: 1
 #      memory: 2Gi
 #    limits:
-#      cpu: 
+#      cpu:
 #      memory:
+
   # Node selector terms to install StorageOS on.
   nodeSelectorTerm:
     key:
