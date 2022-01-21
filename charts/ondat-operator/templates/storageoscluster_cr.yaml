@@ -29,6 +29,9 @@ spec:
   tlsEtcdSecretRefNamespace: {{ .Values.cluster.kvBackend.tlsSecretNamespace }}
   {{- end }}
 
+  resources:
+{{ toYaml .Values.cluster.resources | indent 4 }}
+
   {{- if .Values.cluster.nodeSelectorTerm.key }}
   nodeSelectorTerms:
     - matchExpressions:
