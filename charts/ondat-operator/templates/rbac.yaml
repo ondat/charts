@@ -106,6 +106,27 @@ rules:
   verbs:
   - '*'
 - apiGroups:
+  - api.storageos.com
+  resources:
+  - nodes
+  - volumes
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - watch
+- apiGroups:
+  - api.storageos.com
+  resources:
+  - nodes/status
+  - volumes/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
   - apiextensions.k8s.io
   resources:
   - customresourcedefinitions
@@ -150,6 +171,9 @@ rules:
   resources:
   - poddisruptionbudgets
   verbs:
+  - create
+  - delete
+  - get
   - list
   - watch
 - apiGroups:
@@ -237,6 +261,61 @@ rules:
 - apiGroups:
   - ""
   resources:
+  - configmaps
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - configmaps/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - endpoints
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - endpoints/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
+  - patch
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
   - node
   verbs:
   - get
@@ -257,6 +336,7 @@ rules:
   verbs:
   - get
   - list
+  - update
   - watch
 - apiGroups:
   - ""
@@ -384,6 +464,168 @@ metadata:
     chart: {{ template "storageos.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
+  name: storageos:operator:node-manager
+rules:
+- apiGroups:
+  - api.storageos.com
+  resources:
+  - nodes
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - api.storageos.com
+  resources:
+  - volumes
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - storageos.com
+  resources:
+  - storageosclusters
+  verbs:
+  - get
+  - list
+  - watch
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app: {{ template "storageos.name" . }}
+    app.kubernetes.io/component: operator
+    chart: {{ template "storageos.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  name: storageos:operator:portal-manager
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - configmaps/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - nodes
+  - persistentvolumeclaims
+  - persistentvolumes
+  - pods
+  verbs:
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - create
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - api.storageos.com
+  resources:
+  - nodes
+  - volumes
+  verbs:
+  - list
+  - watch
+- apiGroups:
+  - apps
+  resources:
+  - daemonsets
+  - deployments
+  - replicasets
+  - statefulsets
+  verbs:
+  - list
+  - watch
+- apiGroups:
+  - coordination.k8s.io
+  resources:
+  - leases
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - storage.k8s.io
+  resources:
+  - storageclasses
+  - volumeattachments
+  verbs:
+  - list
+  - watch
+- apiGroups:
+  - storageos.com
+  resources:
+  - storageosclusters
+  verbs:
+  - list
+  - watch
+- apiGroups:
+  - storageos.com
+  resources:
+  - storageosportals
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app: {{ template "storageos.name" . }}
+    app.kubernetes.io/component: operator
+    chart: {{ template "storageos.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
   name: storageos:operator:scheduler-extender
 rules:
 - apiGroups:
@@ -416,7 +658,7 @@ metadata:
     chart: {{ template "storageos.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
-  name: storageos:proxy
+  name: storageos:proxy:operator
 rules:
 - apiGroups:
   - authentication.k8s.io
@@ -482,6 +724,46 @@ metadata:
     chart: {{ template "storageos.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
+  name: storageos:operator:node-manager
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: storageos:operator:node-manager
+subjects:
+- kind: ServiceAccount
+  name: storageos-operator
+  namespace: storageos
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app: {{ template "storageos.name" . }}
+    app.kubernetes.io/component: operator
+    chart: {{ template "storageos.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  name: storageos:operator:portal-manager
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: storageos:operator:portal-manager
+subjects:
+- kind: ServiceAccount
+  name: storageos-operator
+  namespace: storageos
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app: {{ template "storageos.name" . }}
+    app.kubernetes.io/component: operator
+    chart: {{ template "storageos.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
   name: storageos:operator:scheduler-extender
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -502,11 +784,11 @@ metadata:
     chart: {{ template "storageos.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
-  name: storageos:proxy
+  name: storageos:proxy:operator
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: storageos:proxy
+  name: storageos:proxy:operator
 subjects:
 - kind: ServiceAccount
   name: storageos-operator
