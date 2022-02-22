@@ -54,6 +54,15 @@ data:
   {{- if and .Values.cluster.images.node.repository .Values.cluster.images.node.tag }}
   RELATED_IMAGE_STORAGEOS_NODE: "{{ .Values.cluster.images.node.repository }}:{{ .Values.cluster.images.node.tag }}"
   {{- end }}
+  {{- if and .Values.cluster.images.nodeManager.repository .Values.cluster.images.nodeManager.tag }}
+  RELATED_IMAGE_NODE_MANAGER: "{{ .Values.cluster.images.nodeManager.repository }}:{{ .Values.cluster.images.nodeManager.tag }}"
+  {{- end }}
+  {{- if and .Values.cluster.images.portalManager.repository .Values.cluster.images.portalManager.tag }}
+  RELATED_IMAGE_PORTAL_MANAGER: "{{ .Values.cluster.images.portalManager.repository }}:{{ .Values.cluster.images.portalManager.tag }}"
+  {{- end }}
+  {{- if and .Values.cluster.images.upgradeGuard.repository .Values.cluster.images.upgradeGuard.tag }}
+  RELATED_IMAGE_UPGRADE_GUARD: "{{ .Values.cluster.images.upgradeGuard.repository }}:{{ .Values.cluster.images.upgradeGuard.tag }}"
+  {{- end }}
 kind: ConfigMap
 metadata:
   labels:

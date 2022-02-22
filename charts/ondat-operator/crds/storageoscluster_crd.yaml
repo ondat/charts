@@ -98,6 +98,9 @@ spec:
               disableTelemetry:
                 description: Disable Telemetry.
                 type: boolean
+              enablePortalManager:
+                description: EnablePortalManager enables Portal Manager.
+                type: boolean
               environment:
                 additionalProperties:
                   type: string
@@ -133,6 +136,12 @@ spec:
                     type: string
                   nodeContainer:
                     type: string
+                  nodeManagerContainer:
+                    type: string
+                  portalManagerContainer:
+                    type: string
+                  upgradeGuardContainer:
+                    type: string
                 type: object
               ingress:
                 description: 'Ingress defines the ingress configurations used in the cluster. Deprecated: Not used any more, please create your ingress for dashboard on your own.'
@@ -167,6 +176,11 @@ spec:
               namespace:
                 description: 'Namespace is the kubernetes Namespace where storageos resources are provisioned. Deprecated: StorageOS uses namespace of storageosclusters.storageos.com resource.'
                 type: string
+              nodeManagerFeatures:
+                additionalProperties:
+                  type: string
+                description: Node manager feature list with optional configurations.
+                type: object
               nodeSelectorTerms:
                 description: NodeSelectorTerms is to set the placement of storageos pods using node affinity requiredDuringSchedulingIgnoredDuringExecution.
                 items:
