@@ -81,7 +81,7 @@ works at time of writing -->
 
 ```console
 # Add ondat charts repo.
-$ helm repo add ondat https://charts.ondat.io
+$ helm repo add ondat https://ondat.github.io/charts
 # Install the chart in a namespace.
 $ kubectl create namespace ondat-operator
 $ helm install my-ondat ondat/ondat-operator \
