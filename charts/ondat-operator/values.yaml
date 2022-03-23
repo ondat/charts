@@ -48,8 +48,6 @@ cluster:
   # This is opposed to the namespace of the operator, which is refered to
   # with .Release.Namespace
   namespace: storageos
-  # Set to false if you'd like to use a pre-existing namespace
-  createNamespace: true
 
   # Name of the secret containing StorageOS API credentials.
   secretRefName: storageos-api

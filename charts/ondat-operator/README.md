@@ -212,7 +212,6 @@ Parameter | Description | Default
 `cluster.name` | Name of the storageos deployment | `storageos`
 `cluster.namespace` | Namespace to install the StorageOS cluster into |
 `storageos`
-`cluster.createNamespace` | If true, create the namespace used by the cluster | `true`
 `cluster.secretRefName` | Name of the secret containing StorageOS API credentials | `storageos-api`
 `cluster.admin.username` | Username to authenticate to the StorageOS API with | `storageos`
 `cluster.admin.password` | Password to authenticate to the StorageOS API with |
