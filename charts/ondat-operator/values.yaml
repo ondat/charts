@@ -30,6 +30,12 @@ operator:
     tag: v2.6.0
     pullPolicy: IfNotPresent
 
+# parameters for StorageOS resource quotas
+# Required for GKE installation!
+resourceQuotas:
+  create: true
+  pods: 100
+
 # cluster-specific configuation parameters.
 cluster:
   # set create to true if the operator should auto-create the StorageOS cluster.
