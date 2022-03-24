@@ -2,7 +2,7 @@ apiVersion: v2
 appVersion: "v2.6.0"
 description: Cloud Native storage for containers
 name: ondat-operator
-version: 0.5.4
+version: 0.5.5
 keywords:
 - storage
 - block-storage

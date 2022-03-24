@@ -210,8 +210,8 @@ Parameter | Description | Default
 `podSecurityPolicy.annotations` | Specify pod annotations in the pod security policy | `{}`
 `cluster.create` | If true, auto-create the StorageOS cluster | `true`
 `cluster.name` | Name of the storageos deployment | `storageos`
-`cluster.namespace` | Namespace to install the StorageOS cluster into | `kube-system`
-`cluster.createNamespace` | If true, create the namespace used by the cluster | `true`
+`cluster.namespace` | Namespace to install the StorageOS cluster into |
+`storageos`
 `cluster.secretRefName` | Name of the secret containing StorageOS API credentials | `storageos-api`
 `cluster.admin.username` | Username to authenticate to the StorageOS API with | `storageos`
 `cluster.admin.password` | Password to authenticate to the StorageOS API with |

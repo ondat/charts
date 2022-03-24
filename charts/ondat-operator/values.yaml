@@ -30,6 +30,12 @@ operator:
     tag: v2.6.0
     pullPolicy: IfNotPresent
 
+# parameters for StorageOS resource quotas
+# Required for GKE installation!
+resourceQuotas:
+  create: true
+  pods: 100
+
 # cluster-specific configuation parameters.
 cluster:
   # set create to true if the operator should auto-create the StorageOS cluster.
@@ -42,8 +48,6 @@ cluster:
   # This is opposed to the namespace of the operator, which is refered to
   # with .Release.Namespace
   namespace: storageos
-  # Set to false if you'd like to use a pre-existing namespace
-  createNamespace: true
 
   # Name of the secret containing StorageOS API credentials.
   secretRefName: storageos-api
