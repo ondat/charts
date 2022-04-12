@@ -27,7 +27,7 @@ podSecurityPolicy:
 operator:
   image:
     repository: storageos/operator
-    tag: v2.6.0
+    tag: v2.7.0
     pullPolicy: IfNotPresent
 
 # parameters for StorageOS resource quotas
@@ -105,7 +105,7 @@ cluster:
   images:
     apiManager:
       repository: storageos/api-manager
-      tag: v1.2.5
+      tag: v1.2.9
     csiV1ExternalAttacherV3:
       repository: quay.io/k8scsi/csi-attacher
       tag: v3.1.0
@@ -123,21 +123,21 @@ cluster:
       tag: v2.1.0
     init:
       repository:  storageos/init
-      tag: v2.1.1
+      tag: v2.1.2
     # nodeContainer is the StorageOS node image to use, available from the
     # [Docker Hub](https://hub.docker.com/r/storageos/node/).
     node:
       repository: storageos/node
-      tag: v2.6.0
+      tag: v2.7.0
     nodeManager:
       repository: storageos/node-manager
-      tag: v0.0.2
+      tag: v0.0.6
     portalManager:
       repository: storageos/portal-manager
-      tag: v1.0.1
+      tag: v1.0.2
     upgradeGuard:
       repository: storageos/upgrade-guard
-      tag: v0.0.2
+      tag: v0.0.4
 
 # The following is used for cleaning up unmanaged cluster resources when
 # auto-install is enabled.
