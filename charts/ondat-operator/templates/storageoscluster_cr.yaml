@@ -41,6 +41,11 @@ spec:
           - "{{ .Values.cluster.nodeSelectorTerm.value }}"
   {{- end }}
 
+  {{- if .Values.cluster.nodeManagerFeatures.upgradeGuard.enabled }}
+  nodeManagerFeatures:
+    upgradeGuard: "true"
+  {{- end }}
+
   {{- if .Values.cluster.toleration.key }}
   tolerations:
     - key: {{ .Values.cluster.toleration.key }}
