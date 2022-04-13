@@ -52,6 +52,11 @@ cluster:
   # Name of the secret containing StorageOS API credentials.
   secretRefName: storageos-api
 
+  # Enable protection for volumes during orchestrator upgrades - Tech Preview
+  nodeManagerFeatures:
+    upgradeGuard:
+      enabled: false
+
   # Default admin account.
   admin:
     # Username to authenticate to the StorageOS API with.
