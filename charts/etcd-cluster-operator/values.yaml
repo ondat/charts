@@ -1,0 +1,14 @@
+# Default values for storageos.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+name: etcd-cluster-operator
+
+k8sDistro: default
+
+serviceAccount:
+  create: true
+  name: etcd-cluster-operator
+
+cluster:
+  create: true
