@@ -43,7 +43,7 @@ Parameter | Description | Default
 ## Deleting an Etcd Cluster
 
 Deleting the `EtcdCluster` custom resource object would delete the
-storageos cluster and its associated resources.
+etcd cluster and its associated resources.
 
 In the above example,
 
