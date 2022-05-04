@@ -45,7 +45,7 @@ cluster:
   name: storageos
 
   # Namespace to install the StorageOS cluster into.
-  # This is opposed to the namespace of the operator, which is refered to
+  # This is opposed to the namespace of the operator, which is referred to
   # with .Release.Namespace
   namespace: storageos
 
