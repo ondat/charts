@@ -103,6 +103,16 @@ cluster:
   # StorageOS configuration information is collected.
   disableTelemetry: false
 
+  # Connect to Ondat portal
+  portalManager:
+    secretRefName: storageos-portal-client
+    enabled: true
+    clientId:
+    secret:
+    apiUrl:
+    tenantId:
+
+
   # The name of the StorageClass to be created
   # Using a YAML anchor to allow deletion of the custom storageClass
   storageClassName: storageos

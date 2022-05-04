@@ -54,4 +54,8 @@ spec:
       effect: "NoSchedule"
   {{- end }}
 
+  {{- if .Values.cluster.portalManager.enabled }}
+  enablePortalManager: {{ .Values.cluster.portalManager.enabled }}
+  {{- end }}
+
 {{- end }}
