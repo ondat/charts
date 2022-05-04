@@ -73,3 +73,27 @@ metadata:
     heritage: {{ .Release.Service }}
   name: storageos-related-images
   namespace: {{ .Release.Namespace }}
+---
+
+apiVersion: v1
+data:
+  portal_config.yaml: |
+    apiVersion: storageos.com/v1alpha1
+    kind: PortalConfig
+    health:
+      healthProbeBindAddress: :8081
+    metrics:
+      bindAddress: 127.0.0.1:8080
+    webhook:
+      port: 9443
+    leaderElection:
+      leaderElect: true
+      resourceNamespace: storageos
+      resourceName: storageos-portal-manager
+kind: ConfigMap
+metadata:
+  labels:
+    app: {{ template "storageos.name" . }}
+    app.kubernetes.io/component: portal-manager
+  name: storageos-portal-manager
+  namespace: {{ .Values.cluster.namespace }}

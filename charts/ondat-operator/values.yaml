@@ -45,7 +45,7 @@ cluster:
   name: storageos
 
   # Namespace to install the StorageOS cluster into.
-  # This is opposed to the namespace of the operator, which is refered to
+  # This is opposed to the namespace of the operator, which is referred to
   # with .Release.Namespace
   namespace: storageos
 
@@ -102,6 +102,16 @@ cluster:
   # Defaults to false. To help improve the product, data such as API usage and
   # StorageOS configuration information is collected.
   disableTelemetry: false
+
+  # Connect to Ondat portal
+  portalManager:
+    secretRefName: storageos-portal-client
+    enabled: true
+    clientId:
+    secret:
+    apiUrl:
+    tenantId:
+
 
   # The name of the StorageClass to be created
   # Using a YAML anchor to allow deletion of the custom storageClass
