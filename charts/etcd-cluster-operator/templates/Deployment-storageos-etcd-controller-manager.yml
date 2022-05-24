@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    control-plane: controller-manager
+  name: storageos-etcd-controller-manager
+  namespace: storageos-etcd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      control-plane: controller-manager
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+      labels:
+        control-plane: controller-manager
+    spec:
+      containers:
+        - args:
+            - --enable-leader-election
+            - --proxy-url=storageos-proxy.storageos-etcd.svc
+          command:
+            - /manager
+          env:
+            - name: DISABLE_WEBHOOKS
+              value: "true"
+          image: storageos/etcd-cluster-operator-controller:v0.3.2
+          name: manager
+          ports:
+            - containerPort: 8080
+              name: metrics
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 100m
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 120Mi
+      terminationGracePeriodSeconds: 10

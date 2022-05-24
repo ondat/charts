@@ -1,0 +1,31 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    control-plane: proxy
+  name: storageos-etcd-proxy
+  namespace: storageos-etcd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      control-plane: proxy
+  template:
+    metadata:
+      labels:
+        control-plane: proxy
+    spec:
+      containers:
+        - args:
+            - --api-port=8080
+          image: storageos/etcd-cluster-operator-proxy:v0.3.2
+          name: proxy
+          resources:
+            limits:
+              cpu: 100m
+              memory: 50Mi
+            requests:
+              cpu: 100m
+              memory: 50Mi
+      terminationGracePeriodSeconds: 10

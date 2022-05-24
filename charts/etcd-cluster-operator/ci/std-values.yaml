@@ -1,5 +1,45 @@
-podSecurityPolicy:
-  enabled: true
+# Default values for storageos.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+name: etcd-cluster-operator
+
 cluster:
-  # Disable cluster creation in CI, should install the operator only.
-  create: false
+  # Whether to create the etcd cluster resource
+  create: true
+  # Name of the etcd cluster
+  name: storageos-etcd
+  # Namespace to which to deploy the etcd cluster
+  namespace: storageos-etcd
+  # Number of replicas for etcd, suggest 3
+  replicas: 3
+  # Version of etcd to deploy
+  version: 3.5.3
+  # Whether to enable TLS for etcd (recommended)
+  tls: true
+  # Storageclass for etcd backing storage
+  storageclass: standard
+  # Amount of storage to allocate per etcd volume
+  storage: 1Gi
+  # Resource requests and limits for etcd pods
+  resources:
+    requests:
+      cpu: 200m
+      memory: 200Mi
+    limits:
+      cpu: 200m
+      memory: 200Mi
+  # Node selector terms to install etcd on
+  nodeSelectorTerm:
+    key:
+    value:
+  # Pod toleration for etcd pods
+  toleration:
+    key:
+    value:
+
+ondat:
+  # Namespace in which ondat operator is installed
+  namespace: storageos
+  # etcd secret for ondat operator within above namespace
+  secret: storageos-etcd-secret

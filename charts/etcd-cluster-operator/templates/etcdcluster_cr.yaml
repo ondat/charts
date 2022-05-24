@@ -1,0 +1,68 @@
+{{- if .Values.cluster.create }}
+apiVersion: etcd.improbable.io/v1alpha1
+kind: EtcdCluster
+metadata:
+  name: {{ .Values.cluster.name }}
+  namespace: {{ .Values.cluster.namespace }}
+spec:
+  replicas: {{ .Values.cluster.replicas }}
+  version: {{ .Values.cluster.version }}
+  tls:
+    enabled: {{ .Values.cluster.tls }}
+    storageOSClusterNamespace: {{ .Values.ondat.namespace }}
+    storageOSEtcdSecretName: {{ .Values.ondat.secret }}
+  storage:
+    volumeClaimTemplate:
+      storageClassName: {{ .Values.cluster.storageclass }}
+      resources:
+        requests:
+          storage: {{ .Values.cluster.storage }}
+  podTemplate:
+    resources:
+{{ toYaml .Values.cluster.resources | indent 4 }}
+    etcdEnv:
+      - name: "ETCD_HEARTBEAT_INTERVAL"
+        value: "500"
+      - name: "ETCD_ELECTION_TIMEOUT"
+        value: "5000"
+      - name: "ETCD_MAX_SNAPSHOTS"
+        value: "10"
+      - name: "ETCD_MAX_WALS"
+        value: "10"
+      - name: "ETCD_QUOTA_BACKEND_BYTES"
+        value: "8589934592"
+      - name: "ETCD_SNAPSHOT_COUNT"
+        value: "100000"
+      - name: "ETCD_AUTO_COMPACTION_RETENTION"
+        value: "20000"
+      - name: "ETCD_AUTO_COMPACTION_MODE"
+        value: "revision"
+    affinity:
+      {{- if .Values.cluster.nodeSelectorTerm.key }}
+      nodeAffinity:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: {{ .Values.cluster.nodeSelectorTerm.key }}
+                operator: In
+                values:
+                - "{{ .Values.cluster.nodeSelectorTerm.value }}"
+      {{- end }}
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: etcd.improbable.io/cluster-name
+                    operator: In
+                    values:
+                      - storageos-etcd
+              topologyKey: kubernetes.io/hostname
+    {{- if .Values.cluster.toleration.key }}
+    tolerations:
+      - key: {{ .Values.cluster.toleration.key }}
+        operator: "Equal"
+        value: {{ .Values.cluster.toleration.value }}
+        effect: "NoSchedule"
+    {{- end }}
+{{- end }}

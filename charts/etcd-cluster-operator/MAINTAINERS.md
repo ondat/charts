@@ -1,0 +1,21 @@
+# Maintaining the Chart
+This chart is mainly the contents of the latest release of the [etcd-cluster-operator](https://github.com/storageos/etcd-cluster-operator/releases) translated to Helm format.
+
+Updating the chart for a new release begins by clearing out the old release:
+
+```shell
+rm crds/*.yml
+rm templates/*.yml
+```
+
+Following that, we should obtain the new version and decompile it into the format expected by Helm:
+
+```shell
+OPERATOR_VERSION=v0.3.2
+curl -Lo https://github.com/storageos/etcd-cluster-operator/releases/download/$OPERATOR_VERSION/storageos-etcd-cluster-operator.yaml
+curl -Lo https://github.com/storageos/etcd-cluster-operator/releases/download/$OPERATOR_VERSION/storageos-etcd-cluster.yaml
+yq ea 'select(.kind=="CustomResourceDefinition")' storageos-etcd-cluster-operator.yaml --split-exp='"crds/" + (.metadata.name)'
+yq ea 'select(.kind != "CustomResourceDefinition")' storageos-etcd-cluster-operator.yaml --split-exp='"templates/" + (.kind) + "-" + (.metadata.name)'
+```
+
+When this is complete, we should rewrite `templates/etcdcluster_cr.yaml` with any changes. This one file is heavily templated for Helm to provide configurability and is correspondent to the file `storageos-etcd-cluster.yaml` from the above mentioned repository.
