@@ -74,10 +74,10 @@ cluster:
 
   # Key-Value store backend.
   kvBackend:
-    address:
+    address: 'storageos-etcd.storageos:2379'
     backend: etcd
-    tlsSecretName:
-    tlsSecretNamespace:
+    tlsSecretName: storageos-etcd-secret
+    tlsSecretNamespace: storageos
 
   # Resource requests and limits for the node container
   resources: {}
