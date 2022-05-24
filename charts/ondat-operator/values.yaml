@@ -106,7 +106,7 @@ cluster:
   # Connect to Ondat portal
   portalManager:
     secretRefName: storageos-portal-client
-    enabled: true
+    enabled: false
     clientId:
     secret:
     apiUrl:
