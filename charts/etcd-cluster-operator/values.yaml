@@ -19,8 +19,7 @@ cluster:
   tls: true
   # Storageclass for etcd backing storage
   # NOTE: We CANNOT use storageos here as this is the egg to Ondat's chicken
-  # Leave blank for the cluster's default
-  storageclass:
+  storageclass: standard
   # Amount of storage to allocate per etcd volume
   storage: 1Gi
   # Resource requests and limits for etcd pods

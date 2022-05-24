@@ -19,7 +19,7 @@ spec:
           storage: {{ .Values.cluster.storage }}
   podTemplate:
     resources:
-{{ toYaml .Values.cluster.resources | indent 4 }}
+{{ toYaml .Values.cluster.resources | indent 6 }}
     etcdEnv:
       - name: "ETCD_HEARTBEAT_INTERVAL"
         value: "500"
