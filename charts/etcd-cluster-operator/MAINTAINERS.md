@@ -18,4 +18,6 @@ yq ea 'select(.kind=="CustomResourceDefinition")' storageos-etcd-cluster-operato
 yq ea 'select(.kind != "CustomResourceDefinition")' storageos-etcd-cluster-operator.yaml --split-exp='"templates/" + (.kind) + "-" + (.metadata.name)'
 ```
 
+Be sure to update `appVersion` in `Chart.yaml` to the new version used of the operator.
+
 When this is complete, we should rewrite `templates/etcdcluster_cr.yaml` with any changes. This one file is heavily templated for Helm to provide configurability and is correspondent to the file `storageos-etcd-cluster.yaml` from the above mentioned repository.
