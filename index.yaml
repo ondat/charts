@@ -3,6 +3,31 @@ entries:
   ondat-operator:
   - apiVersion: v2
     appVersion: v2.7.0
+    created: "2022-05-24T16:48:57.031918852Z"
+    description: Cloud Native storage for containers
+    digest: a3b2b1307dcb0cab6879194977d834c0662999cd6749c434cf036b4f23718930
+    home: https://ondat.io
+    icon: https://docs.ondat.io/images/generic/Ondat_logo.svg
+    keywords:
+    - storage
+    - block-storage
+    - volume
+    - operator
+    maintainers:
+    - email: david@ondat.io
+      name: DavidMarchant
+    - email: richard.kovacs@ondat.io
+      name: mhmxs
+    - email: angelos.perivolaropoulos@ondat.io
+      name: aeroniero33
+    name: ondat-operator
+    sources:
+    - https://github.com/ondat
+    urls:
+    - https://github.com/ondat/charts/releases/download/ondat-operator-0.5.7/ondat-operator-0.5.7.tgz
+    version: 0.5.7
+  - apiVersion: v2
+    appVersion: v2.7.0
     created: "2022-04-13T09:39:17.143535394Z"
     description: Cloud Native storage for containers
     digest: 0926d68d35ae72e6c889de2a926421f0ebb2bdf1d4303673d943d041b22ed1d6
@@ -151,4 +176,4 @@ entries:
     urls:
     - https://github.com/ondat/charts/releases/download/ondat-operator-0.5.1/ondat-operator-0.5.1.tgz
     version: 0.5.1
-generated: "2022-04-13T09:39:17.143560695Z"
+generated: "2022-05-24T16:48:57.031967553Z"
