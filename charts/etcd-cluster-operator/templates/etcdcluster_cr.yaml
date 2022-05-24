@@ -56,7 +56,7 @@ spec:
                   - key: etcd.improbable.io/cluster-name
                     operator: In
                     values:
-                      - storageos-etcd
+                      - {{ .Values.cluster.name }}
               topologyKey: kubernetes.io/hostname
     {{- if .Values.cluster.toleration.key }}
     tolerations:
