@@ -12,8 +12,8 @@ Following that, we should obtain the new version and decompile it into the forma
 
 ```shell
 OPERATOR_VERSION=v0.3.2
-curl -Lo https://github.com/storageos/etcd-cluster-operator/releases/download/$OPERATOR_VERSION/storageos-etcd-cluster-operator.yaml
-curl -Lo https://github.com/storageos/etcd-cluster-operator/releases/download/$OPERATOR_VERSION/storageos-etcd-cluster.yaml
+curl -Lo storageos-etcd-cluster-operator.yaml https://github.com/storageos/etcd-cluster-operator/releases/download/$OPERATOR_VERSION/storageos-etcd-cluster-operator.yaml
+curl -Lo storageos-etcd-cluster.yaml https://github.com/storageos/etcd-cluster-operator/releases/download/$OPERATOR_VERSION/storageos-etcd-cluster.yaml
 yq ea 'select(.kind=="CustomResourceDefinition")' storageos-etcd-cluster-operator.yaml --split-exp='"crds/" + (.metadata.name)'
 yq ea 'select(.kind != "CustomResourceDefinition")' storageos-etcd-cluster-operator.yaml --split-exp='"templates/" + (.kind) + "-" + (.metadata.name)'
 ```
