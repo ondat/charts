@@ -4,8 +4,8 @@ kind: Service
 metadata:
   labels:
     control-plane: proxy
-  name: storageos-etcd-proxy
-  namespace: storageos-etcd
+  name: {{ .Release.Name }}-proxy
+  namespace: {{ .Release.Namespace }}
 spec:
   ports:
     - name: http

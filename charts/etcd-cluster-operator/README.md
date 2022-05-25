@@ -16,9 +16,9 @@ based API to define etcd clusters with Kubernetes resources, and enable manageme
 # Add ondat charts repo.
 $ helm repo add ondat https://ondat.github.io/charts
 # Install the chart in a namespace.
-$ kubectl create namespace etcd-cluster-operator
-$ helm install my-etcd ondat/etcd-cluster-operator \
-    --namespace etcd-cluster-operator
+$ kubectl create namespace etcd-operator
+$ helm install storageos-etcd ondat/etcd-cluster-operator \
+    --namespace etcd-operator
 ```
 
 This will install the Etcd cluster operator in `etcd-cluster-operator`
@@ -26,7 +26,7 @@ namespace and deploys Etcd with a minimal configuration.
 
 ```console
 $ helm install ondat/etcd-cluster-operator \
-    --namespace etcd-cluster-operator \
+    --namespace etcd-operator \
     --values <values-file>
 ```
 > **Tip**: List all releases using `helm list -A`
@@ -48,7 +48,7 @@ etcd cluster and its associated resources.
 In the above example,
 
 ```console
-$ kubectl delete etcdcluster my-etcd --namespace etcd-cluster-operator
+$ kubectl delete etcdcluster storageos-etcd --namespace storageos-etcd
 ```
 
 would delete the custom resource and the cluster.
@@ -58,5 +58,5 @@ would delete the custom resource and the cluster.
 To uninstall/delete the etcd cluster operator deployment:
 
 ```console
-$ helm uninstall <release-name> --namespace etcd-cluster-operator
+$ helm uninstall <release-name> --namespace etcd-operator
 ```

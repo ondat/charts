@@ -1,4 +1,6 @@
+{{- if .Values.cluster.create -}}
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: storageos-etcd
+  name: {{ .Values.cluster.namespace }}
+{{- end -}}

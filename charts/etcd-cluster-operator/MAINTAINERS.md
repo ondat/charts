@@ -16,6 +16,22 @@ curl -Lo storageos-etcd-cluster-operator.yaml https://github.com/storageos/etcd-
 curl -Lo storageos-etcd-cluster.yaml https://github.com/storageos/etcd-cluster-operator/releases/download/$OPERATOR_VERSION/storageos-etcd-cluster.yaml
 yq ea 'select(.kind=="CustomResourceDefinition")' storageos-etcd-cluster-operator.yaml --split-exp='"crds/" + (.metadata.name)'
 yq ea 'select(.kind != "CustomResourceDefinition")' storageos-etcd-cluster-operator.yaml --split-exp='"templates/" + (.kind) + "-" + (.metadata.name)'
+cat <<EOF > templates/Namespace-storageos-etcd.yml
+{{- if .Values.cluster.create -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Values.cluster.namespace }}
+{{- end -}}
+EOF
+```
+
+The next step will then template various values in the `templates` directory to fit helm's configuration format:
+
+```shell
+sed -i templates/* -e 's/namespace: storageos-etcd/namespace: {{ .Release.Namespace }}/g' -e 's/storageos-etcd.svc/{{ .Release.namespace }}.svc/g'
+sed -i templates/Namespace-storageos-etcd.yml -e 's/name: storageos-etcd/name: {{ .Release.Namespace }}/g'
+sed -i templates/* -e 's/storageos-etcd/{{ .Release.Name }}/g'
 ```
 
 Be sure to update `appVersion` in `Chart.yaml` to the new version used of the operator.

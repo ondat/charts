@@ -4,8 +4,8 @@ kind: Deployment
 metadata:
   labels:
     control-plane: controller-manager
-  name: storageos-etcd-controller-manager
-  namespace: storageos-etcd
+  name: {{ .Release.Name }}-controller-manager
+  namespace: {{ .Release.Namespace }}
 spec:
   replicas: 1
   selector:
@@ -21,7 +21,7 @@ spec:
       containers:
         - args:
             - --enable-leader-election
-            - --proxy-url=storageos-proxy.storageos-etcd.svc
+            - --proxy-url=storageos-proxy.{{ .Release.Namespace }}.svc
           command:
             - /manager
           env:

@@ -4,8 +4,8 @@ kind: Deployment
 metadata:
   labels:
     control-plane: proxy
-  name: storageos-etcd-proxy
-  namespace: storageos-etcd
+  name: {{ .Release.Name }}-proxy
+  namespace: {{ .Release.Namespace }}
 spec:
   replicas: 1
   selector:
