@@ -2,7 +2,7 @@ apiVersion: v2
 appVersion: "v0.3.3"
 description: Cloud Native etcd clusters
 name: etcd-cluster-operator
-version: 0.0.1
+version: 0.0.2
 keywords:
 - etcd
 - kv
@@ -20,3 +20,5 @@ maintainers:
   email: richard.kovacs@ondat.io
 - name: aeroniero33
   email: angelos.perivolaropoulos@ondat.io
+- name: arau
+  email: ferran@ondat.io
