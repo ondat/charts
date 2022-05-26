@@ -29,7 +29,7 @@ EOF
 The next step will then template various values in the `templates` directory to fit helm's configuration format:
 
 ```shell
-sed -i templates/* -e 's/namespace: storageos-etcd/namespace: {{ .Release.Namespace }}/g' -e 's/storageos-etcd.svc/{{ .Release.namespace }}.svc/g'
+sed -i templates/* -e 's/namespace: storageos-etcd/namespace: {{ .Release.Namespace }}/g' -e 's/storageos-etcd.svc/{{ .Release.Namespace }}.svc/g'
 sed -i templates/Namespace-storageos-etcd.yml -e 's/name: storageos-etcd/name: {{ .Release.Namespace }}/g'
 sed -i templates/* -e 's/storageos-etcd/{{ .Release.Name }}/g'
 ```
