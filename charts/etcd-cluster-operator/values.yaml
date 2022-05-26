@@ -21,7 +21,7 @@ cluster:
   # NOTE: We CANNOT use storageos here as this is the egg to Ondat's chicken
   storageclass: standard
   # Amount of storage to allocate per etcd volume
-  storage: 8Gi
+  storage: 12Gi
   # Resource requests and limits for etcd pods
   resources:
     requests:
