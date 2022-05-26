@@ -32,8 +32,11 @@ The next step will then template various values in the `templates` directory to 
 sed -i templates/* -e 's/namespace: storageos-etcd/namespace: {{ .Release.Namespace }}/g' -e 's/storageos-etcd.svc/{{ .Release.Namespace }}.svc/g'
 sed -i templates/Namespace-storageos-etcd.yml -e 's/name: storageos-etcd/name: {{ .Release.Namespace }}/g'
 sed -i templates/* -e 's/storageos-etcd/{{ .Release.Name }}/g'
+sed -i templates/*.yml -e '0,/labels:/{/labels:/d;}' -e '0,/metadata:/{s/metadata:/metadata:\n{{- template "etcd-cluster-operator.labels" . }}/}'
 ```
 
 Be sure to update `appVersion` in `Chart.yaml` to the new version used of the operator.
 
 When this is complete, we should rewrite `templates/etcdcluster_cr.yaml` with any changes. This one file is heavily templated for Helm to provide configurability and is correspondent to the file `storageos-etcd-cluster.yaml` from the above mentioned repository.
+
+Before you commit, be sure to check the output of `git diff` and `helm template .` and ensure that the changes make sense.

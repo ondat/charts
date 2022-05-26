@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
+{{- template "etcd-cluster-operator.labels" . }}
     control-plane: proxy
   name: {{ .Release.Name }}-proxy
   namespace: {{ .Release.Namespace }}

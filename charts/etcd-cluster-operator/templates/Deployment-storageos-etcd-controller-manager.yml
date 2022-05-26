@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
+{{- template "etcd-cluster-operator.labels" . }}
     control-plane: controller-manager
   name: {{ .Release.Name }}-controller-manager
   namespace: {{ .Release.Namespace }}

@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
+{{- template "etcd-cluster-operator.labels" . }}
     control-plane: proxy
   name: {{ .Release.Name }}-proxy
   namespace: {{ .Release.Namespace }}
