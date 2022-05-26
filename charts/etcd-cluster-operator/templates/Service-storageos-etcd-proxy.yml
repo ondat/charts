@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+{{- template "etcd-cluster-operator.labels" . }}
+    control-plane: proxy
+  name: {{ .Release.Name }}-proxy
+  namespace: {{ .Release.Namespace }}
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+  selector:
+    control-plane: proxy
