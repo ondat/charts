@@ -1,6 +1,60 @@
 apiVersion: v1
 entries:
+  etcd-cluster-operator:
+  - apiVersion: v2
+    appVersion: v0.3.3
+    created: "2022-05-26T13:51:58.286576958Z"
+    description: Cloud Native etcd clusters
+    digest: 41785f6127e3d6f94de7509864e32cb60cebbf6249c12f7baee57b1bad5a26b2
+    home: https://ondat.io
+    icon: https://docs.ondat.io/images/generic/Ondat_logo.svg
+    keywords:
+    - etcd
+    - kv
+    - operator
+    maintainers:
+    - email: calum@ondat.io
+      name: cvlc
+    - email: david@ondat.io
+      name: DavidMarchant
+    - email: richard.kovacs@ondat.io
+      name: mhmxs
+    - email: angelos.perivolaropoulos@ondat.io
+      name: aeroniero33
+    - email: ferran@ondat.io
+      name: arau
+    name: etcd-cluster-operator
+    sources:
+    - https://github.com/ondat
+    urls:
+    - https://github.com/ondat/charts/releases/download/etcd-cluster-operator-0.0.2/etcd-cluster-operator-0.0.2.tgz
+    version: 0.0.2
   ondat-operator:
+  - apiVersion: v2
+    appVersion: v2.7.0
+    created: "2022-05-26T13:51:58.439708514Z"
+    description: Cloud Native storage for containers
+    digest: 4ff7b6177575f127b014b979b1752c46cf5d2c486fba6576c1ca837cdc7a3cb6
+    home: https://ondat.io
+    icon: https://docs.ondat.io/images/generic/Ondat_logo.svg
+    keywords:
+    - storage
+    - block-storage
+    - volume
+    - operator
+    maintainers:
+    - email: david@ondat.io
+      name: DavidMarchant
+    - email: richard.kovacs@ondat.io
+      name: mhmxs
+    - email: angelos.perivolaropoulos@ondat.io
+      name: aeroniero33
+    name: ondat-operator
+    sources:
+    - https://github.com/ondat
+    urls:
+    - https://github.com/ondat/charts/releases/download/ondat-operator-0.5.9/ondat-operator-0.5.9.tgz
+    version: 0.5.9
   - apiVersion: v2
     appVersion: v2.7.0
     created: "2022-05-26T11:37:46.003226783Z"
@@ -201,4 +255,4 @@ entries:
     urls:
     - https://github.com/ondat/charts/releases/download/ondat-operator-0.5.1/ondat-operator-0.5.1.tgz
     version: 0.5.1
-generated: "2022-05-26T11:37:46.003381983Z"
+generated: "2022-05-26T13:51:58.439747813Z"
