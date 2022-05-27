@@ -1,0 +1,93 @@
+ondat-operator:
+  cluster:
+    # Name of the deployment.
+    name: storageos
+    # Namespace to install the StorageOS cluster into.
+    # This is opposed to the namespace of the operator, which is referred to
+    # with .Release.Namespace
+    namespace: storageos
+
+    # Enable protection for volumes during orchestrator upgrades - Tech Preview
+    nodeManagerFeatures:
+      upgradeGuard:
+        enabled: false
+
+    # Default admin account.
+    admin:
+      # Username to authenticate to the StorageOS API with.
+      username: storageos
+      # Password to authenticate to the StorageOS API with. This must be at least
+      # 8 characters long.
+      password: storageos
+
+    # Resource requests and limits for the node container
+    resources: {}
+  #    requests:
+  #      cpu: 1
+  #      memory: 2Gi
+  #    limits:
+  #      cpu:
+  #      memory:
+
+    # Node selector terms to install StorageOS on.
+    nodeSelectorTerm:
+      key:
+      value:
+
+    # Pod toleration for the StorageOS pods.
+    toleration:
+      key:
+      value:
+
+    # To disable anonymous usage reporting across the cluster, set to true.
+    # Defaults to false. To help improve the product, data such as API usage and
+    # StorageOS configuration information is collected.
+    disableTelemetry: false
+
+    # Connect to Ondat portal
+    portalManager:
+      secretRefName: storageos-portal-client
+      enabled: false
+      clientId:
+      secret:
+      apiUrl:
+      tenantId:
+
+
+    # The name of the StorageClass to be created
+    # Using a YAML anchor to allow deletion of the custom storageClass
+    storageClassName: storageos
+
+etcd-cluster-operator:
+  cluster:
+    # Name of the etcd cluster
+    name: storageos-etcd
+    # Namespace to which to deploy the etcd cluster
+    namespace: storageos-etcd
+    # Number of replicas for etcd, suggest 3
+    replicas: 3
+    # Storageclass for etcd backing storage
+    # NOTE: We CANNOT use storageos here as this is the egg to Ondat's chicken
+    storageclass: standard
+    # Amount of storage to allocate per etcd volume
+    storage: 12Gi
+    # Resource requests and limits for etcd pods
+    resources:
+      requests:
+        cpu: 200m
+        memory: 200Mi
+      limits:
+        cpu: 200m
+        memory: 200Mi
+    # Node selector terms to install etcd on
+    nodeSelectorTerm:
+      key:
+      value:
+    # Pod toleration for etcd pods
+    toleration:
+      key:
+      value:
+
+  ondat:
+    # Namespace in which ondat operator is installed
+    namespace: storageos
