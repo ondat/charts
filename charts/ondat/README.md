@@ -41,7 +41,7 @@ $ helm install ondat ondat/ondat \
 Or, alternatively, with a custom `values.yaml` file:
 
 ```console
-$ helm install ondat/etcd-cluster-operator \
+$ helm install ondat/ondat \
     --namespace ondat \
     --values <values-file>
 ```
