@@ -19,6 +19,9 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
+      - name: Add Ondat repository
+        run: helm repo add ondat https://ondat.github.io/charts
+
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.4.0
         env:
