@@ -1,0 +1,9 @@
+dependencies:
+- name: ondat-operator
+  repository: https://ondat.github.io/charts
+  version: 0.5.9
+- name: etcd-cluster-operator
+  repository: https://ondat.github.io/charts
+  version: 0.0.2
+digest: sha256:3ca38108261cbe3c04557671d6976acfb6568c817d818f05533b424b2e2a947e
+generated: "2022-05-27T11:42:00.450179+01:00"
