@@ -1,15 +1,15 @@
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
+kind: ClusterRoleBinding
 metadata:
 {{- template "etcd-cluster-operator.labels" . }}
   name: {{ .Release.Name }}-leader-election-rolebinding
-  namespace: {{ .Release.Namespace }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
+  kind: ClusterRole
   name: {{ .Release.Name }}-leader-election-role
 subjects:
-  - kind: ServiceAccount
+  - apiGroup: ""
+    kind: ServiceAccount
     name: default
     namespace: {{ .Release.Namespace }}

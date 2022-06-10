@@ -19,13 +19,13 @@ spec:
       containers:
         - args:
             - --api-port=8080
-          image: storageos/etcd-cluster-operator-proxy:v0.3.4
+          image: storageos/etcd-cluster-operator-proxy:v0.3.6
           name: proxy
           resources:
             limits:
               cpu: 100m
-              memory: 50Mi
+              memory: 100Mi
             requests:
-              cpu: 100m
-              memory: 50Mi
+              cpu: 70m
+              memory: 70Mi
       terminationGracePeriodSeconds: 10
