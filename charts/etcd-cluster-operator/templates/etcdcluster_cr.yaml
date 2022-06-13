@@ -49,14 +49,12 @@ spec:
       {{- end }}
       podAntiAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                  - key: etcd.improbable.io/cluster-name
-                    operator: In
-                    values:
-                      - {{ .Values.cluster.name }}
+          - labelSelector:
+              matchExpressions:
+                - key: etcd.improbable.io/cluster-name
+                  operator: In
+                  values:
+                    - {{ .Values.cluster.name }}
             topologyKey: kubernetes.io/hostname
     {{- if .Values.cluster.toleration.key }}
     tolerations:
