@@ -65,7 +65,7 @@ spec:
                 operator: In
                 values:
                   - storageos-etcd
-            topologyKey: topology.kubernetes.io/zone
+            topologyKey: {{ .Values.cluster.topologyKey }} 
     {{- if .Values.cluster.toleration.key }}
     tolerations:
       - key: {{ .Values.cluster.toleration.key }}

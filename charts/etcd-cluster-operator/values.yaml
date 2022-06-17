@@ -30,6 +30,8 @@ cluster:
     limits:
       cpu: 500m
       memory: 500Mi
+  # Topology key to demarcate between different zones
+  topologyKey: topology.kubernetes.io/zone 
   # Node selector terms to install etcd on
   nodeSelectorTerm:
     key:
