@@ -21,6 +21,7 @@ cat <<EOF > templates/Namespace-storageos-etcd.yml
 apiVersion: v1
 kind: Namespace
 metadata:
+{{- template "etcd-cluster-operator.labels" . }}
   name: {{ .Values.cluster.namespace }}
 {{- end -}}
 EOF

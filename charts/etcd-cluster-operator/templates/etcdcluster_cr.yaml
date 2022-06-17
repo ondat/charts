@@ -32,7 +32,7 @@ spec:
       - name: "ETCD_QUOTA_BACKEND_BYTES"
         value: "8589934592"
       - name: "ETCD_SNAPSHOT_COUNT"
-        value: "100000"
+        value: "20000"
       - name: "ETCD_AUTO_COMPACTION_RETENTION"
         value: "20000"
       - name: "ETCD_AUTO_COMPACTION_MODE"
@@ -56,6 +56,16 @@ spec:
                   values:
                     - {{ .Values.cluster.name }}
             topologyKey: kubernetes.io/hostname
+        preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 1
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: etcd.improbable.io/cluster-name
+                operator: In
+                values:
+                  - storageos-etcd
+            topologyKey: topology.kubernetes.io/zone
     {{- if .Values.cluster.toleration.key }}
     tolerations:
       - key: {{ .Values.cluster.toleration.key }}

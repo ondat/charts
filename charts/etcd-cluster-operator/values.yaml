@@ -25,11 +25,11 @@ cluster:
   # Resource requests and limits for etcd pods
   resources:
     requests:
-      cpu: 200m
-      memory: 200Mi
+      cpu: 500m
+      memory: 500Mi
     limits:
-      cpu: 200m
-      memory: 200Mi
+      cpu: 500m
+      memory: 500Mi
   # Node selector terms to install etcd on
   nodeSelectorTerm:
     key:
