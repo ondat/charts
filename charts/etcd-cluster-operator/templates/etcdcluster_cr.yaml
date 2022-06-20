@@ -64,7 +64,7 @@ spec:
               - key: etcd.improbable.io/cluster-name
                 operator: In
                 values:
-                  - storageos-etcd
+                  - {{ .Values.cluster.name }}
             topologyKey: {{ .Values.cluster.topologyKey }} 
     {{- if .Values.cluster.toleration.key }}
     tolerations:
