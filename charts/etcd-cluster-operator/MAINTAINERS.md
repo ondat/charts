@@ -11,7 +11,7 @@ rm templates/*.yml
 Following that, we should obtain the new version and decompile it into the format expected by Helm:
 
 ```shell
-OPERATOR_VERSION=v0.3.2
+OPERATOR_VERSION=v0.4.0-beta.2
 curl -Lo storageos-etcd-cluster-operator.yaml https://github.com/storageos/etcd-cluster-operator/releases/download/$OPERATOR_VERSION/storageos-etcd-cluster-operator.yaml
 curl -Lo storageos-etcd-cluster.yaml https://github.com/storageos/etcd-cluster-operator/releases/download/$OPERATOR_VERSION/storageos-etcd-cluster.yaml
 yq ea 'select(.kind=="CustomResourceDefinition")' storageos-etcd-cluster-operator.yaml --split-exp='"crds/" + (.metadata.name)'
@@ -21,6 +21,7 @@ cat <<EOF > templates/Namespace-storageos-etcd.yml
 apiVersion: v1
 kind: Namespace
 metadata:
+{{- template "etcd-cluster-operator.labels" . }}
   name: {{ .Values.cluster.namespace }}
 {{- end -}}
 EOF
@@ -31,7 +32,7 @@ The next step will then template various values in the `templates` directory to 
 ```shell
 sed -i templates/* -e 's/namespace: storageos-etcd/namespace: {{ .Release.Namespace }}/g' -e 's/storageos-etcd.svc/{{ .Release.Namespace }}.svc/g'
 sed -i templates/Namespace-storageos-etcd.yml -e 's/name: storageos-etcd/name: {{ .Release.Namespace }}/g'
-sed -i templates/* -e 's/storageos-etcd/{{ .Release.Name }}/g'
+sed -i templates/* -e 's/storageos-etcd/{{ .Release.Name }}/g' -e 's%--leader-election-cm-namespace=storageos%--leader-election-cm-namespace={{ .Release.Namespace }}%g'
 sed -i templates/*.yml -e '0,/labels:/{/labels:/d;}' -e '0,/metadata:/{s/metadata:/metadata:\n{{- template "etcd-cluster-operator.labels" . }}/}'
 ```
 

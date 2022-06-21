@@ -11,10 +11,10 @@ cluster:
   name: storageos-etcd
   # Namespace to which to deploy the etcd cluster
   namespace: storageos-etcd
-  # Number of replicas for etcd, suggest 3
-  replicas: 3
+  # Number of replicas for etcd, suggest 5
+  replicas: 5
   # Version of etcd to deploy
-  version: 3.5.3
+  version: 3.5.4
   # Whether to enable TLS for etcd (recommended)
   tls: true
   # Storageclass for etcd backing storage
@@ -25,11 +25,13 @@ cluster:
   # Resource requests and limits for etcd pods
   resources:
     requests:
-      cpu: 200m
-      memory: 200Mi
+      cpu: 500m
+      memory: 500Mi
     limits:
-      cpu: 200m
-      memory: 200Mi
+      cpu: 500m
+      memory: 500Mi
+  # Topology key to demarcate between different zones
+  topologyKey: topology.kubernetes.io/zone 
   # Node selector terms to install etcd on
   nodeSelectorTerm:
     key:

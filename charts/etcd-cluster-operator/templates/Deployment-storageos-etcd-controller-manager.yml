@@ -3,31 +3,39 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
 {{- template "etcd-cluster-operator.labels" . }}
-    control-plane: controller-manager
+    control-plane: etcd-controller-manager
   name: {{ .Release.Name }}-controller-manager
   namespace: {{ .Release.Namespace }}
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
-      control-plane: controller-manager
+      control-plane: etcd-controller-manager
   template:
     metadata:
       annotations:
         prometheus.io/scrape: "true"
       labels:
-        control-plane: controller-manager
+        control-plane: etcd-controller-manager
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  control-plane: etcd-controller-manager
+              topologyKey: kubernetes.io/hostname
       containers:
         - args:
             - --enable-leader-election
             - --proxy-url=storageos-proxy.{{ .Release.Namespace }}.svc
+            - --leader-election-cm-namespace={{ .Release.Namespace }}
           command:
             - /manager
           env:
             - name: DISABLE_WEBHOOKS
               value: "true"
-          image: storageos/etcd-cluster-operator-controller:v0.3.4
+          image: storageos/etcd-cluster-operator-controller:v0.4.0-beta.2
           name: manager
           ports:
             - containerPort: 8080

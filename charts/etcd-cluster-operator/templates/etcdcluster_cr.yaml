@@ -32,7 +32,7 @@ spec:
       - name: "ETCD_QUOTA_BACKEND_BYTES"
         value: "8589934592"
       - name: "ETCD_SNAPSHOT_COUNT"
-        value: "100000"
+        value: "20000"
       - name: "ETCD_AUTO_COMPACTION_RETENTION"
         value: "20000"
       - name: "ETCD_AUTO_COMPACTION_MODE"
@@ -48,16 +48,24 @@ spec:
                 - "{{ .Values.cluster.nodeSelectorTerm.value }}"
       {{- end }}
       podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: etcd.improbable.io/cluster-name
+                  operator: In
+                  values:
+                    - {{ .Values.cluster.name }}
+            topologyKey: kubernetes.io/hostname
         preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                  - key: etcd.improbable.io/cluster-name
-                    operator: In
-                    values:
-                      - {{ .Values.cluster.name }}
-              topologyKey: kubernetes.io/hostname
+        - weight: 1
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: etcd.improbable.io/cluster-name
+                operator: In
+                values:
+                  - {{ .Values.cluster.name }}
+            topologyKey: {{ .Values.cluster.topologyKey }} 
     {{- if .Values.cluster.toleration.key }}
     tolerations:
       - key: {{ .Values.cluster.toleration.key }}
