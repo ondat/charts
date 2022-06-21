@@ -29,7 +29,7 @@ spec:
         - args:
             - --enable-leader-election
             - --proxy-url=storageos-proxy.{{ .Release.Namespace }}.svc
-            - --leader-election-cm-namespace=storageos
+            - --leader-election-cm-namespace={{ .Release.Namespace }}
           command:
             - /manager
           env:

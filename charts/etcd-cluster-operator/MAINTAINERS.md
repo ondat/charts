@@ -32,7 +32,7 @@ The next step will then template various values in the `templates` directory to 
 ```shell
 sed -i templates/* -e 's/namespace: storageos-etcd/namespace: {{ .Release.Namespace }}/g' -e 's/storageos-etcd.svc/{{ .Release.Namespace }}.svc/g'
 sed -i templates/Namespace-storageos-etcd.yml -e 's/name: storageos-etcd/name: {{ .Release.Namespace }}/g'
-sed -i templates/* -e 's/storageos-etcd/{{ .Release.Name }}/g'
+sed -i templates/* -e 's/storageos-etcd/{{ .Release.Name }}/g' -e 's%--leader-election-cm-namespace=storageos%--leader-election-cm-namespace={{ .Release.Namespace }}%g'
 sed -i templates/*.yml -e '0,/labels:/{/labels:/d;}' -e '0,/metadata:/{s/metadata:/metadata:\n{{- template "etcd-cluster-operator.labels" . }}/}'
 ```
 
