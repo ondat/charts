@@ -2,6 +2,34 @@ apiVersion: v1
 entries:
   etcd-cluster-operator:
   - apiVersion: v2
+    appVersion: v0.4.0-beta.2
+    created: "2022-06-21T13:50:14.842303475Z"
+    description: Cloud Native etcd clusters
+    digest: c823738debb7e4a02ca6b2803002c8f9d467880eb901162c010bbafda75bf54e
+    home: https://ondat.io
+    icon: https://docs.ondat.io/images/generic/Ondat_logo.svg
+    keywords:
+    - etcd
+    - kv
+    - operator
+    maintainers:
+    - email: calum@ondat.io
+      name: cvlc
+    - email: david@ondat.io
+      name: DavidMarchant
+    - email: richard.kovacs@ondat.io
+      name: mhmxs
+    - email: angelos.perivolaropoulos@ondat.io
+      name: aeroniero33
+    - email: ferran@ondat.io
+      name: arau
+    name: etcd-cluster-operator
+    sources:
+    - https://github.com/ondat
+    urls:
+    - https://github.com/ondat/charts/releases/download/etcd-cluster-operator-0.0.3/etcd-cluster-operator-0.0.3.tgz
+    version: 0.0.3
+  - apiVersion: v2
     appVersion: v0.3.3
     created: "2022-05-26T13:51:58.286576958Z"
     description: Cloud Native etcd clusters
@@ -30,6 +58,42 @@ entries:
     - https://github.com/ondat/charts/releases/download/etcd-cluster-operator-0.0.2/etcd-cluster-operator-0.0.2.tgz
     version: 0.0.2
   ondat:
+  - apiVersion: v2
+    appVersion: v2.7.0
+    created: "2022-06-21T13:50:14.992231667Z"
+    dependencies:
+    - name: ondat-operator
+      repository: https://ondat.github.io/charts
+      version: 0.5.9
+    - name: etcd-cluster-operator
+      repository: https://ondat.github.io/charts
+      version: 0.0.2
+    description: Ondat with in-cluster etcd
+    digest: 34fa924d56cd2eaa0429251ba67a80844d668095d53523b4a74fa822f49ba63a
+    home: https://ondat.io
+    icon: https://docs.ondat.io/images/generic/Ondat_logo.svg
+    keywords:
+    - ondat
+    - data
+    - operator
+    - etcd
+    maintainers:
+    - email: calum@ondat.io
+      name: cvlc
+    - email: david@ondat.io
+      name: DavidMarchant
+    - email: richard.kovacs@ondat.io
+      name: mhmxs
+    - email: angelos.perivolaropoulos@ondat.io
+      name: aeroniero33
+    - email: ferran@ondat.io
+      name: arau
+    name: ondat
+    sources:
+    - https://github.com/ondat
+    urls:
+    - https://github.com/ondat/charts/releases/download/ondat-0.0.2/ondat-0.0.2.tgz
+    version: 0.0.2
   - apiVersion: v2
     appVersion: v2.7.0
     created: "2022-05-30T09:55:23.570357143Z"
@@ -292,4 +356,4 @@ entries:
     urls:
     - https://github.com/ondat/charts/releases/download/ondat-operator-0.5.1/ondat-operator-0.5.1.tgz
     version: 0.5.1
-generated: "2022-05-30T09:55:23.570397946Z"
+generated: "2022-06-21T13:50:14.992392472Z"
