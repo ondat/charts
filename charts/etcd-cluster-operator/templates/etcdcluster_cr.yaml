@@ -40,8 +40,9 @@ spec:
     affinity:
       {{- if .Values.cluster.nodeSelectorTerm.key }}
       nodeAffinity:
-        nodeSelectorTerms:
-          - matchExpressions:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
               - key: {{ .Values.cluster.nodeSelectorTerm.key }}
                 operator: In
                 values:
