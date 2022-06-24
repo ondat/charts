@@ -3,6 +3,34 @@ entries:
   etcd-cluster-operator:
   - apiVersion: v2
     appVersion: v0.4.0-beta.2
+    created: "2022-06-24T14:08:20.107237703Z"
+    description: Cloud Native etcd clusters
+    digest: 584144df09e11379a7360c71e3ee2a8d92d44f87c6d4ef20726ffb8410f64a10
+    home: https://ondat.io
+    icon: https://docs.ondat.io/images/generic/Ondat_logo.svg
+    keywords:
+    - etcd
+    - kv
+    - operator
+    maintainers:
+    - email: calum@ondat.io
+      name: cvlc
+    - email: david@ondat.io
+      name: DavidMarchant
+    - email: richard.kovacs@ondat.io
+      name: mhmxs
+    - email: angelos.perivolaropoulos@ondat.io
+      name: aeroniero33
+    - email: ferran@ondat.io
+      name: arau
+    name: etcd-cluster-operator
+    sources:
+    - https://github.com/ondat
+    urls:
+    - https://github.com/ondat/charts/releases/download/etcd-cluster-operator-0.0.5/etcd-cluster-operator-0.0.5.tgz
+    version: 0.0.5
+  - apiVersion: v2
+    appVersion: v0.4.0-beta.2
     created: "2022-06-23T10:47:28.076104787Z"
     description: Cloud Native etcd clusters
     digest: dbcdec8eb9bdb656189f292810f5e217b6684b61afa319599ccae6e94fe9b56d
@@ -456,4 +484,4 @@ entries:
     urls:
     - https://github.com/ondat/charts/releases/download/ondat-operator-0.5.1/ondat-operator-0.5.1.tgz
     version: 0.5.1
-generated: "2022-06-23T10:49:41.962893154Z"
+generated: "2022-06-24T14:08:20.107277404Z"
