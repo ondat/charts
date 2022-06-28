@@ -42,23 +42,29 @@ data:
   {{- if and .Values.cluster.images.csiV1ExternalResizer.repository .Values.cluster.images.csiV1ExternalResizer.tag }}
   RELATED_IMAGE_CSIV1_EXTERNAL_RESIZER: "{{ .Values.cluster.images.csiV1ExternalResizer.repository }}:{{ .Values.cluster.images.csiV1ExternalResizer.tag }}"
   {{- end }}
+  {{- if and .Values.cluster.images.csiV1ExternalSnapshotter.repository .Values.cluster.images.csiV1ExternalSnapshotter.tag }}
+  RELATED_IMAGE_CSIV1_EXTERNAL_SNAPSHOTTER: "{{ .Values.cluster.images.csiV1ExternalSnapshotter.repository }}:{{ .Values.cluster.images.csiV1ExternalSnapshotter.tag }}"
+  {{- end }}
   {{- if and .Values.cluster.images.csiV1LivenessProbe.repository .Values.cluster.images.csiV1LivenessProbe.tag }}
   RELATED_IMAGE_CSIV1_LIVENESS_PROBE: "{{ .Values.cluster.images.csiV1LivenessProbe.repository }}:{{ .Values.cluster.images.csiV1LivenessProbe.tag }}"
   {{- end }}
   {{- if and .Values.cluster.images.csiV1NodeDriverRegistrar.repository .Values.cluster.images.csiV1NodeDriverRegistrar.tag }}
   RELATED_IMAGE_CSIV1_NODE_DRIVER_REGISTRAR: "{{ .Values.cluster.images.csiV1NodeDriverRegistrar.repository }}:{{ .Values.cluster.images.csiV1NodeDriverRegistrar.tag }}"
   {{- end }}
-  {{- if and .Values.cluster.images.init.repository .Values.cluster.images.init.tag }}
-  RELATED_IMAGE_STORAGEOS_INIT: "{{ .Values.cluster.images.init.repository }}:{{ .Values.cluster.images.init.tag }}"
-  {{- end }}
-  {{- if and .Values.cluster.images.node.repository .Values.cluster.images.node.tag }}
-  RELATED_IMAGE_STORAGEOS_NODE: "{{ .Values.cluster.images.node.repository }}:{{ .Values.cluster.images.node.tag }}"
+  {{- if and .Values.cluster.images.metricsExporter.repository .Values.cluster.images.metricsExporter.tag }}
+  RELATED_IMAGE_METRICS_EXPORTER: "{{ .Values.cluster.images.metricsExporter.repository }}:{{ .Values.cluster.images.metricsExporter.tag }}"
   {{- end }}
   {{- if and .Values.cluster.images.nodeManager.repository .Values.cluster.images.nodeManager.tag }}
   RELATED_IMAGE_NODE_MANAGER: "{{ .Values.cluster.images.nodeManager.repository }}:{{ .Values.cluster.images.nodeManager.tag }}"
   {{- end }}
   {{- if and .Values.cluster.images.portalManager.repository .Values.cluster.images.portalManager.tag }}
   RELATED_IMAGE_PORTAL_MANAGER: "{{ .Values.cluster.images.portalManager.repository }}:{{ .Values.cluster.images.portalManager.tag }}"
+  {{- end }}
+  {{- if and .Values.cluster.images.init.repository .Values.cluster.images.init.tag }}
+  RELATED_IMAGE_STORAGEOS_INIT: "{{ .Values.cluster.images.init.repository }}:{{ .Values.cluster.images.init.tag }}"
+  {{- end }}
+  {{- if and .Values.cluster.images.node.repository .Values.cluster.images.node.tag }}
+  RELATED_IMAGE_STORAGEOS_NODE: "{{ .Values.cluster.images.node.repository }}:{{ .Values.cluster.images.node.tag }}"
   {{- end }}
   {{- if and .Values.cluster.images.upgradeGuard.repository .Values.cluster.images.upgradeGuard.tag }}
   RELATED_IMAGE_UPGRADE_GUARD: "{{ .Values.cluster.images.upgradeGuard.repository }}:{{ .Values.cluster.images.upgradeGuard.tag }}"
