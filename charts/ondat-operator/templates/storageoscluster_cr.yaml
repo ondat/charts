@@ -41,6 +41,9 @@ spec:
           - "{{ .Values.cluster.nodeSelectorTerm.value }}"
   {{- end }}
 
+  metrics:
+    enabled: {{ .Values.cluster.metricsExporter.enabled }}
+
   {{- if .Values.cluster.nodeManagerFeatures.upgradeGuard.enabled }}
   nodeManagerFeatures:
     upgradeGuard: "true"

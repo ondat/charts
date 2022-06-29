@@ -57,6 +57,10 @@ cluster:
     upgradeGuard:
       enabled: false
 
+  # Enable Prometheus metrics exporting
+  metricsExporter:
+    enabled: false
+
   # Default admin account.
   admin:
     # Username to authenticate to the StorageOS API with.
