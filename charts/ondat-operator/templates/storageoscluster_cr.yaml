@@ -41,6 +41,14 @@ spec:
           - "{{ .Values.cluster.nodeSelectorTerm.value }}"
   {{- end }}
 
+  metrics:
+    enabled: {{ .Values.cluster.metricsExporter.enabled }}
+
+  {{- if .Values.cluster.snapshots.enabled }}
+  snapshots:
+    volumeSnapshotClassName: {{ .Values.cluster.snapshots.volumeSnapshotClassName }}
+  {{- end }}
+
   {{- if .Values.cluster.nodeManagerFeatures.upgradeGuard.enabled }}
   nodeManagerFeatures:
     upgradeGuard: "true"

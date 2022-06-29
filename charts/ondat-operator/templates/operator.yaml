@@ -6,7 +6,7 @@ metadata:
   labels:
     app: {{ template "storageos.name" . }}
     app.kubernetes.io/component: operator
-    control-plane: storageos-operator
+    control-plane: controller-manager
     chart: {{ template "storageos.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -16,14 +16,14 @@ spec:
     matchLabels:
       app: {{ template "storageos.name" . }}
       app.kubernetes.io/component: operator
-      control-plane: storageos-operator
+      control-plane: controller-manager
       release: {{ .Release.Name }}
   template:
     metadata:
       labels:
         app: {{ template "storageos.name" . }}
         app.kubernetes.io/component: operator
-        control-plane: storageos-operator
+        control-plane: controller-manager
         release: {{ .Release.Name }}
     spec:
       containers:
