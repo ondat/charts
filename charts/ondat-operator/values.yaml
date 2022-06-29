@@ -61,6 +61,11 @@ cluster:
   metricsExporter:
     enabled: false
 
+  # Enable volume snapshotting with Kasten
+  snapshots:
+    enabled: false
+    volumeSnapshotClassName: storageos
+
   # Default admin account.
   admin:
     # Username to authenticate to the StorageOS API with.
