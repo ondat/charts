@@ -18,11 +18,15 @@ yq ea 'select(.kind=="CustomResourceDefinition")' storageos-etcd-cluster-operato
 yq ea 'select(.kind != "CustomResourceDefinition")' storageos-etcd-cluster-operator.yaml --split-exp='"templates/" + (.kind) + "-" + (.metadata.name)'
 cat <<EOF > templates/Namespace-storageos-etcd.yml
 {{- if .Values.cluster.create -}}
+{{- if not (lookup "v1" "Namespace" "" .Values.cluster.namespace) }}
+{{- if not (eq .Release.Namespace .Values.cluster.namespace) }}
 apiVersion: v1
 kind: Namespace
 metadata:
 {{- template "etcd-cluster-operator.labels" . }}
   name: {{ .Values.cluster.namespace }}
+{{- end -}}
+{{- end -}}
 {{- end -}}
 EOF
 ```

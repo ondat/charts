@@ -1,3 +1,5 @@
+{{- if .Values.cluster.create }}
+
 # We want to create the storageoscluster namespace if and only if it isn't the
 # same namespace as used for the release AND it doesn't already exist in the
 # cluster.
@@ -18,6 +20,8 @@ metadata:
     chart: {{ template "storageos.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
+
+{{- end }}
 
 {{- end }}
 
