@@ -4,7 +4,7 @@ kind: Service
 metadata:
 {{- template "etcd-cluster-operator.labels" . }}
     control-plane: proxy
-  name: {{ .Release.Name }}-proxy
+  name: storageos-etcd-proxy
   namespace: {{ .Release.Namespace }}
 spec:
   ports:

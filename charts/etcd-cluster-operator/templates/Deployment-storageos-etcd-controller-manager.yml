@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
 {{- template "etcd-cluster-operator.labels" . }}
     control-plane: etcd-controller-manager
-  name: {{ .Release.Name }}-controller-manager
+  name: storageos-etcd-controller-manager
   namespace: {{ .Release.Namespace }}
 spec:
   replicas: 2

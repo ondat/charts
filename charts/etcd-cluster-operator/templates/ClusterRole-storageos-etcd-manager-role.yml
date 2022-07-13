@@ -4,7 +4,7 @@ kind: ClusterRole
 metadata:
 {{- template "etcd-cluster-operator.labels" . }}
   creationTimestamp: null
-  name: {{ .Release.Name }}-manager-role
+  name: storageos-etcd-manager-role
 rules:
   - apiGroups:
       - apps
