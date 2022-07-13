@@ -6,7 +6,7 @@ metadata:
   namespace: {{ .Values.cluster.namespace }}
 spec:
   replicas: {{ .Values.cluster.replicas }}
-  version: {{ .Values.cluster.version }}
+  version: {{ .Values.cluster.images.etcd.version }}
   tls:
     enabled: {{ .Values.cluster.tls }}
     storageOSClusterNamespace: {{ .Values.ondat.namespace }}

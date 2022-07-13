@@ -51,6 +51,9 @@ data:
   {{- if and .Values.cluster.images.csiV1NodeDriverRegistrar.repository .Values.cluster.images.csiV1NodeDriverRegistrar.tag }}
   RELATED_IMAGE_CSIV1_NODE_DRIVER_REGISTRAR: "{{ .Values.cluster.images.csiV1NodeDriverRegistrar.repository }}:{{ .Values.cluster.images.csiV1NodeDriverRegistrar.tag }}"
   {{- end }}
+  {{- if and .Values.cluster.images.kubeScheduler.repository .Values.cluster.images.kubeScheduler.tag }}
+  RELATED_IMAGE_KUBE_SCHEDULER: "{{ .Values.cluster.images.kubeScheduler.repository }}:{{ .Values.cluster.images.kubeScheduler.tag }}"
+  {{- end }}
   {{- if and .Values.cluster.images.metricsExporter.repository .Values.cluster.images.metricsExporter.tag }}
   RELATED_IMAGE_METRICS_EXPORTER: "{{ .Values.cluster.images.metricsExporter.repository }}:{{ .Values.cluster.images.metricsExporter.tag }}"
   {{- end }}

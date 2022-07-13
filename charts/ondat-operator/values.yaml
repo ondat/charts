@@ -149,8 +149,17 @@ cluster:
       repository: quay.io/k8scsi/csi-node-driver-registrar
       tag: v2.1.0
     init:
-      repository:  storageos/init
+      repository: storageos/init
       tag: v2.1.2
+    kubeRbacProxy:
+      repository: quay.io/brancz/kube-rbac-proxy
+      tag: v0.10.0
+    # These values SHOULD be set dynamically on install based on the Kubernetes version.
+    # This behaviour will be overridden if values are set here.
+    # i.e. only fill these fields if you are sure you know what you're doing.
+    kubeScheduler:
+      repository:
+      tag:
     node:
       repository: storageos/node
       tag: v2.8.0
