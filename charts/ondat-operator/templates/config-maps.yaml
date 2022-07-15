@@ -105,4 +105,4 @@ metadata:
     app: {{ template "storageos.name" . }}
     app.kubernetes.io/component: portal-manager
   name: storageos-portal-manager
-  namespace: {{ .Values.cluster.namespace }}
+  namespace: {{ template "cluster.namespace" . }}

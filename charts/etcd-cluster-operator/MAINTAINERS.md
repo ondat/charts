@@ -17,7 +17,7 @@ curl -Lo storageos-etcd-cluster.yaml https://github.com/storageos/etcd-cluster-o
 yq ea 'select(.kind=="CustomResourceDefinition")' storageos-etcd-cluster-operator.yaml --split-exp='"crds/" + (.metadata.name)'
 yq ea 'select(.kind != "CustomResourceDefinition")' storageos-etcd-cluster-operator.yaml --split-exp='"templates/" + (.kind) + "-" + (.metadata.name)'
 cat <<EOF > templates/Namespace-storageos-etcd.yml
-{{- if .Values.cluster.create -}}
+{{- if .Values.cluster.namespace -}}
 {{- if not (lookup "v1" "Namespace" "" .Values.cluster.namespace) }}
 {{- if not (eq .Release.Namespace .Values.cluster.namespace) }}
 apiVersion: v1

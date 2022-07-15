@@ -1,4 +1,4 @@
-{{- if .Values.cluster.create }}
+{{- if .Values.cluster.namespace }}
 
 # We want to create the storageoscluster namespace if and only if it isn't the
 # same namespace as used for the release AND it doesn't already exist in the

@@ -134,7 +134,7 @@ spec:
         command:
           - kubectl
           - -n
-          - {{ .Values.cluster.namespace }}
+          - {{ template "cluster.namespace" . }}
           - delete
           - storageoscluster
           - {{ .Values.cluster.name }}
@@ -164,7 +164,7 @@ spec:
           - "/bin/bash"
           - "-c"
         args:
-          - 'while [ -n "$(kubectl get pods -n {{ .Values.cluster.namespace }} -l app=storageos --ignore-not-found)" ]; do echo "Pods stil deleting"; sleep 5; done'
+          - 'while [ -n "$(kubectl get pods -n {{ template "cluster.namespace" . }} -l app=storageos --ignore-not-found)" ]; do echo "Pods stil deleting"; sleep 5; done'
       restartPolicy: Never
   backoffLimit: 4
 

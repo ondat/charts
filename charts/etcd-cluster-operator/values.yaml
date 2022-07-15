@@ -19,7 +19,8 @@ cluster:
   # Name of the etcd cluster
   name: storageos-etcd
   # Namespace to which to deploy the etcd cluster
-  namespace: storageos-etcd
+  # By default, the release namespace will be used
+  namespace:
   # Number of replicas for etcd, suggest 5
   replicas: 5
   # Whether to enable TLS for etcd (recommended)
@@ -57,7 +58,8 @@ cluster:
 
 
 ondat:
-  # Namespace in which ondat operator is installed
-  namespace: storageos
+  # Namespace in which ondat operator is installed.
+  # By default, the release namespace will be used.
+  namespace:
   # etcd secret for ondat operator within above namespace
   secret: storageos-etcd-secret

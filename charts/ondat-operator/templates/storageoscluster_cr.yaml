@@ -4,7 +4,7 @@ apiVersion: storageos.com/v1
 kind: StorageOSCluster
 metadata:
   name: {{ .Values.cluster.name }}
-  namespace: {{ .Values.cluster.namespace }}
+  namespace: {{ template "cluster.namespace" . }}
 spec:
   secretRefName: {{ .Values.cluster.secretRefName }}
   disableTelemetry: {{ .Values.cluster.disableTelemetry }}
