@@ -82,10 +82,12 @@ cluster:
 
   # Key-Value store backend.
   kvBackend:
-    address: 'storageos-etcd.storageos-etcd:2379'
+    svcName: storageos-etcd
+    # The namespace to look for the kvBackend in.
+    # Will default to the release namespace
+    namespace:
     backend: etcd
     tlsSecretName: storageos-etcd-secret
-    tlsSecretNamespace: storageos
 
   # Resource requests and limits for the node container
   resources: {}

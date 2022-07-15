@@ -20,7 +20,7 @@ spec:
   {{- end }}
 
   kvBackend:
-    address: {{ required "kv backend address must be set" .Values.cluster.kvBackend.address }}
+    address: {{ .Values.cluster.kvBackend.svcName }}.{{ default .Release.Namespace .Values.cluster.kvBackend.namespace }}:2379
     backend: {{ .Values.cluster.kvBackend.backend }}
   {{- if .Values.cluster.kvBackend.tlsSecretName }}
   tlsEtcdSecretRefName: {{ .Values.cluster.kvBackend.tlsSecretName }}

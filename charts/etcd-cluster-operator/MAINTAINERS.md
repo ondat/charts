@@ -42,6 +42,10 @@ sed -i templates/Namespace-storageos-etcd.yml -e 's/name: storageos-etcd/name: {
 sed -i templates/* -e 's%--leader-election-cm-namespace=storageos%--leader-election-cm-namespace={{ .Release.Namespace }}\n            - --etcd-repository={{ .Values.cluster.images.etcd.repository }}%g'
 # Add labels to all manifests
 sed -i templates/*.yml -e '0,/labels:/{/labels:/d;}' -e '0,/metadata:/{s/metadata:/metadata:\n{{- template "etcd-cluster-operator.labels" . }}/}'
+# Set the proxy image
+sed -i templates/Deployment-storageos-etcd-proxy.yml -e 's/image: storageos/etcd-cluster-operator-proxy.*$/image: {{ .Values.images.etcdClusterOperatorProxy.repository }}:{{ .Values.images.etcdClusterOperatorProxy.tag }}/g'
+# Set the operator image
+sed -i templates/Deployment-storageos-etcd-controller-manager.yml -e 's/image: storageos/etcd-cluster-operator-controller.*$/image: {{ .Values.images.etcdClusterOperatorController.repository }}:{{ .Values.images.etcdClusterOperatorController.tag }}/g'
 ```
 
 Be sure to update `appVersion` in `Chart.yaml` to the new version used of the operator.
