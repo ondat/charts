@@ -17,7 +17,7 @@ curl -Lo storageos-etcd-cluster.yaml https://github.com/storageos/etcd-cluster-o
 yq ea 'select(.kind=="CustomResourceDefinition")' storageos-etcd-cluster-operator.yaml --split-exp='"crds/" + (.metadata.name)'
 yq ea 'select(.kind != "CustomResourceDefinition")' storageos-etcd-cluster-operator.yaml --split-exp='"templates/" + (.kind) + "-" + (.metadata.name)'
 cat <<EOF > templates/Namespace-storageos-etcd.yml
-{{- if .Values.cluster.create -}}
+{{- if .Values.cluster.namespace -}}
 {{- if not (lookup "v1" "Namespace" "" .Values.cluster.namespace) }}
 {{- if not (eq .Release.Namespace .Values.cluster.namespace) }}
 apiVersion: v1
@@ -34,10 +34,18 @@ EOF
 The next step will then template various values in the `templates` directory to fit helm's configuration format:
 
 ```shell
+# Template namespace
 sed -i templates/* -e 's/namespace: storageos-etcd/namespace: {{ .Release.Namespace }}/g' -e 's/storageos-etcd.svc/{{ .Release.Namespace }}.svc/g'
+# Template namespace name
 sed -i templates/Namespace-storageos-etcd.yml -e 's/name: storageos-etcd/name: {{ .Release.Namespace }}/g'
-sed -i templates/* -e 's/storageos-etcd/{{ .Release.Name }}/g' -e 's%--leader-election-cm-namespace=storageos%--leader-election-cm-namespace={{ .Release.Namespace }}%g'
+# Template arguments to the operator
+sed -i templates/* -e 's%--leader-election-cm-namespace=storageos%--leader-election-cm-namespace={{ .Release.Namespace }}\n            - --etcd-repository={{ .Values.cluster.images.etcd.repository }}%g'
+# Add labels to all manifests
 sed -i templates/*.yml -e '0,/labels:/{/labels:/d;}' -e '0,/metadata:/{s/metadata:/metadata:\n{{- template "etcd-cluster-operator.labels" . }}/}'
+# Set the proxy image
+sed -i templates/Deployment-storageos-etcd-proxy.yml -e 's/image: storageos/etcd-cluster-operator-proxy.*$/image: {{ .Values.images.etcdClusterOperatorProxy.repository }}:{{ .Values.images.etcdClusterOperatorProxy.tag }}/g'
+# Set the operator image
+sed -i templates/Deployment-storageos-etcd-controller-manager.yml -e 's/image: storageos/etcd-cluster-operator-controller.*$/image: {{ .Values.images.etcdClusterOperatorController.repository }}:{{ .Values.images.etcdClusterOperatorController.tag }}/g'
 ```
 
 Be sure to update `appVersion` in `Chart.yaml` to the new version used of the operator.

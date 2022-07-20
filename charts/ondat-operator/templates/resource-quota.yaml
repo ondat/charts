@@ -10,7 +10,7 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
   name: storageos-critical-pods
-  namespace: {{ .Values.cluster.namespace }}
+  namespace: {{ template "cluster.namespace" . }}
 spec:
   hard:
     pods: {{ .Values.resourceQuotas.pods }}

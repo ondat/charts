@@ -1,7 +1,7 @@
 {{- if .Values.cluster.create }}
 
 As you enabled automatic cluster creation, your StorageOS cluster is spinning
-up in the {{ .Values.cluster.namespace }} namespace.
+up in the {{ template "cluster.namespace" . }} namespace.
 
 {{- else }}
 

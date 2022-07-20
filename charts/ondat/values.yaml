@@ -4,10 +4,10 @@ ondat-operator:
   cluster:
     # Name of the deployment.
     name: storageos
+
     # Namespace to install the StorageOS cluster into.
-    # This is opposed to the namespace of the operator, which is referred to
-    # with .Release.Namespace
-    namespace: storageos
+    # By default the release namespace will be used.
+    namespace:
 
     # Enable protection for volumes during orchestrator upgrades - Tech Preview
     nodeManagerFeatures:
@@ -67,7 +67,8 @@ etcd-cluster-operator:
     # Name of the etcd cluster
     name: storageos-etcd
     # Namespace to which to deploy the etcd cluster
-    namespace: storageos-etcd
+    # By default the release namespace will be used.
+    namespace:
     # Number of replicas for etcd, suggest 5
     replicas: 5
     # Storageclass for etcd backing storage
@@ -94,4 +95,4 @@ etcd-cluster-operator:
 
   ondat:
     # Namespace in which ondat operator is installed
-    namespace: storageos
+    namespace:

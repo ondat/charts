@@ -45,9 +45,8 @@ cluster:
   name: storageos
 
   # Namespace to install the StorageOS cluster into.
-  # This is opposed to the namespace of the operator, which is referred to
-  # with .Release.Namespace
-  namespace: storageos
+  # By default the release namespace will be used.
+  namespace:
 
   # Name of the secret containing StorageOS API credentials.
   secretRefName: storageos-api
@@ -83,10 +82,12 @@ cluster:
 
   # Key-Value store backend.
   kvBackend:
-    address: 'storageos-etcd.storageos-etcd:2379'
+    svcName: storageos-etcd
+    # The namespace to look for the kvBackend in.
+    # Will default to the release namespace
+    namespace:
     backend: etcd
     tlsSecretName: storageos-etcd-secret
-    tlsSecretNamespace: storageos
 
   # Resource requests and limits for the node container
   resources: {}
@@ -149,8 +150,17 @@ cluster:
       repository: quay.io/k8scsi/csi-node-driver-registrar
       tag: v2.1.0
     init:
-      repository:  storageos/init
+      repository: storageos/init
       tag: v2.1.2
+    kubeRbacProxy:
+      repository: quay.io/brancz/kube-rbac-proxy
+      tag: v0.10.0
+    # These values SHOULD be set dynamically on install based on the Kubernetes version.
+    # This behaviour will be overridden if values are set here.
+    # i.e. only fill these fields if you are sure you know what you're doing.
+    kubeScheduler:
+      repository:
+      tag:
     node:
       repository: storageos/node
       tag: v2.8.0

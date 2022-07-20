@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
 {{- template "etcd-cluster-operator.labels" . }}
     control-plane: proxy
-  name: {{ .Release.Name }}-proxy
+  name: storageos-etcd-proxy
   namespace: {{ .Release.Namespace }}
 spec:
   replicas: 1
@@ -19,7 +19,7 @@ spec:
       containers:
         - args:
             - --api-port=8080
-          image: storageos/etcd-cluster-operator-proxy:v0.4.1
+          image: {{ .Values.images.etcdClusterOperatorProxy.repository }}:{{ .Values.images.etcdClusterOperatorProxy.tag }}
           name: proxy
           resources:
             limits:

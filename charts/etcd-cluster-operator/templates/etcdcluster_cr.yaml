@@ -3,13 +3,13 @@ apiVersion: etcd.improbable.io/v1alpha1
 kind: EtcdCluster
 metadata:
   name: {{ .Values.cluster.name }}
-  namespace: {{ .Values.cluster.namespace }}
+  namespace: {{ default .Release.Namespace .Values.cluster.namespace }}
 spec:
   replicas: {{ .Values.cluster.replicas }}
-  version: {{ .Values.cluster.version }}
+  version: {{ .Values.cluster.images.etcd.version }}
   tls:
     enabled: {{ .Values.cluster.tls }}
-    storageOSClusterNamespace: {{ .Values.ondat.namespace }}
+    storageOSClusterNamespace: {{ default .Release.Namespace .Values.ondat.namespace }}
     storageOSEtcdSecretName: {{ .Values.ondat.secret }}
   storage:
     volumeClaimTemplate:
