@@ -2,7 +2,7 @@ apiVersion: v2
 appVersion: "v0.4.2"
 description: Cloud Native etcd clusters
 name: etcd-cluster-operator
-version: 0.1.1
+version: 0.1.2
 keywords:
 - etcd
 - kv
