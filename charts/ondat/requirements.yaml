@@ -1,0 +1,7 @@
+dependencies:
+  - name: ondat-operator
+    version: 0.6.0
+    repository: https://ondat.github.io/charts
+  - name: etcd-cluster-operator
+    version: 0.1.2
+    repository: https://ondat.github.io/charts
