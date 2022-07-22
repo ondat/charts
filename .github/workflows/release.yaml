@@ -22,24 +22,8 @@ jobs:
 
       - name: Add Ondat repository
         run: helm repo add ondat https://ondat.github.io/charts
-      
-      - name: Run chart-releaser ETCD Cluster Operator
-        uses: helm/chart-releaser-action@v1.4.0
-        with:
-          charts_dir: charts/etcd-cluster-operator
-        env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
-      - name: Run chart-releaser Ondat Operator
+      - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.4.0
-        with:
-          charts_dir: charts/ondat-operator
-        env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-
-      - name: Run chart-releaser Ondat
-        uses: helm/chart-releaser-action@v1.4.0
-        with:
-          charts_dir: charts/ondat
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
