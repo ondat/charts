@@ -2,7 +2,7 @@ apiVersion: v2
 appVersion: "v2.8.0"
 description: Ondat with in-cluster etcd
 name: ondat
-version: 0.1.1
+version: 0.1.2
 keywords:
 - ondat
 - data
