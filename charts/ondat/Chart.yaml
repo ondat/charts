@@ -14,10 +14,10 @@ sources:
 - https://github.com/ondat
 dependencies:
 - name: ondat-operator
-  version: 0.6.0
+  version: 0.5.11
   repository: https://ondat.github.io/charts
 - name: etcd-cluster-operator
-  version: 0.1.0
+  version: 0.0.8
   repository: https://ondat.github.io/charts
 maintainers:
 - name: cvlc
