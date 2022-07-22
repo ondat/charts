@@ -5,6 +5,9 @@ on:
     branches:
       - main
       - fix-release-pipeline
+    # paths:
+    #   - 'charts/ondat-operator/**'
+    #   - 'charts/etcd-cluster-operator/**'
 
 jobs:
   release:
@@ -21,18 +24,30 @@ jobs:
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
       - name: Add Ondat repository
-        run: helm repo add ondat https://ondat.github.io/charts
-      
-      - name: Install YQ
-        run: | 
-          wget https://github.com/mikefarah/yq/releases/download/v4.26.1/yq_linux_amd64.tar.gz -O - |\
-          tar xz && mv yq_linux_amd64 yq
-
-      - name: Get Helm chart versions
         run: |
-          ./yq -r '.version' charts/ondat-operator/Chart.yaml
-
+          helm repo add ondat https://ondat.github.io/charts
+          helm repo update
+      
       # - name: Run chart-releaser
       #   uses: helm/chart-releaser-action@v1.4.0
       #   env:
       #     CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      
+      - name: Install YQ
+        run: | 
+          pip3 install yq
+
+      - name: Update umbrella chart versions
+        run: |
+          export ONDAT_OPERATOR_VERSION=$(yq -r '.version' charts/ondat-operator/Chart.yaml)
+          export ETCD_OPERATOR_VERSION=$(yq -r '.version' charts/etcd-cluster-operator/Chart.yaml)
+          export APP_VERSION=$(yq -r '.appVersion' charts/ondat-operator/Chart.yaml)
+          yq --arg ONDAT_OPERATOR_VERSION "$ONDAT_OPERATOR_VERSION" -yi '(.dependencies[]|select(.name == "ondat-operator").version)|=$ONDAT_OPERATOR_VERSION' charts/ondat/Chart.yaml
+          yq --arg ETCD_OPERATOR_VERSION "$ETCD_OPERATOR_VERSION" -yi '(.dependencies[]|select(.name == "etcd-cluster-operator").version)|=$ETCD_OPERATOR_VERSION' charts/ondat/Chart.yaml
+          yq --arg APP_VERSION "$APP_VERSION" -yi '(.appVersion)|=$APP_VERSION' charts/ondat/Chart.yaml
+          export CURRENT_ONDAT_VERSION=$(helm search repo ondat/ondat | awk 'FNR==2{print $2}' || yq .version ondat/Chart.yaml)
+          export INCREAMENTED_ONDAT_VERSION=$(echo "${CURRENT_ONDAT_VERSION}" | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')
+          yq --arg INCREAMENTED_ONDAT_VERSION "$INCREAMENTED_ONDAT_VERSION" -yi '(.version)|=$INCREAMENTED_ONDAT_VERSION' charts/ondat/Chart.yaml
+          git add charts/ondat/Chart.yaml
+          git commit -m "Updating umbrella chart versions - GHA"
+          git push origin fix-release-pipeline
