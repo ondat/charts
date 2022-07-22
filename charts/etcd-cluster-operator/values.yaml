@@ -8,10 +8,10 @@ name: etcd-cluster-operator
 images:
   etcdClusterOperatorController:
     repository: storageos/etcd-cluster-operator-controller
-    tag: v0.4.1
+    tag: v0.4.2
   etcdClusterOperatorProxy:
     repository: storageos/etcd-cluster-operator-proxy
-    tag: v0.4.1
+    tag: v0.4.2
 
 cluster:
   # Whether to create the etcd cluster resource
@@ -26,8 +26,9 @@ cluster:
   # Whether to enable TLS for etcd (recommended)
   tls: true
   # Storageclass for etcd backing storage
+  # If not filled, the cluster's default storageclass will be used
   # NOTE: We CANNOT use storageos here as this is the egg to Ondat's chicken
-  storageclass: standard
+  storageclass:
   # Amount of storage to allocate per etcd volume
   storage: 12Gi
   # Resource requests and limits for etcd pods

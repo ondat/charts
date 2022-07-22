@@ -73,7 +73,7 @@ etcd-cluster-operator:
     replicas: 5
     # Storageclass for etcd backing storage
     # NOTE: We CANNOT use storageos here as this is the egg to Ondat's chicken
-    storageclass: standard
+    storageclass:
     # Amount of storage to allocate per etcd volume
     storage: 12Gi
     # Resource requests and limits for etcd pods
