@@ -72,7 +72,7 @@ cluster:
 
     # Password to authenticate to the StorageOS API with. This must be at least
     # 8 characters long.
-    password:
+    password: storageos
 
   # sharedDir should be set if running kubelet in a container.  This should
   # be the path shared into to kubelet container, typically:

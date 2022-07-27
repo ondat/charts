@@ -68,6 +68,7 @@ etcd-cluster-operator:
     name: storageos-etcd
     # Namespace to which to deploy the etcd cluster
     # By default the release namespace will be used.
+    # If specifying this and also installing ondat, you will need to set the .cluster.kvBackend.namespace value for that chart
     namespace:
     # Number of replicas for etcd, suggest 5
     replicas: 5
@@ -95,4 +96,5 @@ etcd-cluster-operator:
 
   ondat:
     # Namespace in which ondat operator is installed
+    # By default the release namespace will be used.
     namespace:
