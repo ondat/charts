@@ -6,3 +6,12 @@
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/version: {{ .Chart.AppVersion }}
 {{- end }}
+
+{{/*
+The version of the etcd container to use is input as a field in the CR
+Bizarrely, this is taken as a 'version' not an image tag (not leading 'v')
+This function removes the v from the tag string, such that we can have consistent image values
+{{- define etcdImageVersion -}}
+{{ trimPrefix "v" .Values.images.etcd.tag }}
+{{- end -}}
+*/}}

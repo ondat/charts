@@ -30,7 +30,7 @@ spec:
             - --enable-leader-election
             - --proxy-url=storageos-proxy.{{ .Release.Namespace }}.svc
             - --leader-election-cm-namespace={{ .Release.Namespace }}
-            - --etcd-repository={{ .Values.cluster.images.etcd.repository }}
+            - --etcd-repository={{ .Values.images.etcd.repository }}
           command:
             - /manager
           env:
