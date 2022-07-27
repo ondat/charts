@@ -40,7 +40,7 @@ spec:
         - configMapRef:
             name: storageos-related-images
         image: "{{ .Values.operator.image.repository }}:{{ .Values.operator.image.tag }}"
-        imagePullPolicy: {{ .Values.operator.image.pullPolicy }}
+        imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
             path: /healthz

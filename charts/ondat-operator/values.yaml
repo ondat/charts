@@ -28,7 +28,6 @@ operator:
   image:
     repository: storageos/operator
     tag: v2.8.0
-    pullPolicy: IfNotPresent
 
 # parameters for StorageOS resource quotas
 # Required for GKE installation!
