@@ -26,55 +26,71 @@ podSecurityPolicy:
 # operator-specific configuation parameters.
 images:
   operator:
-    repository: storageos/operator
+    registry: docker.io/storageos
+    image: operator
     tag: v2.8.0
   apiManager:
-    repository: storageos/api-manager
+    registry: docker.io/storageos
+    image: api-manager
     tag: v1.2.11
   csiV1ExternalAttacherV3:
-    repository: quay.io/k8scsi/csi-attacher
+    registry: quay.io/k8scsi
+    image: csi-attacher
     tag: v3.1.0
   csiV1ExternalProvisioner:
-    repository: storageos/csi-provisioner
+    registry: docker.io/storageos
+    image: csi-provisioner
     tag: v2.1.1-snapshots-patched
   csiV1ExternalResizer:
-    repository: quay.io/k8scsi/csi-resizer
+    registry: quay.io/k8scsi
+    image: csi-resizer
     tag: v1.1.0
   csiV1ExternalSnapshotter:
-    repository: quay.io/k8scsi/csi-snapshotter
+    registry: quay.io/k8scsi
+    image: csi-snapshotter
     tag: v4.0.0
   csiV1LivenessProbe:
-    repository: quay.io/k8scsi/livenessprobe
+    registry: quay.io/k8scsi
+    image: livenessprobe
     tag: v2.2.0
   csiV1NodeDriverRegistrar:
-    repository: quay.io/k8scsi/csi-node-driver-registrar
+    registry: quay.io/k8scsi
+    image: csi-node-driver-registrar
     tag: v2.1.0
   init:
-    repository: storageos/init
+    registry: docker.io/storageos
+    image: init
     tag: v2.1.2
   kubeRbacProxy:
-    repository: quay.io/brancz/kube-rbac-proxy
+    registry: quay.io/brancz
+    image: kube-rbac-proxy
     tag: v0.10.0
   # These values SHOULD be set dynamically on install based on the Kubernetes version.
   # This behaviour will be overridden if values are set here.
   # i.e. only fill these fields if you are sure you know what you're doing.
   kubeScheduler:
-    repository:
+    registry:
+    image:
     tag:
   node:
-    repository: storageos/node
+    registry: docker.io/storageos
+    image: node
     tag: v2.8.0
   metricsExporter:
-    repository: storageos/metrics-exporter
+    registry: docker.io/storageos
+    image: metrics-exporter
     tag: v0.1.6
   nodeManager:
-    repository: storageos/node-manager
+    registry: docker.io/storageos
+    image: node-manager
     tag: v0.0.8
   portalManager:
-    repository: storageos/portal-manager
+    registry: docker.io/storageos
+    image: portal-manager
     tag: v1.0.5
   upgradeGuard:
-    repository: storageos/upgrade-guard
+    registry: docker.io/storageos
+    image: upgrade-guard
     tag: v0.0.4
 
 # parameters for StorageOS resource quotas
