@@ -19,7 +19,7 @@ spec:
       containers:
         - args:
             - --api-port=8080
-          image: {{ .Values.images.etcdClusterOperatorProxy.repository }}:{{ .Values.images.etcdClusterOperatorProxy.tag }}
+          image: {{ .Values.images.etcdClusterOperatorProxy.registry }}/{{ .Values.images.etcdClusterOperatorProxy.image }}:{{ .Values.images.etcdClusterOperatorProxy.tag }}
           name: proxy
           resources:
             limits:

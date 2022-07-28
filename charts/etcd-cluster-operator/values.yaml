@@ -7,13 +7,16 @@ name: etcd-cluster-operator
 # Operator images
 images:
   etcdClusterOperatorController:
-    repository: storageos/etcd-cluster-operator-controller
+    registry: docker.io/storageos
+    image: etcd-cluster-operator-controller
     tag: v0.4.2
   etcdClusterOperatorProxy:
-    repository: storageos/etcd-cluster-operator-proxy
+    registry: docker.io/storageos
+    image: etcd-cluster-operator-proxy
     tag: v0.4.2
   etcd:
-    repository: quay.io/coreos/etcd
+    registry: quay.io/coreos
+    image: etcd
     tag: v3.5.4
 
 cluster:
