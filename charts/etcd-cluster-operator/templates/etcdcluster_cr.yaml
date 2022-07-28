@@ -6,7 +6,7 @@ metadata:
   namespace: {{ default .Release.Namespace .Values.cluster.namespace }}
 spec:
   replicas: {{ .Values.cluster.replicas }}
-  version: {{ trimPrefix "v" .Values.images.etcd.tag }}
+  version: {{ trimPrefix "v" .Values.global.azure.images.etcd.digest }}
   tls:
     enabled: {{ .Values.cluster.tls }}
     storageOSClusterNamespace: {{ default .Release.Namespace .Values.ondat.namespace }}

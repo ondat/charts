@@ -130,7 +130,7 @@ spec:
       serviceAccountName: storageos-cleanup
       containers:
       - name: "storageos-storageoscluster-cleanup"
-        image: "{{ $.Values.images.kubectl.registry }}/{{ $.Values.images.kubectl.image }}:{{ $.Values.images.kubectl.tag }}"
+        image: "{{ $.Values.global.azure.images.kubectl.registry }}/{{ $.Values.global.azure.images.kubectl.image }}:{{ $.Values.global.azure.images.kubectl.digest }}"
         command:
           - kubectl
           - -n
@@ -159,7 +159,7 @@ spec:
       serviceAccountName: storageos-cleanup
       containers:
       - name: "storageos-cleanup-wait"
-        image: "{{ $.Values.images.kubectl.registry }}/{{ $.Values.images.kubectl.image }}:{{ $.Values.images.kubectl.tag }}"
+        image: "{{ $.Values.global.azure.images.kubectl.registry }}/{{ $.Values.global.azure.images.kubectl.image }}:{{ $.Values.global.azure.images.kubectl.digest }}"
         command:
           - "/bin/bash"
           - "-c"
@@ -300,7 +300,7 @@ spec:
       serviceAccountName: storageos-cleanup
       containers:
       - name: "storageos-operator-data-cleanup"
-        image: "{{ $.Values.images.kubectl.registry }}/{{ $.Values.images.kubectl.image }}:{{ $.Values.images.kubectl.tag }}"
+        image: "{{ $.Values.global.azure.images.kubectl.registry }}/{{ $.Values.global.azure.images.kubectl.image }}:{{ $.Values.global.azure.images.kubectl.digest }}"
         command:
           - kubectl
           - -n

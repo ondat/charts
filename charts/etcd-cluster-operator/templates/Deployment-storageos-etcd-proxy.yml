@@ -19,7 +19,7 @@ spec:
       containers:
         - args:
             - --api-port=8080
-          image: {{ .Values.images.etcdClusterOperatorProxy.registry }}/{{ .Values.images.etcdClusterOperatorProxy.image }}:{{ .Values.images.etcdClusterOperatorProxy.tag }}
+          image: {{ .Values.global.azure.images.etcdClusterOperatorProxy.registry }}/{{ .Values.global.azure.images.etcdClusterOperatorProxy.image }}:{{ .Values.global.azure.images.etcdClusterOperatorProxy.digest }}
           name: proxy
           resources:
             limits:

@@ -39,7 +39,7 @@ spec:
         envFrom:
         - configMapRef:
             name: storageos-related-images
-        image: "{{ .Values.images.operator.registry}}/{{ .Values.images.operator.image }}:{{ .Values.images.operator.tag }}"
+        image: "{{ .Values.global.azure.images.operator.registry}}/{{ .Values.global.azure.images.operator.image }}:{{ .Values.global.azure.images.operator.digest }}"
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -72,7 +72,7 @@ spec:
         - --upstream=http://127.0.0.1:8080/
         - --logtostderr=true
         - --v=10
-        image: "{{ .Values.images.kubeRbacProxy.registry}}/{{ .Values.images.kubeRbacProxy.image }}:{{ .Values.images.kubeRbacProxy.tag }}"
+        image: "{{ .Values.global.azure.images.kubeRbacProxy.registry}}/{{ .Values.global.azure.images.kubeRbacProxy.image }}:{{ .Values.global.azure.images.kubeRbacProxy.digest }}"
         name: kube-rbac-proxy
         ports:
         - containerPort: 8443

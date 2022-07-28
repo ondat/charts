@@ -1,24 +1,7 @@
 # Default values for storageos.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-
 name: etcd-cluster-operator
-
-# Operator images
-images:
-  etcdClusterOperatorController:
-    registry: docker.io/storageos
-    image: etcd-cluster-operator-controller
-    tag: v0.4.2
-  etcdClusterOperatorProxy:
-    registry: docker.io/storageos
-    image: etcd-cluster-operator-proxy
-    tag: v0.4.2
-  etcd:
-    registry: quay.io/coreos
-    image: etcd
-    tag: v3.5.4
-
 cluster:
   # Whether to create the etcd cluster resource
   create: true
@@ -56,10 +39,24 @@ cluster:
   toleration:
     key:
     value:
-
 ondat:
   # Namespace in which ondat operator is installed.
   # By default, the release namespace will be used.
   namespace:
   # etcd secret for ondat operator within above namespace
   secret: storageos-etcd-secret
+global:
+  azure:
+    images:
+      etcdClusterOperatorController:
+        registry: docker.io/storageos
+        image: etcd-cluster-operator-controller
+        digest: v0.4.2
+      etcdClusterOperatorProxy:
+        registry: docker.io/storageos
+        image: etcd-cluster-operator-proxy
+        digest: v0.4.2
+      etcd:
+        registry: quay.io/coreos
+        image: etcd
+        digest: v3.5.4
