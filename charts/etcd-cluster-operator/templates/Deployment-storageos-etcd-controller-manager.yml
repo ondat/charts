@@ -30,13 +30,13 @@ spec:
             - --enable-leader-election
             - --proxy-url=storageos-proxy.{{ .Release.Namespace }}.svc
             - --leader-election-cm-namespace={{ .Release.Namespace }}
-            - --etcd-repository={{ .Values.cluster.images.etcd.repository }}
+            - --etcd-repository={{ .Values.images.etcd.registry }}/{{ .Values.images.etcd.image }}
           command:
             - /manager
           env:
             - name: DISABLE_WEBHOOKS
               value: "true"
-          image: {{ .Values.images.etcdClusterOperatorController.repository }}:{{ .Values.images.etcdClusterOperatorController.tag }}
+          image: {{ .Values.images.etcdClusterOperatorController.registry}}/{{ .Values.images.etcdClusterOperatorController.image}}:{{ .Values.images.etcdClusterOperatorController.tag }}
           name: manager
           ports:
             - containerPort: 8080

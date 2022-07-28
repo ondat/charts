@@ -30,47 +30,47 @@ metadata:
 
 apiVersion: v1
 data:
-  {{- if and .Values.cluster.images.apiManager.repository .Values.cluster.images.apiManager.tag }}
-  RELATED_IMAGE_API_MANAGER: "{{ .Values.cluster.images.apiManager.repository }}:{{ .Values.cluster.images.apiManager.tag }}"
+  {{- if and .Values.images.apiManager.image .Values.images.apiManager.tag }}
+  RELATED_IMAGE_API_MANAGER: "{{ .Values.images.apiManager.registry}}/{{ .Values.images.apiManager.image }}:{{ .Values.images.apiManager.tag }}"
   {{- end }}
-  {{- if and .Values.cluster.images.csiV1ExternalAttacherV3.repository .Values.cluster.images.csiV1ExternalAttacherV3.tag }}
-  RELATED_IMAGE_CSIV1_EXTERNAL_ATTACHER_V3: "{{ .Values.cluster.images.csiV1ExternalAttacherV3.repository }}:{{ .Values.cluster.images.csiV1ExternalAttacherV3.tag }}"
+  {{- if and .Values.images.csiV1ExternalAttacherV3.image .Values.images.csiV1ExternalAttacherV3.tag }}
+  RELATED_IMAGE_CSIV1_EXTERNAL_ATTACHER_V3: "{{ .Values.images.csiV1ExternalAttacherV3.registry}}/{{ .Values.images.csiV1ExternalAttacherV3.image }}:{{ .Values.images.csiV1ExternalAttacherV3.tag }}"
   {{- end }}
-  {{- if and .Values.cluster.images.csiV1ExternalProvisioner.repository .Values.cluster.images.csiV1ExternalProvisioner.tag }}
-  RELATED_IMAGE_CSIV1_EXTERNAL_PROVISIONER: "{{ .Values.cluster.images.csiV1ExternalProvisioner.repository }}:{{ .Values.cluster.images.csiV1ExternalProvisioner.tag }}"
+  {{- if and .Values.images.csiV1ExternalProvisioner.image .Values.images.csiV1ExternalProvisioner.tag }}
+  RELATED_IMAGE_CSIV1_EXTERNAL_PROVISIONER: "{{ .Values.images.csiV1ExternalProvisioner.registry}}/{{ .Values.images.csiV1ExternalProvisioner.image }}:{{ .Values.images.csiV1ExternalProvisioner.tag }}"
   {{- end }}
-  {{- if and .Values.cluster.images.csiV1ExternalResizer.repository .Values.cluster.images.csiV1ExternalResizer.tag }}
-  RELATED_IMAGE_CSIV1_EXTERNAL_RESIZER: "{{ .Values.cluster.images.csiV1ExternalResizer.repository }}:{{ .Values.cluster.images.csiV1ExternalResizer.tag }}"
+  {{- if and .Values.images.csiV1ExternalResizer.image .Values.images.csiV1ExternalResizer.tag }}
+  RELATED_IMAGE_CSIV1_EXTERNAL_RESIZER: "{{ .Values.images.csiV1ExternalResizer.registry}}/{{ .Values.images.csiV1ExternalResizer.image }}:{{ .Values.images.csiV1ExternalResizer.tag }}"
   {{- end }}
-  {{- if and .Values.cluster.images.csiV1ExternalSnapshotter.repository .Values.cluster.images.csiV1ExternalSnapshotter.tag }}
-  RELATED_IMAGE_CSIV1_EXTERNAL_SNAPSHOTTER: "{{ .Values.cluster.images.csiV1ExternalSnapshotter.repository }}:{{ .Values.cluster.images.csiV1ExternalSnapshotter.tag }}"
+  {{- if and .Values.images.csiV1ExternalSnapshotter.image .Values.images.csiV1ExternalSnapshotter.tag }}
+  RELATED_IMAGE_CSIV1_EXTERNAL_SNAPSHOTTER: "{{ .Values.images.csiV1ExternalSnapshotter.registry}}/{{ .Values.images.csiV1ExternalSnapshotter.image }}:{{ .Values.images.csiV1ExternalSnapshotter.tag }}"
   {{- end }}
-  {{- if and .Values.cluster.images.csiV1LivenessProbe.repository .Values.cluster.images.csiV1LivenessProbe.tag }}
-  RELATED_IMAGE_CSIV1_LIVENESS_PROBE: "{{ .Values.cluster.images.csiV1LivenessProbe.repository }}:{{ .Values.cluster.images.csiV1LivenessProbe.tag }}"
+  {{- if and .Values.images.csiV1LivenessProbe.image .Values.images.csiV1LivenessProbe.tag }}
+  RELATED_IMAGE_CSIV1_LIVENESS_PROBE: "{{ .Values.images.csiV1LivenessProbe.registry}}/{{ .Values.images.csiV1LivenessProbe.image }}:{{ .Values.images.csiV1LivenessProbe.tag }}"
   {{- end }}
-  {{- if and .Values.cluster.images.csiV1NodeDriverRegistrar.repository .Values.cluster.images.csiV1NodeDriverRegistrar.tag }}
-  RELATED_IMAGE_CSIV1_NODE_DRIVER_REGISTRAR: "{{ .Values.cluster.images.csiV1NodeDriverRegistrar.repository }}:{{ .Values.cluster.images.csiV1NodeDriverRegistrar.tag }}"
+  {{- if and .Values.images.csiV1NodeDriverRegistrar.image .Values.images.csiV1NodeDriverRegistrar.tag }}
+  RELATED_IMAGE_CSIV1_NODE_DRIVER_REGISTRAR: "{{ .Values.images.csiV1NodeDriverRegistrar.registry}}/{{ .Values.images.csiV1NodeDriverRegistrar.image }}:{{ .Values.images.csiV1NodeDriverRegistrar.tag }}"
   {{- end }}
-  {{- if and .Values.cluster.images.kubeScheduler.repository .Values.cluster.images.kubeScheduler.tag }}
-  RELATED_IMAGE_KUBE_SCHEDULER: "{{ .Values.cluster.images.kubeScheduler.repository }}:{{ .Values.cluster.images.kubeScheduler.tag }}"
+  {{- if and .Values.images.kubeScheduler.image .Values.images.kubeScheduler.tag }}
+  RELATED_IMAGE_KUBE_SCHEDULER: "{{ .Values.images.kubeScheduler.registry}}/{{ .Values.images.kubeScheduler.image }}:{{ .Values.images.kubeScheduler.tag }}"
   {{- end }}
-  {{- if and .Values.cluster.images.metricsExporter.repository .Values.cluster.images.metricsExporter.tag }}
-  RELATED_IMAGE_METRICS_EXPORTER: "{{ .Values.cluster.images.metricsExporter.repository }}:{{ .Values.cluster.images.metricsExporter.tag }}"
+  {{- if and .Values.images.metricsExporter.image .Values.images.metricsExporter.tag }}
+  RELATED_IMAGE_METRICS_EXPORTER: "{{ .Values.images.metricsExporter.registry}}/{{ .Values.images.metricsExporter.image }}:{{ .Values.images.metricsExporter.tag }}"
   {{- end }}
-  {{- if and .Values.cluster.images.nodeManager.repository .Values.cluster.images.nodeManager.tag }}
-  RELATED_IMAGE_NODE_MANAGER: "{{ .Values.cluster.images.nodeManager.repository }}:{{ .Values.cluster.images.nodeManager.tag }}"
+  {{- if and .Values.images.nodeManager.image .Values.images.nodeManager.tag }}
+  RELATED_IMAGE_NODE_MANAGER: "{{ .Values.images.nodeManager.registry}}/{{ .Values.images.nodeManager.image }}:{{ .Values.images.nodeManager.tag }}"
   {{- end }}
-  {{- if and .Values.cluster.images.portalManager.repository .Values.cluster.images.portalManager.tag }}
-  RELATED_IMAGE_PORTAL_MANAGER: "{{ .Values.cluster.images.portalManager.repository }}:{{ .Values.cluster.images.portalManager.tag }}"
+  {{- if and .Values.images.portalManager.image .Values.images.portalManager.tag }}
+  RELATED_IMAGE_PORTAL_MANAGER: "{{ .Values.images.portalManager.registry}}/{{ .Values.images.portalManager.image }}:{{ .Values.images.portalManager.tag }}"
   {{- end }}
-  {{- if and .Values.cluster.images.init.repository .Values.cluster.images.init.tag }}
-  RELATED_IMAGE_STORAGEOS_INIT: "{{ .Values.cluster.images.init.repository }}:{{ .Values.cluster.images.init.tag }}"
+  {{- if and .Values.images.init.image .Values.images.init.tag }}
+  RELATED_IMAGE_STORAGEOS_INIT: "{{ .Values.images.init.registry}}/{{ .Values.images.init.image }}:{{ .Values.images.init.tag }}"
   {{- end }}
-  {{- if and .Values.cluster.images.node.repository .Values.cluster.images.node.tag }}
-  RELATED_IMAGE_STORAGEOS_NODE: "{{ .Values.cluster.images.node.repository }}:{{ .Values.cluster.images.node.tag }}"
+  {{- if and .Values.images.node.image .Values.images.node.tag }}
+  RELATED_IMAGE_STORAGEOS_NODE: "{{ .Values.images.node.registry}}/{{ .Values.images.node.image }}:{{ .Values.images.node.tag }}"
   {{- end }}
-  {{- if and .Values.cluster.images.upgradeGuard.repository .Values.cluster.images.upgradeGuard.tag }}
-  RELATED_IMAGE_UPGRADE_GUARD: "{{ .Values.cluster.images.upgradeGuard.repository }}:{{ .Values.cluster.images.upgradeGuard.tag }}"
+  {{- if and .Values.images.upgradeGuard.image .Values.images.upgradeGuard.tag }}
+  RELATED_IMAGE_UPGRADE_GUARD: "{{ .Values.images.upgradeGuard.registry}}/{{ .Values.images.upgradeGuard.image }}:{{ .Values.images.upgradeGuard.tag }}"
   {{- end }}
 kind: ConfigMap
 metadata:

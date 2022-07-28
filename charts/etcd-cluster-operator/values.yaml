@@ -7,11 +7,17 @@ name: etcd-cluster-operator
 # Operator images
 images:
   etcdClusterOperatorController:
-    repository: storageos/etcd-cluster-operator-controller
+    registry: docker.io/storageos
+    image: etcd-cluster-operator-controller
     tag: v0.4.2
   etcdClusterOperatorProxy:
-    repository: storageos/etcd-cluster-operator-proxy
+    registry: docker.io/storageos
+    image: etcd-cluster-operator-proxy
     tag: v0.4.2
+  etcd:
+    registry: quay.io/coreos
+    image: etcd
+    tag: v3.5.4
 
 cluster:
   # Whether to create the etcd cluster resource
@@ -50,14 +56,6 @@ cluster:
   toleration:
     key:
     value:
-  images:
-    etcd:
-      repository: quay.io/coreos/etcd
-      # NB: VERSION, NOT TAG! So no leading 'v'
-      # This is an idiosyncracy of the etcd operator
-      # Annoying but ho-hum
-      version: 3.5.4
-
 
 ondat:
   # Namespace in which ondat operator is installed.

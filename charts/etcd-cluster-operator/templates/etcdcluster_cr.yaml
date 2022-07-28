@@ -6,7 +6,7 @@ metadata:
   namespace: {{ default .Release.Namespace .Values.cluster.namespace }}
 spec:
   replicas: {{ .Values.cluster.replicas }}
-  version: {{ .Values.cluster.images.etcd.version }}
+  version: {{ trimPrefix "v" .Values.images.etcd.tag }}
   tls:
     enabled: {{ .Values.cluster.tls }}
     storageOSClusterNamespace: {{ default .Release.Namespace .Values.ondat.namespace }}
@@ -66,7 +66,7 @@ spec:
                 operator: In
                 values:
                   - {{ .Values.cluster.name }}
-            topologyKey: {{ .Values.cluster.topologyKey }} 
+            topologyKey: {{ .Values.cluster.topologyKey }}
     {{- if .Values.cluster.toleration.key }}
     tolerations:
       - key: {{ .Values.cluster.toleration.key }}
