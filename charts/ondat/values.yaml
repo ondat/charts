@@ -4,16 +4,13 @@ ondat-operator:
   cluster:
     # Name of the deployment.
     name: storageos
-
     # Namespace to install the StorageOS cluster into.
     # By default the release namespace will be used.
     namespace:
-
     # Enable protection for volumes during orchestrator upgrades - Tech Preview
     nodeManagerFeatures:
       upgradeGuard:
         enabled: false
-
     # Default admin account.
     admin:
       # Username to authenticate to the StorageOS API with.
@@ -21,31 +18,27 @@ ondat-operator:
       # Password to authenticate to the StorageOS API with. This must be at least
       # 8 characters long.
       password: storageos
-
     # Resource requests and limits for the node container
     resources: {}
-  #    requests:
-  #      cpu: 1
-  #      memory: 2Gi
-  #    limits:
-  #      cpu:
-  #      memory:
+    #    requests:
+    #      cpu: 1
+    #      memory: 2Gi
+    #    limits:
+    #      cpu:
+    #      memory:
 
     # Node selector terms to install StorageOS on.
     nodeSelectorTerm:
       key:
       value:
-
     # Pod toleration for the StorageOS pods.
     toleration:
       key:
       value:
-
     # To disable anonymous usage reporting across the cluster, set to true.
     # Defaults to false. To help improve the product, data such as API usage and
     # StorageOS configuration information is collected.
     disableTelemetry: false
-
     # Connect to Ondat portal
     portalManager:
       secretRefName: storageos-portal-client
@@ -54,12 +47,9 @@ ondat-operator:
       secret:
       apiUrl:
       tenantId:
-
-
     # The name of the StorageClass to be created
     # Using a YAML anchor to allow deletion of the custom storageClass
     storageClassName: storageos
-
 etcd-cluster-operator:
   # An exhaustive list of configurable options for etcd-cluster-operator
   # can be found at https://github.com/ondat/charts/blob/main/charts/etcd-cluster-operator/values.yaml
@@ -93,8 +83,100 @@ etcd-cluster-operator:
     toleration:
       key:
       value:
-
   ondat:
     # Namespace in which ondat operator is installed
     # By default the release namespace will be used.
     namespace:
+global:
+  azure:
+    images:
+      operator:
+        registry: docker.io/storageos
+        image: operator
+        tag: v2.8.0
+        digest: sha256:7ef8a16f0200a1be34ad3bf25513a9382c8cbed04fcf8d1e977ca084cf86588d
+      apiManager:
+        registry: docker.io/storageos
+        image: api-manager
+        tag: v1.2.11
+        digest: sha256:91b4e0c7c6ebc9efeccfd336d6f4cf8330c9d5881e72d1f67d43e786ada6f3df
+      csiV1ExternalAttacherV3:
+        registry: quay.io/k8scsi
+        image: csi-attacher
+        tag: v3.1.0
+        digest: sha256:e3334d505bebc44afba610e2c218ca7b4993cac61fc0951d75033ccc971a1347
+      csiV1ExternalProvisioner:
+        registry: docker.io/storageos
+        image: csi-provisioner
+        tag: v2.1.1-snapshots-patched
+        digest: sha256:356f7fe2db61ab4089300d9de3303a5073d10117bd0c05b20599b64324f26d0d
+      csiV1ExternalResizer:
+        registry: quay.io/k8scsi
+        image: csi-resizer
+        tag: v1.1.0
+        digest: sha256:9a4130836e6eead0bfd1d6cca3e569a2ca27b82ce542927fd3da7e7eeff5fe22
+      csiV1ExternalSnapshotter:
+        registry: quay.io/k8scsi
+        image: csi-snapshotter
+        tag: v4.0.0
+        digest: sha256:72d92119b26aa2616d1579694618bcb89ea2218ba030bab1bdeb65f5dff83efa
+      csiV1LivenessProbe:
+        registry: quay.io/k8scsi
+        image: livenessprobe
+        tag: v2.2.0
+        digest: sha256:d657c5644aefe12d4bbdffb900602df65c67dbaea99b26b2005465b88b1bc96e
+      csiV1NodeDriverRegistrar:
+        registry: quay.io/k8scsi
+        image: csi-node-driver-registrar
+        tag: v2.1.0
+        digest: sha256:fb4f139b51ae5b449a132949d7f3d839fa9ea5c57df1c1cd61f781389fdacefb
+      init:
+        registry: docker.io/storageos
+        image: init
+        tag: v2.1.2
+        digest: sha256:7f5366c8928128cebad08b4829660c3e0643a9d4ef0c9904ff6053916bea4d4f
+      # The following is used for cleaning up unmanaged cluster resources when
+      # auto-install is enabled.
+      kubectl:
+        registry: docker.io/bitnami
+        image: kubectl
+        tag: 1.18.2
+        digest: sha256:2c81804f8cb0571e96f28e748a0cffab9fa0f45a2b5290a8f67625e724cce43e
+      kubeRbacProxy:
+        registry: quay.io/brancz
+        image: kube-rbac-proxy
+        tag: v0.10.0
+        digest: sha256:0aacdc5ba56fbcaa7534e928e38e42447194b1029f79d8cf869c5e3bddacb23e
+      # These values SHOULD be set dynamically on install based on the Kubernetes version.
+      # This behaviour will be overridden if values are set here.
+      # i.e. only fill these fields if you are sure you know what you're doing.
+      kubeScheduler:
+        registry:
+        image:
+        tag:
+        digest: ""
+      node:
+        registry: docker.io/storageos
+        image: node
+        tag: v2.8.0
+        digest: sha256:3a4450ba9126aef06725dd36514465b4bb23ee1982f867a76f7d0dd9e5af85c9
+      metricsExporter:
+        registry: docker.io/storageos
+        image: metrics-exporter
+        tag: v0.1.6
+        digest: sha256:c4764c9c3fa0b07877a58acf12127708b4f2af6605a7471f3e2df7f7232c663e
+      nodeManager:
+        registry: docker.io/storageos
+        image: node-manager
+        tag: v0.0.8
+        digest: sha256:62575e314b853e055d477f1934e515e51850c551291c71c52405231bb1d16a7b
+      portalManager:
+        registry: docker.io/storageos
+        image: portal-manager
+        tag: v1.0.5
+        digest: sha256:d73bee09e23443826975b67f924ad937a89dee9f8d7fb8208dd24f463eae991b
+      upgradeGuard:
+        registry: docker.io/storageos
+        image: upgrade-guard
+        tag: v0.0.4
+        digest: sha256:7a06640873d7dd70e23ddb4272371cd9a8952acb6d2e37107395a03423c783c2
