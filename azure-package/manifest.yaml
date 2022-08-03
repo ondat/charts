@@ -1,0 +1,19 @@
+applicationName: ondat
+publisher: "Ondat"
+description: "Cloud Native persistent storage for containers - a test package for the marketplace CNAB structure"
+version: 2.8.0 #Must be semver # version of application (version tag for the cnab bundle)
+restrictions:
+  minCores: 2 # minimum of 2 cores per node
+  minNodes: 5
+  minKubernetesVersion: 1.20
+  requireGpuNodes: False
+  openShiftAllowed: True
+  nodeType: Linux
+  newClusterRequired: False
+helmChart: "./charts/ondat"
+#clusterArmTemplate: "./cluster-deployment.json"
+uiDefinition: "./createUIDefinition.json"
+registryServer: "ondat.azurecr.io" # requires an acr registry with ondat images and the is pushed to mcr - which is taken care of by cnab
+extensionRegistrationParameters:
+  defaultScope: "cluster" 
+  billingIdentifier: microsoft.marketplace.example.ondat # no need for this if we are using per cluster billing model
