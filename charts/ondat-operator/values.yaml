@@ -156,14 +156,6 @@ global:
         image: kube-rbac-proxy
         tag: v0.10.0
         digest: sha256:0aacdc5ba56fbcaa7534e928e38e42447194b1029f79d8cf869c5e3bddacb23e
-      # These values SHOULD be set dynamically on install based on the Kubernetes version.
-      # This behaviour will be overridden if values are set here.
-      # i.e. only fill these fields if you are sure you know what you're doing.
-      kubeScheduler:
-        registry:
-        image:
-        tag:
-        digest: ""
       node:
         registry: docker.io/storageos
         image: node
