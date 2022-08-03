@@ -14,11 +14,11 @@ sources:
 - https://github.com/ondat
 dependencies:
 - name: ondat-operator
-  version: 0.6.0
-  repository: https://ondat.github.io/charts
+  version: 0.6.1
+  repository: "file://../ondat-operator"
 - name: etcd-cluster-operator
-  version: 0.1.1
-  repository: https://ondat.github.io/charts
+  version: 0.1.2
+  repository: "file://../etcd-cluster-operator"
 maintainers:
 - name: cvlc
   email: calum@ondat.io
