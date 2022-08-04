@@ -23,25 +23,15 @@ jobs:
         run: helm repo add ondat https://ondat.github.io/charts
 
       - name: Run chart-releaser
-        if: always()
         uses: helm/chart-releaser-action@v1.4.0
         with:
-          charts_dir: charts/etcd-cluster-operator
+          charts_dir: charts/component-charts
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: Run chart-releaser
-        if: always()
         uses: helm/chart-releaser-action@v1.4.0
         with:
-          charts_dir: charts/ondat-operator
-        env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-
-      - name: Run chart-releaser
-        if: always()
-        uses: helm/chart-releaser-action@v1.4.0
-        with:
-          charts_dir: charts/ondat
+          charts_dir: charts/umbrella-charts
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
