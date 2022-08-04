@@ -3,6 +3,34 @@ entries:
   etcd-cluster-operator:
   - apiVersion: v2
     appVersion: v0.4.2
+    created: "2022-08-04T16:51:52.524591583Z"
+    description: Cloud Native etcd clusters
+    digest: 4a3d71735db6dc03ad2314979431149ebc341bff166f41db802cae504e74552c
+    home: https://ondat.io
+    icon: https://docs.ondat.io/images/generic/Ondat_logo.svg
+    keywords:
+    - etcd
+    - kv
+    - operator
+    maintainers:
+    - email: calum@ondat.io
+      name: cvlc
+    - email: david@ondat.io
+      name: DavidMarchant
+    - email: richard.kovacs@ondat.io
+      name: mhmxs
+    - email: angelos.perivolaropoulos@ondat.io
+      name: aeroniero33
+    - email: ferran@ondat.io
+      name: arau
+    name: etcd-cluster-operator
+    sources:
+    - https://github.com/ondat
+    urls:
+    - https://github.com/ondat/charts/releases/download/etcd-cluster-operator-0.1.3/etcd-cluster-operator-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: v0.4.2
     created: "2022-07-22T09:22:22.568874675Z"
     description: Cloud Native etcd clusters
     digest: 5fcc4a93b79e61ea9187090bad1924176adc9fb339e125934578740b2137633f
@@ -553,6 +581,31 @@ entries:
   ondat-operator:
   - apiVersion: v2
     appVersion: v2.8.0
+    created: "2022-08-04T16:51:52.697521649Z"
+    description: Cloud Native storage for containers
+    digest: 27ee8464b8ea493f1fb4aded9adab4f0ad52b18900e4f7c0e6cb4d1219fbabf0
+    home: https://ondat.io
+    icon: https://docs.ondat.io/images/generic/Ondat_logo.svg
+    keywords:
+    - storage
+    - block-storage
+    - volume
+    - operator
+    maintainers:
+    - email: david@ondat.io
+      name: DavidMarchant
+    - email: richard.kovacs@ondat.io
+      name: mhmxs
+    - email: angelos.perivolaropoulos@ondat.io
+      name: aeroniero33
+    name: ondat-operator
+    sources:
+    - https://github.com/ondat
+    urls:
+    - https://github.com/ondat/charts/releases/download/ondat-operator-0.6.1/ondat-operator-0.6.1.tgz
+    version: 0.6.1
+  - apiVersion: v2
+    appVersion: v2.8.0
     created: "2022-07-22T09:22:22.797656806Z"
     description: Cloud Native storage for containers
     digest: a7fe2ea5dec0773f556dea4e3d2dff9bd8078a53d30f51d677f79c727bdf7083
@@ -851,4 +904,4 @@ entries:
     urls:
     - https://github.com/ondat/charts/releases/download/ondat-operator-0.5.1/ondat-operator-0.5.1.tgz
     version: 0.5.1
-generated: "2022-07-22T09:26:15.225705225Z"
+generated: "2022-08-04T16:51:52.69767975Z"
