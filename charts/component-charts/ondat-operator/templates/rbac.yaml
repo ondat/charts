@@ -54,6 +54,7 @@ rules:
   - pods/binding
   - pods/status
   - replicationcontrollers
+  - resourcequotas
   - secrets
   - serviceaccounts
   - services
@@ -134,7 +135,9 @@ rules:
   - create
   - delete
   - get
+  - list
   - patch
+  - watch
 - apiGroups:
   - apps
   resources:

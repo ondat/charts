@@ -20,6 +20,8 @@ spec:
       release: {{ .Release.Name }}
   template:
     metadata:
+      annotations:
+        kubectl.kubernetes.io/default-container: manager
       labels:
         app: {{ template "storageos.name" . }}
         app.kubernetes.io/component: operator
@@ -40,7 +42,6 @@ spec:
         - configMapRef:
             name: storageos-related-images
         image: "{{ .Values.images.operator.registry}}/{{ .Values.images.operator.image }}:{{ .Values.images.operator.tag }}"
-        imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
             path: /healthz
@@ -57,7 +58,7 @@ spec:
         resources:
           limits:
             cpu: 250m
-            memory: 200Mi
+            memory: 512Mi
           requests:
             cpu: 10m
             memory: 100Mi
@@ -82,12 +83,13 @@ spec:
       serviceAccountName: {{ template "storageos.serviceAccountName" . }}
       terminationGracePeriodSeconds: 10
       topologySpreadConstraints:
-        - labelSelector:
-            matchLabels:
-              app.kubernetes.io/component: operator
-          maxSkew: 1
-          topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: ScheduleAnyway
+      - labelSelector:
+          matchLabels:
+            app.kubernetes.io/component: operator
+            app: {{ template "storageos.name" . }}
+        maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
       volumes:
       - configMap:
           name: storageos-operator

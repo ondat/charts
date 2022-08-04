@@ -228,8 +228,35 @@ spec:
               metrics:
                 description: Metrics feature configuration.
                 properties:
+                  disabledCollectors:
+                    description: DisabledCollectors is a list of collectors that shall
+                      be disabled. By default, all are enabled.
+                    items:
+                      description: MetricsExporterCollector is the name of a metrics
+                        collector in the metrics-exporter.
+                      enum:
+                      - diskstats
+                      - filesystem
+                      type: string
+                    type: array
                   enabled:
                     type: boolean
+                  logLevel:
+                    description: Verbosity of log messages. Accepts go.uber.org/zap
+                      log levels.
+                    enum:
+                    - debug
+                    - info
+                    - warn
+                    - error
+                    - dpanic
+                    - panic
+                    - fatal
+                    type: string
+                  timeout:
+                    description: Timeout in seconds to serve metrics.
+                    minimum: 1
+                    type: integer
                 type: object
               namespace:
                 description: 'Namespace is the kubernetes Namespace where storageos
