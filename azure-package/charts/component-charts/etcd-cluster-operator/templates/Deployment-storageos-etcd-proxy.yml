@@ -1,0 +1,31 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+{{- template "etcd-cluster-operator.labels" . }}
+    control-plane: proxy
+  name: storageos-etcd-proxy
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      control-plane: proxy
+  template:
+    metadata:
+      labels:
+        control-plane: proxy
+    spec:
+      containers:
+        - args:
+            - --api-port=8080
+          image: {{ .Values.global.azure.images.etcdClusterOperatorProxy.registry }}/{{ .Values.global.azure.images.etcdClusterOperatorProxy.image }}:{{ .Values.global.azure.images.etcdClusterOperatorProxy.digest }}
+          name: proxy
+          resources:
+            limits:
+              cpu: 100m
+              memory: 100Mi
+            requests:
+              cpu: 70m
+              memory: 70Mi
+      terminationGracePeriodSeconds: 10

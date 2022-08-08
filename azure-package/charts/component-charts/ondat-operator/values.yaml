@@ -1,0 +1,183 @@
+# Default values for storageos.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+name: ondat-operator
+k8sDistro: default
+serviceAccount:
+  create: true
+  name: storageos-operator
+podSecurityPolicy:
+  enabled: false
+  annotations: {}
+  ## Specify pod annotations
+  ## Ref: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#apparmor
+  ## Ref: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#seccomp
+  ## Ref: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#sysctl
+  ##
+  # seccomp.security.alpha.kubernetes.io/allowedProfileNames: '*'
+  # seccomp.security.alpha.kubernetes.io/defaultProfileName: 'docker/default'
+  # apparmor.security.beta.kubernetes.io/defaultProfileName: 'runtime/default'
+# parameters for StorageOS resource quotas
+# Required for GKE installation!
+resourceQuotas:
+  create: true
+  pods: 100
+# cluster-specific configuation parameters.
+cluster:
+  # set create to true if the operator should auto-create the StorageOS cluster.
+  create: true
+  # Name of the deployment.
+  name: storageos
+  # Namespace to install the StorageOS cluster into.
+  # By default the release namespace will be used.
+  namespace:
+  # Name of the secret containing StorageOS API credentials.
+  secretRefName: storageos-api
+  # Enable protection for volumes during orchestrator upgrades - Tech Preview
+  nodeManagerFeatures:
+    upgradeGuard:
+      enabled: false
+  # Enable Prometheus metrics exporting
+  metricsExporter:
+    enabled: false
+  # Enable volume snapshotting with Kasten
+  snapshots:
+    enabled: false
+    volumeSnapshotClassName: storageos
+  # Default admin account.
+  admin:
+    # Username to authenticate to the StorageOS API with.
+    username: storageos
+    # Password to authenticate to the StorageOS API with. This must be at least
+    # 8 characters long.
+    password: storageos
+  # sharedDir should be set if running kubelet in a container.  This should
+  # be the path shared into to kubelet container, typically:
+  # "/var/lib/kubelet/plugins/kubernetes.io~storageos".  If not set, defaults
+  # will be used.
+  sharedDir:
+  # Key-Value store backend.
+  kvBackend:
+    svcName: storageos-etcd
+    # The namespace to look for the kvBackend in.
+    # Will default to the release namespace
+    namespace:
+    backend: etcd
+    tlsSecretName: storageos-etcd-secret
+  # Resource requests and limits for the node container
+  resources: {}
+  #    requests:
+  #      cpu: 1
+  #      memory: 2Gi
+  #    limits:
+  #      cpu:
+  #      memory:
+
+  # Node selector terms to install StorageOS on.
+  nodeSelectorTerm:
+    key:
+    value:
+  # Pod toleration for the StorageOS pods.
+  toleration:
+    key:
+    value:
+  # To disable anonymous usage reporting across the cluster, set to true.
+  # Defaults to false. To help improve the product, data such as API usage and
+  # StorageOS configuration information is collected.
+  disableTelemetry: false
+  # Connect to Ondat portal
+  portalManager:
+    secretRefName: storageos-portal-client
+    enabled: false
+    clientId:
+    secret:
+    apiUrl:
+    tenantId:
+  # The name of the StorageClass to be created
+  # Using a YAML anchor to allow deletion of the custom storageClass
+  storageClassName: storageos
+global:
+  azure:
+    images:
+      operator:
+        registry: docker.io/storageos
+        image: operator
+        tag: v2.8.1
+        digest: sha256:82c495575c1ca0483505f12937f3a9d91ee73e324b3fd1a1435281b108e3e2ea
+      apiManager:
+        registry: docker.io/storageos
+        image: api-manager
+        tag: v1.2.11
+        digest: sha256:91b4e0c7c6ebc9efeccfd336d6f4cf8330c9d5881e72d1f67d43e786ada6f3df
+      csiV1ExternalAttacherV3:
+        registry: quay.io/k8scsi
+        image: csi-attacher
+        tag: v3.1.0
+        digest: sha256:e3334d505bebc44afba610e2c218ca7b4993cac61fc0951d75033ccc971a1347
+      csiV1ExternalProvisioner:
+        registry: docker.io/storageos
+        image: csi-provisioner
+        tag: v2.1.1-snapshots-patched
+        digest: sha256:356f7fe2db61ab4089300d9de3303a5073d10117bd0c05b20599b64324f26d0d
+      csiV1ExternalResizer:
+        registry: quay.io/k8scsi
+        image: csi-resizer
+        tag: v1.1.0
+        digest: sha256:9a4130836e6eead0bfd1d6cca3e569a2ca27b82ce542927fd3da7e7eeff5fe22
+      csiV1ExternalSnapshotter:
+        registry: quay.io/k8scsi
+        image: csi-snapshotter
+        tag: v4.0.0
+        digest: sha256:72d92119b26aa2616d1579694618bcb89ea2218ba030bab1bdeb65f5dff83efa
+      csiV1LivenessProbe:
+        registry: quay.io/k8scsi
+        image: livenessprobe
+        tag: v2.2.0
+        digest: sha256:d657c5644aefe12d4bbdffb900602df65c67dbaea99b26b2005465b88b1bc96e
+      csiV1NodeDriverRegistrar:
+        registry: quay.io/k8scsi
+        image: csi-node-driver-registrar
+        tag: v2.1.0
+        digest: sha256:fb4f139b51ae5b449a132949d7f3d839fa9ea5c57df1c1cd61f781389fdacefb
+      init:
+        registry: docker.io/storageos
+        image: init
+        tag: v2.1.2
+        digest: sha256:7f5366c8928128cebad08b4829660c3e0643a9d4ef0c9904ff6053916bea4d4f
+      # The following is used for cleaning up unmanaged cluster resources when
+      # auto-install is enabled.
+      kubectl:
+        registry: docker.io/bitnami
+        image: kubectl
+        tag: 1.18.2
+        digest: sha256:2c81804f8cb0571e96f28e748a0cffab9fa0f45a2b5290a8f67625e724cce43e
+      kubeRbacProxy:
+        registry: quay.io/brancz
+        image: kube-rbac-proxy
+        tag: v0.10.0
+        digest: sha256:0aacdc5ba56fbcaa7534e928e38e42447194b1029f79d8cf869c5e3bddacb23e
+      node:
+        registry: docker.io/storageos
+        image: node
+        tag: v2.8.1
+        digest: sha256:316b5f2b86ce0fab78a7272d4128ffda4a5b79cf63497ce2dc7ed32eec998cc9
+      metricsExporter:
+        registry: docker.io/storageos
+        image: metrics-exporter
+        tag: v0.1.7
+        digest: sha256:a5dacb5cef282eee15da68269a2ae37ea69558796c7eba940929552bd82ea00b
+      nodeManager:
+        registry: docker.io/storageos
+        image: node-manager
+        tag: v0.0.8
+        digest: sha256:62575e314b853e055d477f1934e515e51850c551291c71c52405231bb1d16a7b
+      portalManager:
+        registry: docker.io/storageos
+        image: portal-manager
+        tag: v1.0.6
+        digest: sha256:00e63589d6f68287694da9615ecfdc076af0e101a8859c7294a06cf1fbbe1965
+      upgradeGuard:
+        registry: docker.io/storageos
+        image: upgrade-guard
+        tag: v0.0.4
+        digest: sha256:7a06640873d7dd70e23ddb4272371cd9a8952acb6d2e37107395a03423c783c2
