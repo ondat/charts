@@ -93,8 +93,8 @@ global:
       operator:
         registry: docker.io/storageos
         image: operator
-        tag: v2.8.0
-        digest: sha256:7ef8a16f0200a1be34ad3bf25513a9382c8cbed04fcf8d1e977ca084cf86588d
+        tag: v2.8.1
+        digest: sha256:82c495575c1ca0483505f12937f3a9d91ee73e324b3fd1a1435281b108e3e2ea
       apiManager:
         registry: docker.io/storageos
         image: api-manager
@@ -150,13 +150,13 @@ global:
       node:
         registry: docker.io/storageos
         image: node
-        tag: v2.8.0
-        digest: sha256:0571ce286b63955c7b39358fec53d67a2362e93cc1ada3791e3eb8640951f8da
+        tag: v2.8.1
+        digest: sha256:316b5f2b86ce0fab78a7272d4128ffda4a5b79cf63497ce2dc7ed32eec998cc9
       metricsExporter:
         registry: docker.io/storageos
         image: metrics-exporter
-        tag: v0.1.6
-        digest: sha256:c4764c9c3fa0b07877a58acf12127708b4f2af6605a7471f3e2df7f7232c663e
+        tag: v0.1.7
+        digest: sha256:a5dacb5cef282eee15da68269a2ae37ea69558796c7eba940929552bd82ea00b
       nodeManager:
         registry: docker.io/storageos
         image: node-manager
@@ -165,8 +165,8 @@ global:
       portalManager:
         registry: docker.io/storageos
         image: portal-manager
-        tag: v1.0.5
-        digest: sha256:d73bee09e23443826975b67f924ad937a89dee9f8d7fb8208dd24f463eae991b
+        tag: v1.0.6
+        digest: sha256:00e63589d6f68287694da9615ecfdc076af0e101a8859c7294a06cf1fbbe1965
       upgradeGuard:
         registry: docker.io/storageos
         image: upgrade-guard

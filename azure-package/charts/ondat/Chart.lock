@@ -1,9 +1,0 @@
-dependencies:
-- name: ondat-operator
-  repository: file://../ondat-operator
-  version: 0.6.1
-- name: etcd-cluster-operator
-  repository: file://../etcd-cluster-operator
-  version: 0.1.2
-digest: sha256:10d4bdcae880d9af8a36abe2bca8caee8b218ee5f924eb43ace1ee975d68643b
-generated: "2022-08-03T15:19:32.806690681+01:00"
