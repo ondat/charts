@@ -46,7 +46,7 @@ sed -i charts/*/*/templates/* -e 's/.Values.images./.Values.global.azure.images.
 # This may not be needed
 sed -i charts/*/*/templates/* -e 's/\.tag/\.digest/g'
 # Revert the change for the etcd version as that's weird at this moment in time
-sed -i charts/*/*/templates/* -e 's/{{ trimPrefix "v" .Values.images.etcd.digest }}/{{ trimPrefix "v" .Values.images.etcd.tag }}/g'
+sed -i charts/*/*/templates/* -e 's/{{ trimPrefix "v"  .Values.global.azure.images.etcd.digest }}/{{ trimPrefix "v"  .Values.global.azure.images.etcd.tag }}/g'
 
 mkdir azure-package
 cp azure/createUIDefinition.json azure-package/
