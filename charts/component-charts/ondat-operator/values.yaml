@@ -28,7 +28,7 @@ images:
   operator:
     registry: docker.io/storageos
     image: operator
-    tag: v2.8.0
+    tag: v2.8.1
   apiManager:
     registry: docker.io/storageos
     image: api-manager
@@ -81,11 +81,11 @@ images:
   node:
     registry: docker.io/storageos
     image: node
-    tag: v2.8.0
+    tag: v2.8.1
   metricsExporter:
     registry: docker.io/storageos
     image: metrics-exporter
-    tag: v0.1.6
+    tag: v0.1.7
   nodeManager:
     registry: docker.io/storageos
     image: node-manager
@@ -93,7 +93,7 @@ images:
   portalManager:
     registry: docker.io/storageos
     image: portal-manager
-    tag: v1.0.5
+    tag: v1.0.6
   upgradeGuard:
     registry: docker.io/storageos
     image: upgrade-guard
