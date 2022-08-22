@@ -29,6 +29,9 @@ jobs:
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
+      - name: Add Ondat repository
+        run: helm dependency update charts/umbrella-charts/ondat
+
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.4.0
         with:
