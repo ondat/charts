@@ -256,6 +256,42 @@ entries:
   ondat:
   - apiVersion: v2
     appVersion: v2.8.2
+    created: "2022-08-31T15:16:17.201555532Z"
+    dependencies:
+    - name: ondat-operator
+      repository: https://ondat.github.io/charts
+      version: 0.7.0
+    - name: etcd-cluster-operator
+      repository: https://ondat.github.io/charts
+      version: 0.1.3
+    description: Ondat with in-cluster etcd
+    digest: b37034cdb897e869118ed253f01990134ad841ce8f6829432f7ccd4cc11b427c
+    home: https://ondat.io
+    icon: https://docs.ondat.io/images/generic/Ondat_logo.svg
+    keywords:
+    - ondat
+    - data
+    - operator
+    - etcd
+    maintainers:
+    - email: calum@ondat.io
+      name: cvlc
+    - email: david@ondat.io
+      name: DavidMarchant
+    - email: richard.kovacs@ondat.io
+      name: mhmxs
+    - email: angelos.perivolaropoulos@ondat.io
+      name: aeroniero33
+    - email: ferran@ondat.io
+      name: arau
+    name: ondat
+    sources:
+    - https://github.com/ondat
+    urls:
+    - https://github.com/ondat/charts/releases/download/ondat-0.2.1/ondat-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: v2.8.2
     created: "2022-08-22T16:01:29.000334142Z"
     dependencies:
     - name: ondat-operator
@@ -1015,4 +1051,4 @@ entries:
     urls:
     - https://github.com/ondat/charts/releases/download/ondat-operator-0.5.1/ondat-operator-0.5.1.tgz
     version: 0.5.1
-generated: "2022-08-31T15:04:55.997000891Z"
+generated: "2022-08-31T15:16:17.201693932Z"
