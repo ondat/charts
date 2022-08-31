@@ -80,7 +80,7 @@ spec:
           name: https
       securityContext:
         runAsUser: 65532
-      serviceAccountName: {{ template "storageos.serviceAccountName" . }}
+      serviceAccountName: storageos-operator
       terminationGracePeriodSeconds: 10
       topologySpreadConstraints:
       - labelSelector:

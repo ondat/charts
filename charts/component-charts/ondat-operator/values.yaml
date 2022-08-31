@@ -6,10 +6,6 @@ name: ondat-operator
 
 k8sDistro: default
 
-serviceAccount:
-  create: true
-  name: storageos-operator
-
 # operator-specific configuation parameters.
 images:
   operator:

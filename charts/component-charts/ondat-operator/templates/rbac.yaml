@@ -749,7 +749,7 @@ metadata:
     heritage: {{ .Release.Service }}
 subjects:
 - kind: ServiceAccount
-  name: {{ template "storageos.serviceAccountName" . }}
+  name: storageos-operator
   namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
