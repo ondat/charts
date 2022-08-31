@@ -557,7 +557,7 @@ metadata:
     chart: {{ template "storageos.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
-  name: storageos:portal-manager
+  name: storageos:operator:portal-manager
 rules:
 - apiGroups:
   - ""
@@ -749,7 +749,7 @@ metadata:
     heritage: {{ .Release.Service }}
 subjects:
 - kind: ServiceAccount
-  name: {{ template "storageos.serviceAccountName" . }}
+  name: storageos-operator
   namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
@@ -806,11 +806,11 @@ metadata:
     chart: {{ template "storageos.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
-  name: storageos:portal-manager
+  name: storageos:operator:portal-manager
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: storageos:portal-manager
+  name: storageos:operator:portal-manager
 subjects:
 - kind: ServiceAccount
   name: storageos-operator
@@ -855,48 +855,3 @@ subjects:
 - kind: ServiceAccount
   name: storageos-operator
   namespace: {{ .Release.Namespace }}
-
-{{- if .Values.podSecurityPolicy.enabled }}
----
-
-# ClusterRole for using pod security policy.
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: storageos:psp-user
-  labels:
-    app: {{ template "storageos.name" . }}
-    app.kubernetes.io/component: operator
-    chart: {{ template "storageos.chart" . }}
-    heritage: {{ .Release.Service }}
-    release: {{ .Release.Name }}
-rules:
-- apiGroups: ["extensions"]
-  resources: ["podsecuritypolicies"]
-  verbs: ["use"]
-  resourceNames:
-  - {{ template "storageos.fullname" . }}-psp
-
----
-
-# Bind pod security policy cluster role to the operator service account.
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: storageos:psp-user
-  labels:
-    app: {{ template "storageos.name" . }}
-    app.kubernetes.io/component: operator
-    chart: {{ template "storageos.chart" . }}
-    heritage: {{ .Release.Service }}
-    release: {{ .Release.Name }}
-roleRef:
-   apiGroup: rbac.authorization.k8s.io
-   kind: ClusterRole
-   name: storageos:psp-user
-subjects:
-  - kind: ServiceAccount
-    name: {{ template "storageos.serviceAccountName" . }}
-    namespace: {{ .Release.Namespace }}
-
-{{- end }}

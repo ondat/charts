@@ -206,8 +206,6 @@ Parameter | Description | Default
 `operator.image.repository` | StorageOS Operator container image repository | `storageos/operator`
 `operator.image.tag` | StorageOS Operator container image tag | `v2.5.0`
 `operator.image.pullPolicy` | StorageOS Operator container image pull policy | `IfNotPresent`
-`podSecurityPolicy.enabled` | If true, create & use PodSecurityPolicy resources | `false`
-`podSecurityPolicy.annotations` | Specify pod annotations in the pod security policy | `{}`
 `cluster.create` | If true, auto-create the StorageOS cluster | `true`
 `cluster.name` | Name of the storageos deployment | `storageos`
 `cluster.namespace` | Namespace to install the StorageOS cluster into |
