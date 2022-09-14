@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: "v2.8.2"
+appVersion: "v2.8.3"
 description: Cloud Native storage for containers
 name: ondat-operator
 version: 0.7.0
