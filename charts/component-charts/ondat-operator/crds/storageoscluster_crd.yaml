@@ -112,8 +112,7 @@ spec:
                   by storageos.com/fenced label on pod."
                 type: boolean
               disableScheduler:
-                description: 'Disable StorageOS scheduler extender. Deprecated: Not
-                  used any more, scheduler is always enabled on Kubernetes.'
+                description: Disable StorageOS scheduler extender.
                 type: boolean
               disableTCMU:
                 description: "Disable TCMU can be set to true to disable the TCMU
