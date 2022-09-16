@@ -22,11 +22,18 @@ jobs:
       - name: Add Ondat repository
         run: |
           helm repo add ondat https://ondat.github.io/charts
-          helm repo update
+
+      # Note, despite these being seperate steps we should still only update one chart per PR!
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.4.0
+        with:
+          charts_dir: charts/component-charts
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.4.0
         with:
-          charts_dir: charts
+          charts_dir: charts/umbrella-charts
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
