@@ -11,11 +11,11 @@ rm templates/*.yml
 Following that, we should obtain the new version and decompile it into the format expected by Helm:
 
 ```shell
-OPERATOR_VERSION=v0.4.2
+OPERATOR_VERSION=v0.4.3
 curl -Lo storageos-etcd-cluster-operator.yaml https://github.com/storageos/etcd-cluster-operator/releases/download/$OPERATOR_VERSION/storageos-etcd-cluster-operator.yaml
 curl -Lo storageos-etcd-cluster.yaml https://github.com/storageos/etcd-cluster-operator/releases/download/$OPERATOR_VERSION/storageos-etcd-cluster.yaml
-yq ea 'select(.kind=="CustomResourceDefinition")' storageos-etcd-cluster-operator.yaml --split-exp='"crds/" + (.metadata.name)'
-yq ea 'select(.kind != "CustomResourceDefinition")' storageos-etcd-cluster-operator.yaml --split-exp='"templates/" + (.kind) + "-" + (.metadata.name)'
+yq ea 'select(.kind=="CustomResourceDefinition")' storageos-etcd-cluster-operator.yaml --split-exp='"crds/" + (.metadata.name) + ".yml"'
+yq ea 'select(.kind != "CustomResourceDefinition")' storageos-etcd-cluster-operator.yaml --split-exp='"templates/" + (.kind) + "-" + (.metadata.name) + ".yml"'
 ```
 
 The next step will then template various values in the `templates` directory to fit helm's configuration format:
@@ -30,9 +30,9 @@ sed -i templates/* -e 's%--leader-election-cm-namespace=storageos%--leader-elect
 # Add labels to all manifests
 sed -i templates/*.yml -e '0,/labels:/{/labels:/d;}' -e '0,/metadata:/{s/metadata:/metadata:\n{{- template "etcd-cluster-operator.labels" . }}/}'
 # Set the proxy image
-sed -i templates/Deployment-storageos-etcd-proxy.yml -e 's/image: storageos\/etcd-cluster-operator-proxy.*$/image: {{ .Values.images.etcdClusterOperatorProxy.registry }}/{{ .Values.images.etcdClusterOperatorProxy.image }}:{{ .Values.images.etcdClusterOperatorProxy.tag }}/g'
+sed -i templates/Deployment-storageos-etcd-proxy.yml -e 's/image: storageos\/etcd-cluster-operator-proxy.*$/image: {{ .Values.images.etcdClusterOperatorProxy.registry }}\/{{ .Values.images.etcdClusterOperatorProxy.image }}:{{ .Values.images.etcdClusterOperatorProxy.tag }}/g'
 # Set the operator image
-sed -i templates/Deployment-storageos-etcd-controller-manager.yml -e 's/image: storageos\/etcd-cluster-operator-controller.*$/image: {{ .Values.images.etcdClusterOperatorController.registry}}/{{ .Values.images.etcdClusterOperatorController.image}}:{{ .Values.images.etcdClusterOperatorController.tag }}/g'
+sed -i templates/Deployment-storageos-etcd-controller-manager.yml -e 's/image: storageos\/etcd-cluster-operator-controller.*$/image: {{ .Values.images.etcdClusterOperatorController.registry}}\/{{ .Values.images.etcdClusterOperatorController.image}}:{{ .Values.images.etcdClusterOperatorController.tag }}/g'
 ```
 
 Then create the template for the namespace:
@@ -53,7 +53,7 @@ metadata:
 EOF
 ```
 
-Then update any relevant default values in the values file.
+Then update any relevant default values in the values file, including image versions.
 And be sure to update `appVersion` in `Chart.yaml` to the new version used of the operator.
 When this is complete, we should rewrite `templates/etcdcluster_cr.yaml` with any changes. This one file is heavily templated for Helm to provide configurability and is correspondent to the file `storageos-etcd-cluster.yaml` from the above mentioned repository.
 
