@@ -69,8 +69,8 @@ data:
   {{- if and .Values.images.node.image .Values.images.node.tag }}
   RELATED_IMAGE_STORAGEOS_NODE: "{{ .Values.images.node.registry}}/{{ .Values.images.node.image }}:{{ .Values.images.node.tag }}"
   {{- end }}
-  {{- if and .Values.images.upgradeGuard.image .Values.images.upgradeGuard.tag }}
-  RELATED_IMAGE_UPGRADE_GUARD: "{{ .Values.images.upgradeGuard.registry}}/{{ .Values.images.upgradeGuard.image }}:{{ .Values.images.upgradeGuard.tag }}"
+  {{- if and .Values.images.nodeGuard.image .Values.images.nodeGuard.tag }}
+  RELATED_IMAGE_NODE_GUARD: "{{ .Values.images.nodeGuard.registry}}/{{ .Values.images.nodeGuard.image }}:{{ .Values.images.nodeGuard.tag }}"
   {{- end }}
 kind: ConfigMap
 metadata:

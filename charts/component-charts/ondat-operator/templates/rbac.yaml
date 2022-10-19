@@ -440,6 +440,32 @@ rules:
 - apiGroups:
   - api.storageos.com
   resources:
+  - pools
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - api.storageos.com
+  resources:
+  - pools/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - api.storageos.com
+  resources:
+  - pools/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - api.storageos.com
+  resources:
   - volumes
   verbs:
   - create
@@ -479,6 +505,8 @@ rules:
   resources:
   - storageclasses
   verbs:
+  - create
+  - delete
   - get
   - list
   - watch
