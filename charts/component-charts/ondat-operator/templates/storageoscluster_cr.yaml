@@ -49,9 +49,9 @@ spec:
     volumeSnapshotClassName: {{ .Values.cluster.snapshots.volumeSnapshotClassName }}
   {{- end }}
 
-  {{- if .Values.cluster.nodeManagerFeatures.upgradeGuard.enabled }}
+  {{- if .Values.cluster.nodeManagerFeatures.nodeGuard.enabled }}
   nodeManagerFeatures:
-    upgradeGuard: "true"
+    nodeGuard: "true"
   {{- end }}
 
   {{- if .Values.cluster.toleration.key }}

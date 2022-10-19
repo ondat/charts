@@ -11,11 +11,11 @@ images:
   operator:
     registry: docker.io/storageos
     image: operator
-    tag: v2.8.3
+    tag: v2.9.0
   apiManager:
     registry: docker.io/storageos
     image: api-manager
-    tag: v1.2.11
+    tag: v1.2.14
   csiV1ExternalAttacherV3:
     registry: quay.io/k8scsi
     image: csi-attacher
@@ -64,7 +64,7 @@ images:
   node:
     registry: docker.io/storageos
     image: node
-    tag: v2.8.3
+    tag: v2.9.0
   metricsExporter:
     registry: docker.io/storageos
     image: metrics-exporter
@@ -77,10 +77,10 @@ images:
     registry: docker.io/storageos
     image: portal-manager
     tag: v1.0.6
-  upgradeGuard:
+  nodeGuard:
     registry: docker.io/storageos
-    image: upgrade-guard
-    tag: v0.0.4
+    image: node-guard
+    tag: v0.0.2
 
 # parameters for StorageOS resource quotas
 # Required for GKE installation!
@@ -105,7 +105,7 @@ cluster:
 
   # Enable protection for volumes during orchestrator upgrades - Tech Preview
   nodeManagerFeatures:
-    upgradeGuard:
+    nodeGuard:
       enabled: false
 
   # Enable Prometheus metrics exporting
