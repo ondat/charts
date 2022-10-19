@@ -1,8 +1,8 @@
 apiVersion: v2
-appVersion: "v2.8.3"
+appVersion: "v2.9.0"
 description: Ondat with in-cluster etcd
 name: ondat
-version: 0.2.5
+version: 0.2.6
 keywords:
 - ondat
 - data
@@ -15,7 +15,7 @@ sources:
 dependencies:
 - name: ondat-operator
   repository: https://ondat.github.io/charts
-  version: 0.7.1
+  version: 0.7.2
 - name: etcd-cluster-operator
   version: 0.1.4
   repository: https://ondat.github.io/charts
@@ -26,7 +26,7 @@ maintainers:
   email: david@ondat.io
 - name:  mhmxs
   email: richard.kovacs@ondat.io
-- name: aeroniero33
-  email: angelos.perivolaropoulos@ondat.io
 - name: arau
   email: ferran@ondat.io
+- name: scflavell
+  email: simon.flavell@ondat.io
