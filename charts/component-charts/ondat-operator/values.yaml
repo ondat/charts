@@ -105,7 +105,7 @@ cluster:
 
   # Enable protection for volumes during orchestrator upgrades - Tech Preview
   nodeManagerFeatures:
-    upgradeGuard:
+    nodeGuard:
       enabled: false
 
   # Enable Prometheus metrics exporting
