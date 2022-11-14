@@ -7,6 +7,8 @@
 # As that image is set dynamically by the operator based on the orchestrator version
 # And the blank defaults will confuse the bundle builder
 yq e -i "del(.images.kubeScheduler)" ./charts/component-charts/ondat-operator/values.yaml
+# Delete the kubeScheduler reference in the configmap
+sed -i charts/component-charts/ondat-operator/templates/config-maps.yaml -e '/kubeScheduler/,+2d'
 
 for f in ./charts/component-charts/etcd-cluster-operator/values.yaml ./charts/component-charts/ondat-operator/values.yaml; do
   # Create an array of the keys in the '.images' map
@@ -31,15 +33,13 @@ for f in ./charts/component-charts/etcd-cluster-operator/values.yaml ./charts/co
   # move the images to under .global.azure
   yq e -i '.global.azure.images=.images | del(.images)' "$f"
 
-  # azure requires all images to be defined in all values files
-  # so create a tmp file for addition to the umbrella chart
-  yq e ".global.azure" "$f" >> tmp.yaml
+  # Add images section to umbrella chart values file
+  yq e ".global.azure" "$f" | yq eval-all -i 'select(fileIndex == 0) * select(fileIndex == 1)' ./charts/umbrella-charts/ondat/values.yaml -
 done
 
-# Add the contents of the tmp file (all images) to the umbrella values file
-yq e -i '. * load("tmp.yaml")' ./charts/umbrella-charts/ondat/values.yaml
+# Reformat umbrella chart global values
 yq e -i '.global.azure.images=.images | del(.images)' ./charts/umbrella-charts/ondat/values.yaml
-rm tmp.yaml
+yq e -i ".global.azure.billingIdentifier=\"DONOTMODIFY\"" ./charts/umbrella-charts/ondat/values.yaml
 
 # Update the templates to use the new values
 sed -i charts/*/*/templates/* -e 's/.Values.images./.Values.global.azure.images./g'
@@ -49,14 +49,14 @@ sed -i charts/*/*/templates/* -e 's/\.tag/\.digest/g'
 sed -i charts/*/*/templates/* -e 's/{{ trimPrefix "v"  .Values.global.azure.images.etcd.digest }}/{{ trimPrefix "v"  .Values.global.azure.images.etcd.tag }}/g'
 
 mkdir azure-package
-cp azure/createUIDefinition.json azure-package/
-cp azure/manifest.yaml azure-package/
 
 # point the umbrella chart at the local, modified versions of the component charts
 # '2g' is needed to replace the second instance, -z is needed to treat the file as one line
-# This is very fragile, I'm not spending more time improving it though
+# This is very fragile
 sed -i -z charts/umbrella-charts/ondat/Chart.yaml -e 's/repository: https:\/\/ondat.github.io\/charts/repository: "file:\/\/..\/..\/component-charts\/etcd-cluster-operator"/2g'
 sed -i -z charts/umbrella-charts/ondat/Chart.yaml -e 's/repository: https:\/\/ondat.github.io\/charts/repository: "file:\/\/..\/..\/component-charts\/ondat-operator"/1g'
 
 helm dependency update charts/umbrella-charts/ondat
 cp -r charts azure-package/
+
+# The new azure-package dir now needs to be propogated to the azure-charts branch of this repo, at your discretion
