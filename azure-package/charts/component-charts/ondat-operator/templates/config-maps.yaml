@@ -51,9 +51,6 @@ data:
   {{- if and .Values.global.azure.images.csiV1NodeDriverRegistrar.image .Values.global.azure.images.csiV1NodeDriverRegistrar.digest }}
   RELATED_IMAGE_CSIV1_NODE_DRIVER_REGISTRAR: "{{ .Values.global.azure.images.csiV1NodeDriverRegistrar.registry}}/{{ .Values.global.azure.images.csiV1NodeDriverRegistrar.image }}:{{ .Values.global.azure.images.csiV1NodeDriverRegistrar.digest }}"
   {{- end }}
-  {{- if and .Values.global.azure.images.kubeScheduler.image .Values.global.azure.images.kubeScheduler.digest }}
-  RELATED_IMAGE_KUBE_SCHEDULER: "{{ .Values.global.azure.images.kubeScheduler.registry}}/{{ .Values.global.azure.images.kubeScheduler.image }}:{{ .Values.global.azure.images.kubeScheduler.digest }}"
-  {{- end }}
   {{- if and .Values.global.azure.images.metricsExporter.image .Values.global.azure.images.metricsExporter.digest }}
   RELATED_IMAGE_METRICS_EXPORTER: "{{ .Values.global.azure.images.metricsExporter.registry}}/{{ .Values.global.azure.images.metricsExporter.image }}:{{ .Values.global.azure.images.metricsExporter.digest }}"
   {{- end }}

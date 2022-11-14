@@ -89,6 +89,7 @@ etcd-cluster-operator:
     namespace:
 global:
   azure:
+    billingIdentifier: DONOTMODIFY
     images:
       operator:
         registry: docker.io/storageos
