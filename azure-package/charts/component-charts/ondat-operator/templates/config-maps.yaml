@@ -69,8 +69,8 @@ data:
   {{- if and .Values.global.azure.images.node.image .Values.global.azure.images.node.digest }}
   RELATED_IMAGE_STORAGEOS_NODE: "{{ .Values.global.azure.images.node.registry}}/{{ .Values.global.azure.images.node.image }}:{{ .Values.global.azure.images.node.digest }}"
   {{- end }}
-  {{- if and .Values.global.azure.images.upgradeGuard.image .Values.global.azure.images.upgradeGuard.digest }}
-  RELATED_IMAGE_UPGRADE_GUARD: "{{ .Values.global.azure.images.upgradeGuard.registry}}/{{ .Values.global.azure.images.upgradeGuard.image }}:{{ .Values.global.azure.images.upgradeGuard.digest }}"
+  {{- if and .Values.global.azure.images.nodeGuard.image .Values.global.azure.images.nodeGuard.digest }}
+  RELATED_IMAGE_NODE_GUARD: "{{ .Values.global.azure.images.nodeGuard.registry}}/{{ .Values.global.azure.images.nodeGuard.image }}:{{ .Values.global.azure.images.nodeGuard.digest }}"
   {{- end }}
 kind: ConfigMap
 metadata:

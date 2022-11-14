@@ -1,8 +1,8 @@
 apiVersion: v2
-appVersion: "v2.8.1"
+appVersion: "v2.9.0"
 description: Cloud Native storage for containers
 name: ondat-operator
-version: 0.6.2
+version: 0.7.2
 keywords:
 - storage
 - block-storage
@@ -17,5 +17,5 @@ maintainers:
   email: david@ondat.io
 - name:  mhmxs
   email: richard.kovacs@ondat.io
-- name: aeroniero33
-  email: angelos.perivolaropoulos@ondat.io
+- name: scflavell
+  email: simon.flavell@ondat.io

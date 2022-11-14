@@ -40,17 +40,6 @@ Create chart name and version as used by the chart label.
 {{- end -}}
 
 {{/*
-Create the name of the service account to use
-*/}}
-{{- define "storageos.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create -}}
-    {{ default (include "storageos.fullname" .) .Values.serviceAccount.name }}
-{{- else -}}
-    {{ default "default" .Values.serviceAccount.name }}
-{{- end -}}
-{{- end -}}
-
-{{/*
 Validate the admin username to be of minimum length
 */}}
 {{- define "validate-username" -}}

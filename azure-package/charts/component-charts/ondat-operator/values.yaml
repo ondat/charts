@@ -3,20 +3,6 @@
 # Declare variables to be passed into your templates.
 name: ondat-operator
 k8sDistro: default
-serviceAccount:
-  create: true
-  name: storageos-operator
-podSecurityPolicy:
-  enabled: false
-  annotations: {}
-  ## Specify pod annotations
-  ## Ref: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#apparmor
-  ## Ref: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#seccomp
-  ## Ref: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#sysctl
-  ##
-  # seccomp.security.alpha.kubernetes.io/allowedProfileNames: '*'
-  # seccomp.security.alpha.kubernetes.io/defaultProfileName: 'docker/default'
-  # apparmor.security.beta.kubernetes.io/defaultProfileName: 'runtime/default'
 # parameters for StorageOS resource quotas
 # Required for GKE installation!
 resourceQuotas:
@@ -35,7 +21,7 @@ cluster:
   secretRefName: storageos-api
   # Enable protection for volumes during orchestrator upgrades - Tech Preview
   nodeManagerFeatures:
-    upgradeGuard:
+    nodeGuard:
       enabled: false
   # Enable Prometheus metrics exporting
   metricsExporter:
@@ -102,48 +88,48 @@ global:
       operator:
         registry: docker.io/storageos
         image: operator
-        tag: v2.8.1
-        digest: sha256:82c495575c1ca0483505f12937f3a9d91ee73e324b3fd1a1435281b108e3e2ea
+        tag: v2.9.0
+        digest: "sha256:554e3ae8d4bf0be5fcdacb3ba9cc6b15d8364344ac2dfd4ff78bb413f4524a2f"
       apiManager:
         registry: docker.io/storageos
         image: api-manager
-        tag: v1.2.11
-        digest: sha256:91b4e0c7c6ebc9efeccfd336d6f4cf8330c9d5881e72d1f67d43e786ada6f3df
+        tag: v1.2.14
+        digest: "sha256:3ead4cd7dbe35feb7ff10a6a500f9fcc57ca7f986e39a28d36b31517bc68beb9"
       csiV1ExternalAttacherV3:
         registry: quay.io/k8scsi
         image: csi-attacher
         tag: v3.1.0
-        digest: sha256:e3334d505bebc44afba610e2c218ca7b4993cac61fc0951d75033ccc971a1347
+        digest: "sha256:e3334d505bebc44afba610e2c218ca7b4993cac61fc0951d75033ccc971a1347"
       csiV1ExternalProvisioner:
         registry: docker.io/storageos
         image: csi-provisioner
         tag: v2.1.1-snapshots-patched
-        digest: sha256:356f7fe2db61ab4089300d9de3303a5073d10117bd0c05b20599b64324f26d0d
+        digest: "sha256:356f7fe2db61ab4089300d9de3303a5073d10117bd0c05b20599b64324f26d0d"
       csiV1ExternalResizer:
         registry: quay.io/k8scsi
         image: csi-resizer
         tag: v1.1.0
-        digest: sha256:9a4130836e6eead0bfd1d6cca3e569a2ca27b82ce542927fd3da7e7eeff5fe22
+        digest: "sha256:9a4130836e6eead0bfd1d6cca3e569a2ca27b82ce542927fd3da7e7eeff5fe22"
       csiV1ExternalSnapshotter:
         registry: quay.io/k8scsi
         image: csi-snapshotter
         tag: v4.0.0
-        digest: sha256:72d92119b26aa2616d1579694618bcb89ea2218ba030bab1bdeb65f5dff83efa
+        digest: "sha256:72d92119b26aa2616d1579694618bcb89ea2218ba030bab1bdeb65f5dff83efa"
       csiV1LivenessProbe:
         registry: quay.io/k8scsi
         image: livenessprobe
         tag: v2.2.0
-        digest: sha256:d657c5644aefe12d4bbdffb900602df65c67dbaea99b26b2005465b88b1bc96e
+        digest: "sha256:d657c5644aefe12d4bbdffb900602df65c67dbaea99b26b2005465b88b1bc96e"
       csiV1NodeDriverRegistrar:
         registry: quay.io/k8scsi
         image: csi-node-driver-registrar
         tag: v2.1.0
-        digest: sha256:fb4f139b51ae5b449a132949d7f3d839fa9ea5c57df1c1cd61f781389fdacefb
+        digest: "sha256:fb4f139b51ae5b449a132949d7f3d839fa9ea5c57df1c1cd61f781389fdacefb"
       init:
         registry: docker.io/storageos
         image: init
-        tag: v2.1.2
-        digest: sha256:7f5366c8928128cebad08b4829660c3e0643a9d4ef0c9904ff6053916bea4d4f
+        tag: v2.1.3
+        digest: sha256:6b3e390add40f6ab0fa1cc4faa542ad243ee191d60b1dcccaf91b474617757be
       # The following is used for cleaning up unmanaged cluster resources when
       # auto-install is enabled.
       kubectl:
@@ -159,8 +145,8 @@ global:
       node:
         registry: docker.io/storageos
         image: node
-        tag: v2.8.1
-        digest: sha256:316b5f2b86ce0fab78a7272d4128ffda4a5b79cf63497ce2dc7ed32eec998cc9
+        tag: v2.9.0
+        digest: sha256:e687a65812b6cf9dd45e13fb330430f5ca8196f54e5669c3dfcedc1a9391d4dd
       metricsExporter:
         registry: docker.io/storageos
         image: metrics-exporter
@@ -176,8 +162,8 @@ global:
         image: portal-manager
         tag: v1.0.6
         digest: sha256:00e63589d6f68287694da9615ecfdc076af0e101a8859c7294a06cf1fbbe1965
-      upgradeGuard:
+      nodeGuard:
         registry: docker.io/storageos
-        image: upgrade-guard
-        tag: v0.0.4
-        digest: sha256:7a06640873d7dd70e23ddb4272371cd9a8952acb6d2e37107395a03423c783c2
+        image: node-guard
+        tag: v0.0.2
+        digest: sha256:d0e9d0f667465ffd623998bc25dfdd9ea46c81c6f318d5feb3897476ab9c884b
