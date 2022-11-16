@@ -1,0 +1,24 @@
+apiVersion: v2
+appVersion: v0.4.3
+description: Cloud Native etcd clusters
+home: https://ondat.io
+icon: https://docs.ondat.io/images/generic/Ondat_logo.svg
+keywords:
+- etcd
+- kv
+- operator
+maintainers:
+- email: calum@ondat.io
+  name: cvlc
+- email: david@ondat.io
+  name: DavidMarchant
+- email: richard.kovacs@ondat.io
+  name: mhmxs
+- email: angelos.perivolaropoulos@ondat.io
+  name: aeroniero33
+- email: ferran@ondat.io
+  name: arau
+name: etcd-cluster-operator
+sources:
+- https://github.com/ondat
+version: 0.1.4

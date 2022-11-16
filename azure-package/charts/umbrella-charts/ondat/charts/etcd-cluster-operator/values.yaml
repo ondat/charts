@@ -1,0 +1,65 @@
+# Default values for storageos.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+name: etcd-cluster-operator
+cluster:
+  # Whether to create the etcd cluster resource
+  create: true
+  # Name of the etcd cluster
+  name: storageos-etcd
+  # Namespace to which to deploy the etcd cluster
+  # By default, the release namespace will be used
+  # If specifying this and also installing ondat, you will need to set the .cluster.kvBackend.namespace value for that chart
+  namespace:
+  # Number of replicas for etcd, suggest 5
+  replicas: 5
+  # Whether to enable TLS for etcd (recommended)
+  tls: true
+  # Storageclass for etcd backing storage
+  # If not filled, the cluster's default storageclass will be used
+  # NOTE: We CANNOT use storageos here as this is the egg to Ondat's chicken
+  storageclass:
+  # Amount of storage to allocate per etcd volume
+  storage: 12Gi
+  # Resource requests and limits for etcd pods
+  resources:
+    requests:
+      cpu: 500m
+      memory: 500Mi
+    limits:
+      cpu: 500m
+      memory: 500Mi
+  # Topology key to demarcate between different zones
+  topologyKey: topology.kubernetes.io/zone
+  # Node selector terms to install etcd on
+  nodeSelectorTerm:
+    key:
+    value:
+  # Pod toleration for etcd pods
+  toleration:
+    key:
+    value:
+ondat:
+  # Namespace in which ondat operator is installed.
+  # By default, the release namespace will be used.
+  namespace:
+  # etcd secret for ondat operator within above namespace
+  secret: storageos-etcd-secret
+global:
+  azure:
+    images:
+      etcdClusterOperatorController:
+        registry: docker.io/storageos
+        image: etcd-cluster-operator-controller
+        tag: v0.4.3
+        digest: sha256:dc0d4415d575f5ddb8987b96ee48c2b2cf54a3b0f60b65f7c4dd6eec8a4c3e62
+      etcdClusterOperatorProxy:
+        registry: docker.io/storageos
+        image: etcd-cluster-operator-proxy
+        tag: v0.4.3
+        digest: sha256:6eb841afb457d4f14fd4992b1dced2369d4010a0dfe96ff4507e6d20de8f0926
+      etcd:
+        registry: quay.io/coreos
+        image: etcd
+        tag: v3.5.4
+        digest: sha256:795d8660c48c439a7c3764c2330ed9222ab5db5bb524d8d0607cac76f7ba82a3
