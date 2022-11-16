@@ -11,7 +11,7 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: storageos-cleanup
+  name: storageos-cleanup-1
   namespace: {{ .Release.Namespace }}
   annotations:
     "helm.sh/hook": pre-delete
@@ -23,7 +23,7 @@ metadata:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: storageos:cleanup
+  name: storageos:cleanup-1
   annotations:
     "helm.sh/hook": pre-delete
     "helm.sh/hook-delete-policy": "hook-succeeded, hook-failed, before-hook-creation"
@@ -96,17 +96,17 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: storageos:cleanup
+  name: storageos:cleanup-1
   annotations:
     "helm.sh/hook": pre-delete
     "helm.sh/hook-delete-policy": "hook-succeeded, hook-failed, before-hook-creation"
     "helm.sh/hook-weight": "2"
 subjects:
-- name: storageos-cleanup
+- name: storageos-cleanup-1
   kind: ServiceAccount
   namespace: {{ .Release.Namespace }}
 roleRef:
-  name: storageos:cleanup
+  name: storageos:cleanup-1
   kind: ClusterRole
   apiGroup: rbac.authorization.k8s.io
 
@@ -127,7 +127,7 @@ metadata:
 spec:
   template:
     spec:
-      serviceAccountName: storageos-cleanup
+      serviceAccountName: storageos-cleanup-1
       containers:
       - name: "storageos-storageoscluster-cleanup"
         image: "{{ $.Values.global.azure.images.kubectl.registry }}/{{ $.Values.global.azure.images.kubectl.image }}:{{ $.Values.global.azure.images.kubectl.digest }}"
@@ -156,7 +156,7 @@ metadata:
 spec:
   template:
     spec:
-      serviceAccountName: storageos-cleanup
+      serviceAccountName: storageos-cleanup-1
       containers:
       - name: "storageos-cleanup-wait"
         image: "{{ $.Values.global.azure.images.kubectl.registry }}/{{ $.Values.global.azure.images.kubectl.image }}:{{ $.Values.global.azure.images.kubectl.digest }}"
@@ -181,7 +181,7 @@ spec:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: storageos-cleanup
+  name: storageos-cleanup-2
   namespace: {{ .Release.Namespace }}
   annotations:
     "helm.sh/hook": post-delete
@@ -193,7 +193,7 @@ metadata:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: storageos:cleanup
+  name: storageos:cleanup-2
   annotations:
     "helm.sh/hook": post-delete
     "helm.sh/hook-delete-policy": "hook-succeeded, hook-failed, before-hook-creation"
@@ -266,17 +266,17 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: storageos:cleanup
+  name: storageos:cleanup-2
   annotations:
     "helm.sh/hook": post-delete
     "helm.sh/hook-delete-policy": "hook-succeeded, hook-failed, before-hook-creation"
     "helm.sh/hook-weight": "2"
 subjects:
-- name: storageos-cleanup
+- name: storageos-cleanup-2
   kind: ServiceAccount
   namespace: {{ .Release.Namespace }}
 roleRef:
-  name: storageos:cleanup
+  name: storageos:cleanup-2
   kind: ClusterRole
   apiGroup: rbac.authorization.k8s.io
 
@@ -297,7 +297,7 @@ metadata:
 spec:
   template:
     spec:
-      serviceAccountName: storageos-cleanup
+      serviceAccountName: storageos-cleanup-2
       containers:
       - name: "storageos-operator-data-cleanup"
         image: "{{ $.Values.global.azure.images.kubectl.registry }}/{{ $.Values.global.azure.images.kubectl.image }}:{{ $.Values.global.azure.images.kubectl.digest }}"
