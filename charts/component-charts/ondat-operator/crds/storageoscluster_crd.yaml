@@ -54,6 +54,8 @@ spec:
               csi:
                 description: CSI defines the configurations for CSI.
                 properties:
+                  attacherTimeout:
+                    type: string
                   deploymentStrategy:
                     type: string
                   deviceDir:
@@ -80,9 +82,17 @@ spec:
                     type: string
                   pluginDir:
                     type: string
+                  provisionerTimeout:
+                    type: string
+                  provisionerWorkerCount:
+                    type: integer
                   registrarSocketDir:
                     type: string
                   registrationDir:
+                    type: string
+                  resizerTimeout:
+                    type: string
+                  snapshotterTimeout:
                     type: string
                   version:
                     type: string

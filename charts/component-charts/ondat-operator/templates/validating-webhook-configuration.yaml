@@ -17,7 +17,7 @@ webhooks:
       name: storageos-operator-webhook
       namespace: {{ .Release.Namespace }}
       path: /validate-storageoscluster
-  failurePolicy: Fail
+  failurePolicy: Ignore
   name: cluster-validator.storageos.com
   rules:
   - apiGroups:
