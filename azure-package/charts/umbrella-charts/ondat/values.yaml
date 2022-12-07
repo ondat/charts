@@ -94,47 +94,47 @@ global:
         registry: docker.io/storageos
         image: etcd-cluster-operator-controller
         tag: v0.4.3
-        digest: sha256:dc0d4415d575f5ddb8987b96ee48c2b2cf54a3b0f60b65f7c4dd6eec8a4c3e62
+        digest: "sha256:dc0d4415d575f5ddb8987b96ee48c2b2cf54a3b0f60b65f7c4dd6eec8a4c3e62"
       etcdClusterOperatorProxy:
         registry: docker.io/storageos
         image: etcd-cluster-operator-proxy
         tag: v0.4.3
-        digest: sha256:6eb841afb457d4f14fd4992b1dced2369d4010a0dfe96ff4507e6d20de8f0926
+        digest: "sha256:6eb841afb457d4f14fd4992b1dced2369d4010a0dfe96ff4507e6d20de8f0926"
       etcd:
         registry: quay.io/coreos
         image: etcd
         tag: v3.5.4
-        digest: sha256:795d8660c48c439a7c3764c2330ed9222ab5db5bb524d8d0607cac76f7ba82a3
+        digest: "sha256:795d8660c48c439a7c3764c2330ed9222ab5db5bb524d8d0607cac76f7ba82a3"
       operator:
         registry: docker.io/storageos
         image: operator
-        tag: v2.9.0
-        digest: sha256:554e3ae8d4bf0be5fcdacb3ba9cc6b15d8364344ac2dfd4ff78bb413f4524a2f
+        tag: v2.9.1
+        digest: "sha256:613f1c98786d12b7bd04626de7117177eef889f0552b66653ff77c3b2f8ff0c2"
       apiManager:
         registry: docker.io/storageos
         image: api-manager
         tag: v1.2.14
-        digest: sha256:3ead4cd7dbe35feb7ff10a6a500f9fcc57ca7f986e39a28d36b31517bc68beb9
+        digest: "sha256:3ead4cd7dbe35feb7ff10a6a500f9fcc57ca7f986e39a28d36b31517bc68beb9"
       csiV1ExternalAttacherV3:
         registry: quay.io/k8scsi
         image: csi-attacher
         tag: v3.1.0
-        digest: sha256:e3334d505bebc44afba610e2c218ca7b4993cac61fc0951d75033ccc971a1347
+        digest: "sha256:e3334d505bebc44afba610e2c218ca7b4993cac61fc0951d75033ccc971a1347"
       csiV1ExternalProvisioner:
         registry: docker.io/storageos
         image: csi-provisioner
         tag: v2.1.1-snapshots-patched
-        digest: sha256:356f7fe2db61ab4089300d9de3303a5073d10117bd0c05b20599b64324f26d0d
+        digest: "sha256:356f7fe2db61ab4089300d9de3303a5073d10117bd0c05b20599b64324f26d0d"
       csiV1ExternalResizer:
         registry: quay.io/k8scsi
         image: csi-resizer
         tag: v1.1.0
-        digest: sha256:9a4130836e6eead0bfd1d6cca3e569a2ca27b82ce542927fd3da7e7eeff5fe22
+        digest: "sha256:9a4130836e6eead0bfd1d6cca3e569a2ca27b82ce542927fd3da7e7eeff5fe22"
       csiV1ExternalSnapshotter:
         registry: quay.io/k8scsi
         image: csi-snapshotter
         tag: v4.0.0
-        digest: sha256:72d92119b26aa2616d1579694618bcb89ea2218ba030bab1bdeb65f5dff83efa
+        digest: "sha256:72d92119b26aa2616d1579694618bcb89ea2218ba030bab1bdeb65f5dff83efa"
       csiV1LivenessProbe:
         registry: quay.io/k8scsi
         image: livenessprobe
@@ -165,8 +165,8 @@ global:
       node:
         registry: docker.io/storageos
         image: node
-        tag: v2.9.0
-        digest: sha256:e687a65812b6cf9dd45e13fb330430f5ca8196f54e5669c3dfcedc1a9391d4dd
+        tag: v2.9.1
+        digest: sha256:c91d9f10db2382e56bcb7ad304103830baeb8e15f1748ee88cc38752b137e6bf
       metricsExporter:
         registry: docker.io/storageos
         image: metrics-exporter

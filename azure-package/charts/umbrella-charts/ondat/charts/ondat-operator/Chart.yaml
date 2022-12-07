@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: v2.9.0
+appVersion: v2.9.1
 description: Cloud Native storage for containers
 home: https://ondat.io
 icon: https://docs.ondat.io/images/generic/Ondat_logo.svg
@@ -18,4 +18,4 @@ maintainers:
 name: ondat-operator
 sources:
 - https://github.com/ondat
-version: 0.7.2
+version: 0.7.3

@@ -52,14 +52,14 @@ global:
         registry: docker.io/storageos
         image: etcd-cluster-operator-controller
         tag: v0.4.3
-        digest: sha256:dc0d4415d575f5ddb8987b96ee48c2b2cf54a3b0f60b65f7c4dd6eec8a4c3e62
+        digest: "sha256:dc0d4415d575f5ddb8987b96ee48c2b2cf54a3b0f60b65f7c4dd6eec8a4c3e62"
       etcdClusterOperatorProxy:
         registry: docker.io/storageos
         image: etcd-cluster-operator-proxy
         tag: v0.4.3
-        digest: sha256:6eb841afb457d4f14fd4992b1dced2369d4010a0dfe96ff4507e6d20de8f0926
+        digest: "sha256:6eb841afb457d4f14fd4992b1dced2369d4010a0dfe96ff4507e6d20de8f0926"
       etcd:
         registry: quay.io/coreos
         image: etcd
         tag: v3.5.4
-        digest: sha256:795d8660c48c439a7c3764c2330ed9222ab5db5bb524d8d0607cac76f7ba82a3
+        digest: "sha256:795d8660c48c439a7c3764c2330ed9222ab5db5bb524d8d0607cac76f7ba82a3"

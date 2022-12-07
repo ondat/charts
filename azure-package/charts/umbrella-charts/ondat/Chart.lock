@@ -1,9 +1,9 @@
 dependencies:
 - name: ondat-operator
   repository: file://../../component-charts/ondat-operator
-  version: 0.7.2
+  version: 0.7.3
 - name: etcd-cluster-operator
   repository: file://../../component-charts/etcd-cluster-operator
   version: 0.1.4
-digest: sha256:ee9de3e9a458198d1176b2fe10d257dc6fdcfdcf10a0ee25e671d3883d617a30
-generated: "2022-11-14T12:59:05.680540736Z"
+digest: sha256:0748b78dc9bdadbd615497a283f6db103a86cf9bb3adb4245f0764101dc85994
+generated: "2022-12-07T17:22:30.240078734Z"
