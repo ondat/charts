@@ -43,8 +43,8 @@ yq e -i ".global.azure.billingIdentifier=\"DONOTMODIFY\"" ./charts/umbrella-char
 
 # Update the templates to use the new values
 sed -i charts/*/*/templates/* -e 's/.Values.images./.Values.global.azure.images./g'
-# This may not be needed
 sed -i charts/*/*/templates/* -e 's/\.tag/\.digest/g'
+sed -i charts/*/*/templates/* -e 's/}}:{{/}}@{{/g'
 # Revert the change for the etcd version as that's weird at this moment in time
 sed -i charts/*/*/templates/* -e 's/{{ trimPrefix "v"  .Values.global.azure.images.etcd.digest }}/{{ trimPrefix "v"  .Values.global.azure.images.etcd.tag }}/g'
 
