@@ -1,0 +1,2039 @@
+---
+# Source: ondat/charts/ondat-operator/templates/resource-quota.yaml
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ondat-operator
+    app.kubernetes.io/component: operator
+    chart: ondat-operator-0.7.3
+    release: test-name
+    heritage: Helm
+  name: storageos-critical-pods
+  namespace: default
+spec:
+  hard:
+    pods: 100
+  scopeSelector:
+    matchExpressions:
+    - operator: In
+      scopeName: PriorityClass
+      values:
+      - system-cluster-critical
+      - system-node-critical
+---
+# Source: ondat/charts/ondat-operator/templates/service-account.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: storageos-operator
+  namespace: default
+  labels:
+    app: ondat-operator
+    app.kubernetes.io/component: operator
+    chart: ondat-operator-0.7.3
+    release: test-name
+    heritage: Helm
+---
+# Source: ondat/charts/ondat-operator/templates/secrets.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: storageos-api
+  namespace: default
+  labels:
+    app: ondat-operator
+    app.kubernetes.io/component: operator
+    chart: ondat-operator-0.7.3
+    release: test-name
+    heritage: Helm
+type: "kubernetes.io/storageos"
+data:
+  username: "c3RvcmFnZW9z"
+  password: "c3RvcmFnZW9z"
+---
+# Source: ondat/charts/ondat-operator/templates/config-maps.yaml
+apiVersion: v1
+data:
+  operator_config.yaml: |
+    apiVersion: config.storageos.com/v1
+    kind: OperatorConfig
+    health:
+      healthProbeBindAddress: :8081
+    metrics:
+      bindAddress: 127.0.0.1:8080
+    webhook:
+      port: 9443
+    leaderElection:
+      leaderElect: true
+      resourceName: storageos-operator
+    webhookCertRefreshInterval: 15m
+    webhookServiceName: storageos-operator-webhook
+    webhookSecretRef: storageos-operator-webhook
+    validatingWebhookConfigRef: storageos-operator-validating-webhook
+kind: ConfigMap
+metadata:
+  labels:
+    app: ondat-operator
+    app.kubernetes.io/component: operator
+    chart: ondat-operator-0.7.3
+    release: test-name
+    heritage: Helm
+  name: storageos-operator
+  namespace: default
+---
+# Source: ondat/charts/ondat-operator/templates/config-maps.yaml
+apiVersion: v1
+data:
+  RELATED_IMAGE_API_MANAGER: "docker.io/storageos/api-manager:sha256:3ead4cd7dbe35feb7ff10a6a500f9fcc57ca7f986e39a28d36b31517bc68beb9"
+  RELATED_IMAGE_CSIV1_EXTERNAL_ATTACHER_V3: "quay.io/k8scsi/csi-attacher:sha256:e3334d505bebc44afba610e2c218ca7b4993cac61fc0951d75033ccc971a1347"
+  RELATED_IMAGE_CSIV1_EXTERNAL_PROVISIONER: "docker.io/storageos/csi-provisioner:sha256:356f7fe2db61ab4089300d9de3303a5073d10117bd0c05b20599b64324f26d0d"
+  RELATED_IMAGE_CSIV1_EXTERNAL_RESIZER: "quay.io/k8scsi/csi-resizer:sha256:9a4130836e6eead0bfd1d6cca3e569a2ca27b82ce542927fd3da7e7eeff5fe22"
+  RELATED_IMAGE_CSIV1_EXTERNAL_SNAPSHOTTER: "quay.io/k8scsi/csi-snapshotter:sha256:72d92119b26aa2616d1579694618bcb89ea2218ba030bab1bdeb65f5dff83efa"
+  RELATED_IMAGE_CSIV1_LIVENESS_PROBE: "quay.io/k8scsi/livenessprobe:sha256:d657c5644aefe12d4bbdffb900602df65c67dbaea99b26b2005465b88b1bc96e"
+  RELATED_IMAGE_CSIV1_NODE_DRIVER_REGISTRAR: "quay.io/k8scsi/csi-node-driver-registrar:sha256:fb4f139b51ae5b449a132949d7f3d839fa9ea5c57df1c1cd61f781389fdacefb"
+  RELATED_IMAGE_METRICS_EXPORTER: "docker.io/storageos/metrics-exporter:sha256:a5dacb5cef282eee15da68269a2ae37ea69558796c7eba940929552bd82ea00b"
+  RELATED_IMAGE_NODE_MANAGER: "docker.io/storageos/node-manager:sha256:62575e314b853e055d477f1934e515e51850c551291c71c52405231bb1d16a7b"
+  RELATED_IMAGE_PORTAL_MANAGER: "docker.io/storageos/portal-manager:sha256:00e63589d6f68287694da9615ecfdc076af0e101a8859c7294a06cf1fbbe1965"
+  RELATED_IMAGE_STORAGEOS_INIT: "docker.io/storageos/init:sha256:6b3e390add40f6ab0fa1cc4faa542ad243ee191d60b1dcccaf91b474617757be"
+  RELATED_IMAGE_STORAGEOS_NODE: "docker.io/storageos/node:sha256:c91d9f10db2382e56bcb7ad304103830baeb8e15f1748ee88cc38752b137e6bf"
+  RELATED_IMAGE_NODE_GUARD: "docker.io/storageos/node-guard:sha256:d0e9d0f667465ffd623998bc25dfdd9ea46c81c6f318d5feb3897476ab9c884b"
+kind: ConfigMap
+metadata:
+  labels:
+    app: ondat-operator
+    app.kubernetes.io/component: operator
+    chart: ondat-operator-0.7.3
+    release: test-name
+    heritage: Helm
+  name: storageos-related-images
+  namespace: default
+---
+# Source: ondat/charts/ondat-operator/templates/config-maps.yaml
+apiVersion: v1
+data:
+  portal_config.yaml: |
+    apiVersion: storageos.com/v1alpha1
+    kind: PortalConfig
+    health:
+      healthProbeBindAddress: :8081
+    metrics:
+      bindAddress: 127.0.0.1:8080
+    webhook:
+      port: 9443
+    leaderElection:
+      leaderElect: true
+      resourceNamespace: storageos
+      resourceName: storageos-portal-manager
+kind: ConfigMap
+metadata:
+  labels:
+    app: ondat-operator
+    app.kubernetes.io/component: portal-manager
+  name: storageos-portal-manager
+  namespace: default
+---
+# Source: ondat/charts/etcd-cluster-operator/templates/ClusterRole-storageos-etcd-leader-election-role.yml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: etcd-cluster-operator
+    helm.sh/chart: etcd-cluster-operator-0.1.4
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: test-name
+    app.kubernetes.io/version: v0.4.3
+  name: storageos-etcd-leader-election-role
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+  - apiGroups:
+      - coordination.k8s.io
+    resources:
+      - leases
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+  - apiGroups:
+      - ""
+    resources:
+      - events
+    verbs:
+      - create
+      - patch
+---
+# Source: ondat/charts/etcd-cluster-operator/templates/ClusterRole-storageos-etcd-manager-role.yml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: etcd-cluster-operator
+    helm.sh/chart: etcd-cluster-operator-0.1.4
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: test-name
+    app.kubernetes.io/version: v0.4.3
+  creationTimestamp: null
+  name: storageos-etcd-manager-role
+rules:
+  - apiGroups:
+      - apps
+    resources:
+      - replicasets
+    verbs:
+      - create
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - coordination.k8s.io
+    resources:
+      - leases
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - events
+    verbs:
+      - create
+      - patch
+  - apiGroups:
+      - ""
+    resources:
+      - namespaces
+    verbs:
+      - create
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - nodes
+    verbs:
+      - get
+      - list
+  - apiGroups:
+      - ""
+    resources:
+      - persistantvolumeclaims/status
+    verbs:
+      - create
+      - get
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - persistentvolumeclaims
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - resourcequotas
+    verbs:
+      - create
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    verbs:
+      - '*'
+  - apiGroups:
+      - ""
+    resources:
+      - serviceaccounts
+    verbs:
+      - create
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - services
+    verbs:
+      - create
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - etcd.improbable.io
+    resources:
+      - etcdbackups
+    verbs:
+      - create
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - etcd.improbable.io
+    resources:
+      - etcdbackups/status
+    verbs:
+      - get
+      - patch
+      - update
+  - apiGroups:
+      - etcd.improbable.io
+    resources:
+      - etcdbackupschedules
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - etcd.improbable.io
+    resources:
+      - etcdbackupschedules/status
+    verbs:
+      - get
+      - patch
+      - update
+  - apiGroups:
+      - etcd.improbable.io
+    resources:
+      - etcdclusters
+    verbs:
+      - create
+      - get
+      - list
+      - patch
+      - watch
+  - apiGroups:
+      - etcd.improbable.io
+    resources:
+      - etcdclusters/finalizers
+      - etcdclusters/status
+    verbs:
+      - get
+      - patch
+      - update
+  - apiGroups:
+      - etcd.improbable.io
+    resources:
+      - etcdpeers
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - watch
+  - apiGroups:
+      - etcd.improbable.io
+    resources:
+      - etcdpeers/finalizers
+      - etcdpeers/status
+    verbs:
+      - get
+      - patch
+      - update
+  - apiGroups:
+      - etcd.improbable.io
+    resources:
+      - etcdrestores
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - etcd.improbable.io
+    resources:
+      - etcdrestores/status
+    verbs:
+      - get
+      - patch
+      - update
+  - apiGroups:
+      - monitoring.coreos.com
+    resources:
+      - servicemonitors
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - watch
+  - apiGroups:
+      - policy
+    resources:
+      - poddisruptionbudgets
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - watch
+  - apiGroups:
+      - storage
+    resources:
+      - volumeattachments
+    verbs:
+      - delete
+      - list
+  - apiGroups:
+      - storage.k8s.io
+    resources:
+      - storageclasses
+    verbs:
+      - list
+---
+# Source: ondat/charts/ondat-operator/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app: ondat-operator
+    app.kubernetes.io/component: operator
+    chart: ondat-operator-0.7.3
+    release: test-name
+    heritage: Helm
+  name: storageos:metrics-reader
+rules:
+- nonResourceURLs:
+  - /metrics
+  verbs:
+  - get
+---
+# Source: ondat/charts/ondat-operator/templates/rbac.yaml
+# Role for storageos operator
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: storageos:operator
+  labels:
+    app: ondat-operator
+    app.kubernetes.io/component: operator
+    chart: ondat-operator-0.7.3
+    release: test-name
+    heritage: Helm
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  - configmaps/status
+  - endpoints
+  - endpoints/status
+  - events
+  - namespaces
+  - persistentvolumeclaims
+  - persistentvolumeclaims/status
+  - persistentvolumes
+  - pods/binding
+  - pods/status
+  - replicationcontrollers
+  - resourcequotas
+  - secrets
+  - serviceaccounts
+  - services
+  - services/finalizers
+  - services/status
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - configmaps/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - nodes
+  verbs:
+  - create
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - admissionregistration.k8s.io
+  resources:
+  - mutatingwebhookconfigurations
+  - validatingwebhookconfigurations
+  verbs:
+  - '*'
+- apiGroups:
+  - api.storageos.com
+  resources:
+  - nodes
+  - volumes
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - watch
+- apiGroups:
+  - api.storageos.com
+  resources:
+  - nodes/status
+  - volumes/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - apiextensions.k8s.io
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - watch
+- apiGroups:
+  - apps
+  resources:
+  - daemonsets
+  - deployments
+  - replicasets
+  - statefulsets
+  verbs:
+  - '*'
+- apiGroups:
+  - coordination.k8s.io
+  resources:
+  - leases
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - csi.storage.k8s.io
+  resources:
+  - csidrivers
+  - csistoragecapacities
+  verbs:
+  - create
+  - delete
+  - list
+  - watch
+- apiGroups:
+  - extensions
+  resources:
+  - podsecuritypolicies
+  verbs:
+  - use
+- apiGroups:
+  - policy
+  resources:
+  - poddisruptionbudgets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - watch
+- apiGroups:
+  - rbac.authorization.k8s.io
+  resources:
+  - clusterrolebindings
+  - clusterroles
+  - rolebindings
+  - roles
+  verbs:
+  - bind
+  - create
+  - delete
+  - get
+  - patch
+- apiGroups:
+  - security.openshift.io
+  resourceNames:
+  - privileged
+  resources:
+  - securitycontextconstraints
+  verbs:
+  - create
+  - delete
+  - get
+  - update
+  - use
+- apiGroups:
+  - snapshot.storage.k8s.io
+  resources:
+  - volumesnapshotclasses
+  - volumesnapshotcontents
+  - volumesnapshots
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - snapshot.storage.k8s.io
+  resources:
+  - volumesnapshotcontents/status
+  - volumesnapshots/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - storage.k8s.io
+  resources:
+  - csidrivers
+  - csinodeinfos
+  - csinodes
+  - csistoragecapacities
+  - storageclasses
+  - volumeattachments
+  - volumeattachments/status
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - storageos.com
+  resources:
+  - storageosclusters
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - storageos.com
+  resources:
+  - storageosclusters/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - storageos.com
+  resources:
+  - storageosclusters/status
+  verbs:
+  - get
+  - patch
+  - update
+---
+# Source: ondat/charts/ondat-operator/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app: ondat-operator
+    app.kubernetes.io/component: operator
+    chart: ondat-operator-0.7.3
+    release: test-name
+    heritage: Helm
+  name: storageos:operator:api-manager
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - configmaps/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - endpoints
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - endpoints/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
+  - patch
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - node
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - nodes
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - persistentvolumeclaims
+  verbs:
+  - get
+  - list
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - delete
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - services
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - services/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - admissionregistration.k8s.io
+  resources:
+  - mutatingwebhookconfigurations
+  - validatingwebhookconfigurations
+  verbs:
+  - '*'
+- apiGroups:
+  - api.storageos.com
+  resources:
+  - nodes
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - watch
+- apiGroups:
+  - api.storageos.com
+  resources:
+  - nodes/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - api.storageos.com
+  resources:
+  - pools
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - api.storageos.com
+  resources:
+  - pools/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - api.storageos.com
+  resources:
+  - pools/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - api.storageos.com
+  resources:
+  - volumes
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - watch
+- apiGroups:
+  - api.storageos.com
+  resources:
+  - volumes/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - coordination.k8s.io
+  resources:
+  - leases
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - extensions
+  resources:
+  - podsecuritypolicies
+  verbs:
+  - use
+- apiGroups:
+  - storage.k8s.io
+  resources:
+  - storageclasses
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - watch
+- apiGroups:
+  - storage.k8s.io
+  resources:
+  - volumeattachments
+  verbs:
+  - delete
+  - get
+  - list
+  - watch
+---
+# Source: ondat/charts/ondat-operator/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app: ondat-operator
+    app.kubernetes.io/component: operator
+    chart: ondat-operator-0.7.3
+    release: test-name
+    heritage: Helm
+  name: storageos:operator:node-manager
+rules:
+- apiGroups:
+  - api.storageos.com
+  resources:
+  - nodes
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - api.storageos.com
+  resources:
+  - volumes
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - extensions
+  resources:
+  - podsecuritypolicies
+  verbs:
+  - use
+- apiGroups:
+  - security.openshift.io
+  resourceNames:
+  - privileged
+  resources:
+  - securitycontextconstraints
+  verbs:
+  - create
+  - delete
+  - get
+  - update
+  - use
+- apiGroups:
+  - storageos.com
+  resources:
+  - storageosclusters
+  verbs:
+  - get
+  - list
+  - watch
+---
+# Source: ondat/charts/ondat-operator/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app: ondat-operator
+    app.kubernetes.io/component: operator
+    chart: ondat-operator-0.7.3
+    release: test-name
+    heritage: Helm
+  name: storageos:operator:portal-manager
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - configmaps/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - nodes
+  - persistentvolumeclaims
+  - persistentvolumes
+  - pods
+  verbs:
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - create
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - api.storageos.com
+  resources:
+  - nodes
+  - volumes
+  verbs:
+  - list
+  - watch
+- apiGroups:
+  - apps
+  resources:
+  - daemonsets
+  - deployments
+  - replicasets
+  - statefulsets
+  verbs:
+  - list
+  - watch
+- apiGroups:
+  - coordination.k8s.io
+  resources:
+  - leases
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - storage.k8s.io
+  resources:
+  - storageclasses
+  - volumeattachments
+  verbs:
+  - list
+  - watch
+- apiGroups:
+  - storageos.com
+  resources:
+  - storageosclusters
+  verbs:
+  - list
+  - watch
+- apiGroups:
+  - storageos.com
+  resources:
+  - storageosportals
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+---
+# Source: ondat/charts/ondat-operator/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app: ondat-operator
+    app.kubernetes.io/component: operator
+    chart: ondat-operator-0.7.3
+    release: test-name
+    heritage: Helm
+  name: storageos:operator:scheduler-extender
+rules:
+- apiGroups:
+  - extensions
+  resources:
+  - podsecuritypolicies
+  verbs:
+  - use
+- apiGroups:
+  - events.k8s.io
+  resources:
+  - events
+  verbs:
+  - create
+  - patch
+- apiGroups:
+  - scheduling.k8s.io
+  resources:
+  - priorityclasses
+  verbs:
+  - get
+  - list
+  - create
+  - update
+  - patch
+  - delete
+---
+# Source: ondat/charts/ondat-operator/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app: ondat-operator
+    app.kubernetes.io/component: operator
+    chart: ondat-operator-0.7.3
+    release: test-name
+    heritage: Helm
+  name: storageos:proxy:operator
+rules:
+- apiGroups:
+  - authentication.k8s.io
+  resources:
+  - tokenreviews
+  verbs:
+  - create
+- apiGroups:
+  - authorization.k8s.io
+  resources:
+  - subjectaccessreviews
+  verbs:
+  - create
+---
+# Source: ondat/charts/etcd-cluster-operator/templates/ClusterRoleBinding-storageos-etcd-leader-election-rolebinding.yml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/name: etcd-cluster-operator
+    helm.sh/chart: etcd-cluster-operator-0.1.4
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: test-name
+    app.kubernetes.io/version: v0.4.3
+  name: storageos-etcd-leader-election-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: storageos-etcd-leader-election-role
+subjects:
+  - apiGroup: ""
+    kind: ServiceAccount
+    name: default
+    namespace: default
+---
+# Source: ondat/charts/etcd-cluster-operator/templates/ClusterRoleBinding-storageos-etcd-manager-rolebinding.yml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/name: etcd-cluster-operator
+    helm.sh/chart: etcd-cluster-operator-0.1.4
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: test-name
+    app.kubernetes.io/version: v0.4.3
+  name: storageos-etcd-manager-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: storageos-etcd-manager-role
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: default
+---
+# Source: ondat/charts/ondat-operator/templates/rbac.yaml
+# Bind operator service account to storageos-operator role
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: storageos:operator
+  labels:
+    app: ondat-operator
+    app.kubernetes.io/component: operator
+    chart: ondat-operator-0.7.3
+    release: test-name
+    heritage: Helm
+subjects:
+- kind: ServiceAccount
+  name: storageos-operator
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: storageos:operator
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: ondat/charts/ondat-operator/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app: ondat-operator
+    app.kubernetes.io/component: operator
+    chart: ondat-operator-0.7.3
+    release: test-name
+    heritage: Helm
+  name: storageos:operator:api-manager
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: storageos:operator:api-manager
+subjects:
+- kind: ServiceAccount
+  name: storageos-operator
+  namespace: default
+---
+# Source: ondat/charts/ondat-operator/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app: ondat-operator
+    app.kubernetes.io/component: operator
+    chart: ondat-operator-0.7.3
+    release: test-name
+    heritage: Helm
+  name: storageos:operator:node-manager
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: storageos:operator:node-manager
+subjects:
+- kind: ServiceAccount
+  name: storageos-operator
+  namespace: storageos
+---
+# Source: ondat/charts/ondat-operator/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app: ondat-operator
+    app.kubernetes.io/component: operator
+    chart: ondat-operator-0.7.3
+    release: test-name
+    heritage: Helm
+  name: storageos:operator:portal-manager
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: storageos:operator:portal-manager
+subjects:
+- kind: ServiceAccount
+  name: storageos-operator
+  namespace: storageos
+---
+# Source: ondat/charts/ondat-operator/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app: ondat-operator
+    app.kubernetes.io/component: operator
+    chart: ondat-operator-0.7.3
+    release: test-name
+    heritage: Helm
+  name: storageos:operator:scheduler-extender
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: storageos:operator:scheduler-extender
+subjects:
+- kind: ServiceAccount
+  name: storageos-operator
+  namespace: default
+---
+# Source: ondat/charts/ondat-operator/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app: ondat-operator
+    app.kubernetes.io/component: operator
+    chart: ondat-operator-0.7.3
+    release: test-name
+    heritage: Helm
+  name: storageos:proxy:operator
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: storageos:proxy:operator
+subjects:
+- kind: ServiceAccount
+  name: storageos-operator
+  namespace: default
+---
+# Source: ondat/charts/etcd-cluster-operator/templates/Service-storageos-etcd-proxy.yml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: etcd-cluster-operator
+    helm.sh/chart: etcd-cluster-operator-0.1.4
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: test-name
+    app.kubernetes.io/version: v0.4.3
+    control-plane: proxy
+  name: storageos-etcd-proxy
+  namespace: default
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+  selector:
+    control-plane: proxy
+---
+# Source: ondat/charts/ondat-operator/templates/services.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: ondat-operator
+    app.kubernetes.io/component: operator
+    control-plane: controller-manager
+    chart: ondat-operator-0.7.3
+    release: test-name
+    heritage: Helm
+  name: storageos-operator
+  namespace: default
+spec:
+  ports:
+  - name: https
+    port: 8443
+    targetPort: https
+  selector:
+    app: ondat-operator
+    app.kubernetes.io/component: operator
+    control-plane: controller-manager
+---
+# Source: ondat/charts/ondat-operator/templates/services.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: ondat-operator
+    app.kubernetes.io/component: operator
+    chart: ondat-operator-0.7.3
+    release: test-name
+    heritage: Helm
+  name: storageos-operator-webhook
+  namespace: default
+spec:
+  ports:
+  - port: 443
+    targetPort: 9443
+  selector:
+    app: ondat-operator
+    app.kubernetes.io/component: operator
+    control-plane: controller-manager
+---
+# Source: ondat/charts/etcd-cluster-operator/templates/Deployment-storageos-etcd-controller-manager.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: etcd-cluster-operator
+    helm.sh/chart: etcd-cluster-operator-0.1.4
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: test-name
+    app.kubernetes.io/version: v0.4.3
+    control-plane: etcd-controller-manager
+  name: storageos-etcd-controller-manager
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      control-plane: etcd-controller-manager
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+      labels:
+        control-plane: etcd-controller-manager
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  control-plane: etcd-controller-manager
+              topologyKey: kubernetes.io/hostname
+      containers:
+        - args:
+            - --enable-leader-election
+            - --proxy-url=storageos-proxy.default.svc
+            - --leader-election-cm-namespace=default
+            - --etcd-repository=quay.io/coreos/etcd
+          command:
+            - /manager
+          env:
+            - name: DISABLE_WEBHOOKS
+              value: "true"
+          image: docker.io/storageos/etcd-cluster-operator-controller:sha256:dc0d4415d575f5ddb8987b96ee48c2b2cf54a3b0f60b65f7c4dd6eec8a4c3e62
+          name: manager
+          ports:
+            - containerPort: 8080
+              name: metrics
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 100m
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 120Mi
+      terminationGracePeriodSeconds: 10
+---
+# Source: ondat/charts/etcd-cluster-operator/templates/Deployment-storageos-etcd-proxy.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: etcd-cluster-operator
+    helm.sh/chart: etcd-cluster-operator-0.1.4
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: test-name
+    app.kubernetes.io/version: v0.4.3
+    control-plane: proxy
+  name: storageos-etcd-proxy
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      control-plane: proxy
+  template:
+    metadata:
+      labels:
+        control-plane: proxy
+    spec:
+      containers:
+        - args:
+            - --api-port=8080
+          image: docker.io/storageos/etcd-cluster-operator-proxy:sha256:6eb841afb457d4f14fd4992b1dced2369d4010a0dfe96ff4507e6d20de8f0926
+          name: proxy
+          resources:
+            limits:
+              cpu: 100m
+              memory: 100Mi
+            requests:
+              cpu: 70m
+              memory: 70Mi
+      terminationGracePeriodSeconds: 10
+---
+# Source: ondat/charts/ondat-operator/templates/operator.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-name-ondat-operator
+  namespace: default
+  labels:
+    app: ondat-operator
+    app.kubernetes.io/component: operator
+    control-plane: controller-manager
+    chart: ondat-operator-0.7.3
+    release: test-name
+    heritage: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ondat-operator
+      app.kubernetes.io/component: operator
+      control-plane: controller-manager
+      release: test-name
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/default-container: manager
+      labels:
+        app: ondat-operator
+        app.kubernetes.io/component: operator
+        control-plane: controller-manager
+        release: test-name
+    spec:
+      containers:
+      - args:
+        - --config=operator_config.yaml
+        command:
+        - /manager
+        env:
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        envFrom:
+        - configMapRef:
+            name: storageos-related-images
+        image: "docker.io/storageos/operator:sha256:613f1c98786d12b7bd04626de7117177eef889f0552b66653ff77c3b2f8ff0c2"
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8081
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        name: manager
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: 8081
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          limits:
+            cpu: 250m
+          requests:
+            cpu: 10m
+            memory: 600Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+        volumeMounts:
+        - mountPath: /operator_config.yaml
+          name: storageos-operator
+          subPath: operator_config.yaml
+      - args:
+        - --secure-listen-address=0.0.0.0:8443
+        - --upstream=http://127.0.0.1:8080/
+        - --logtostderr=true
+        - --v=10
+        image: "quay.io/brancz/kube-rbac-proxy:sha256:0aacdc5ba56fbcaa7534e928e38e42447194b1029f79d8cf869c5e3bddacb23e"
+        name: kube-rbac-proxy
+        ports:
+        - containerPort: 8443
+          name: https
+      securityContext:
+        runAsUser: 65532
+      serviceAccountName: storageos-operator
+      terminationGracePeriodSeconds: 10
+      topologySpreadConstraints:
+      - labelSelector:
+          matchLabels:
+            app.kubernetes.io/component: operator
+            app: ondat-operator
+        maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+      volumes:
+      - configMap:
+          name: storageos-operator
+        name: storageos-operator
+---
+# Source: ondat/charts/etcd-cluster-operator/templates/etcdcluster_cr.yaml
+apiVersion: etcd.improbable.io/v1alpha1
+kind: EtcdCluster
+metadata:
+  name: storageos-etcd
+  namespace: default
+spec:
+  replicas: 5
+  version: sha256:795d8660c48c439a7c3764c2330ed9222ab5db5bb524d8d0607cac76f7ba82a3
+  tls:
+    enabled: true
+    storageOSClusterNamespace: default
+    storageOSEtcdSecretName: storageos-etcd-secret
+  storage:
+    volumeClaimTemplate:
+      storageClassName: 
+      resources:
+        requests:
+          storage: 12Gi
+  podTemplate:
+    resources:
+      limits:
+        cpu: 500m
+        memory: 500Mi
+      requests:
+        cpu: 500m
+        memory: 500Mi
+    etcdEnv:
+      - name: "ETCD_HEARTBEAT_INTERVAL"
+        value: "500"
+      - name: "ETCD_ELECTION_TIMEOUT"
+        value: "5000"
+      - name: "ETCD_MAX_SNAPSHOTS"
+        value: "10"
+      - name: "ETCD_MAX_WALS"
+        value: "10"
+      - name: "ETCD_QUOTA_BACKEND_BYTES"
+        value: "8589934592"
+      - name: "ETCD_SNAPSHOT_COUNT"
+        value: "20000"
+      - name: "ETCD_AUTO_COMPACTION_RETENTION"
+        value: "20000"
+      - name: "ETCD_AUTO_COMPACTION_MODE"
+        value: "revision"
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: etcd.improbable.io/cluster-name
+                  operator: In
+                  values:
+                    - storageos-etcd
+            topologyKey: kubernetes.io/hostname
+        preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 1
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: etcd.improbable.io/cluster-name
+                operator: In
+                values:
+                  - storageos-etcd
+            topologyKey: topology.kubernetes.io/zone
+---
+# Source: ondat/charts/ondat-operator/templates/storageoscluster_cr.yaml
+apiVersion: storageos.com/v1
+kind: StorageOSCluster
+metadata:
+  name: storageos
+  namespace: default
+spec:
+  secretRefName: storageos-api
+  disableTelemetry: false
+  storageClassName: storageos
+  k8sDistro: default
+
+  kvBackend:
+    address: storageos-etcd.default:2379
+    backend: etcd
+  tlsEtcdSecretRefName: storageos-etcd-secret
+
+  resources:
+    {}
+
+  metrics:
+    enabled: false
+---
+# Source: ondat/charts/ondat-operator/templates/validating-webhook-configuration.yaml
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ondat-operator
+    app.kubernetes.io/component: operator
+    chart: ondat-operator-0.7.3
+    release: test-name
+    heritage: Helm
+  name: storageos-operator-validating-webhook
+webhooks:
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: storageos-operator-webhook
+      namespace: default
+      path: /validate-storageoscluster
+  failurePolicy: Ignore
+  name: cluster-validator.storageos.com
+  rules:
+  - apiGroups:
+    - storageos.com
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    resources:
+    - storageosclusters
+  sideEffects: None
+---
+# Source: ondat/charts/ondat-operator/templates/cleanup.yaml
+# ClusterRole, ClusterRoleBinding and ServiceAccounts have hook-failed in
+# hook-delete-policy to make it easy to rerun the whole setup even after a
+# failure, else the rerun fails with existing resource error.
+# Hook delete policy before-hook-creation ensures any other leftover resources
+# from previous run gets deleted when run again.
+# The Job resources will not be deleted to help investigage the failure.
+# Since the resources created by the operator are not managed by the chart, each
+# of them must be individually deleted in separate jobs.
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: storageos-cleanup-1
+  namespace: default
+  annotations:
+    "helm.sh/hook": pre-delete
+    "helm.sh/hook-delete-policy": "hook-succeeded, hook-failed, before-hook-creation"
+    "helm.sh/hook-weight": "1"
+---
+# Source: ondat/charts/ondat-operator/templates/cleanup.yaml
+# Seperation between pre- & post-delete hooks
+# The storageoscluster CR must be deleted before the operator, so the operator
+# can handle cluster tear down.
+# Some resources must be deleted after the operator otherwise the operator
+# will re-create them.
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: storageos-cleanup-2
+  namespace: default
+  annotations:
+    "helm.sh/hook": post-delete
+    "helm.sh/hook-delete-policy": "hook-succeeded, hook-failed, before-hook-creation"
+    "helm.sh/hook-weight": "1"
+---
+# Source: ondat/charts/ondat-operator/templates/cleanup.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: storageos:cleanup-1
+  annotations:
+    "helm.sh/hook": pre-delete
+    "helm.sh/hook-delete-policy": "hook-succeeded, hook-failed, before-hook-creation"
+    "helm.sh/hook-weight": "1"
+rules:
+# Using apiGroup "apps" for daemonsets fails and the permission error indicates
+# that it's in group "extensions". Not sure if it's a Job specific behavior,
+# because the daemonsets deployed by the operator use "apps" apiGroup.
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - list
+- apiGroups:
+  - extensions
+  resources:
+  - daemonsets
+  - deployments
+  verbs:
+  - delete
+- apiGroups:
+  - apps
+  resources:
+  - statefulsets
+  - deployments
+  - daemonsets
+  verbs:
+  - delete
+- apiGroups:
+  - rbac.authorization.k8s.io
+  resources:
+  - roles
+  - rolebindings
+  - clusterroles
+  - clusterrolebindings
+  verbs:
+  - delete
+- apiGroups:
+  - storage.k8s.io
+  resources:
+  - storageclasses
+  verbs:
+  - delete
+- apiGroups:
+  - apiextensions.k8s.io
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - delete
+- apiGroups:
+  - ""
+  resources:
+  - serviceaccounts
+  - secrets
+  - services
+  - configmaps
+  verbs:
+  - delete
+- apiGroups:
+  - storageos.com
+  resources:
+  - storageosclusters
+  verbs:
+  - get
+  - patch
+  - delete
+---
+# Source: ondat/charts/ondat-operator/templates/cleanup.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: storageos:cleanup-2
+  annotations:
+    "helm.sh/hook": post-delete
+    "helm.sh/hook-delete-policy": "hook-succeeded, hook-failed, before-hook-creation"
+    "helm.sh/hook-weight": "1"
+rules:
+# Using apiGroup "apps" for daemonsets fails and the permission error indicates
+# that it's in group "extensions". Not sure if it's a Job specific behavior,
+# because the daemonsets deployed by the operator use "apps" apiGroup.
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - list
+- apiGroups:
+  - extensions
+  resources:
+  - daemonsets
+  - deployments
+  verbs:
+  - delete
+- apiGroups:
+  - apps
+  resources:
+  - statefulsets
+  - deployments
+  - daemonsets
+  verbs:
+  - delete
+- apiGroups:
+  - rbac.authorization.k8s.io
+  resources:
+  - roles
+  - rolebindings
+  - clusterroles
+  - clusterrolebindings
+  verbs:
+  - delete
+- apiGroups:
+  - storage.k8s.io
+  resources:
+  - storageclasses
+  verbs:
+  - delete
+- apiGroups:
+  - apiextensions.k8s.io
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - delete
+- apiGroups:
+  - ""
+  resources:
+  - serviceaccounts
+  - secrets
+  - services
+  - configmaps
+  verbs:
+  - delete
+- apiGroups:
+  - storageos.com
+  resources:
+  - storageosclusters
+  verbs:
+  - get
+  - patch
+  - delete
+---
+# Source: ondat/charts/ondat-operator/templates/cleanup.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: storageos:cleanup-1
+  annotations:
+    "helm.sh/hook": pre-delete
+    "helm.sh/hook-delete-policy": "hook-succeeded, hook-failed, before-hook-creation"
+    "helm.sh/hook-weight": "2"
+subjects:
+- name: storageos-cleanup-1
+  kind: ServiceAccount
+  namespace: default
+roleRef:
+  name: storageos:cleanup-1
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: ondat/charts/ondat-operator/templates/cleanup.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: storageos:cleanup-2
+  annotations:
+    "helm.sh/hook": post-delete
+    "helm.sh/hook-delete-policy": "hook-succeeded, hook-failed, before-hook-creation"
+    "helm.sh/hook-weight": "2"
+subjects:
+- name: storageos-cleanup-2
+  kind: ServiceAccount
+  namespace: default
+roleRef:
+  name: storageos:cleanup-2
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: ondat/charts/ondat-operator/templates/cleanup.yaml
+# Delete the CR
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "storageos-storageoscluster-cleanup"
+  namespace: default
+  annotations:
+    "helm.sh/hook": pre-delete
+    "helm.sh/hook-delete-policy": "hook-succeeded, before-hook-creation"
+    "helm.sh/hook-weight": "3"
+spec:
+  template:
+    spec:
+      serviceAccountName: storageos-cleanup-1
+      containers:
+      - name: "storageos-storageoscluster-cleanup"
+        image: "docker.io/bitnami/kubectl:sha256:2c81804f8cb0571e96f28e748a0cffab9fa0f45a2b5290a8f67625e724cce43e"
+        command:
+          - kubectl
+          - -n
+          - default
+          - delete
+          - storageoscluster
+          - storageos
+          - --ignore-not-found=true
+      restartPolicy: Never
+  backoffLimit: 4
+---
+# Source: ondat/charts/ondat-operator/templates/cleanup.yaml
+# Wait for the operator to appropriately delete resources based on CR deletion
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "storageos-cleanup-wait"
+  namespace: default
+  annotations:
+    "helm.sh/hook": pre-delete
+    "helm.sh/hook-delete-policy": "hook-succeeded, before-hook-creation"
+    "helm.sh/hook-weight": "4"
+spec:
+  template:
+    spec:
+      serviceAccountName: storageos-cleanup-1
+      containers:
+      - name: "storageos-cleanup-wait"
+        image: "docker.io/bitnami/kubectl:sha256:2c81804f8cb0571e96f28e748a0cffab9fa0f45a2b5290a8f67625e724cce43e"
+        command:
+          - "/bin/bash"
+          - "-c"
+        args:
+          - 'while [ -n "$(kubectl get pods -n default -l app=storageos --ignore-not-found)" ]; do echo "Pods stil deleting"; sleep 5; done'
+      restartPolicy: Never
+  backoffLimit: 4
+---
+# Source: ondat/charts/ondat-operator/templates/cleanup.yaml
+# Delete some misc operator files that aren't cleaned up otherwise.
+# Needs to be done afterwards in a post-delete hook as otherwise the operator
+# will sometimes recreate them before it's destroyed.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "storageos-operator-data-cleanup"
+  namespace: default
+  annotations:
+    "helm.sh/hook": post-delete
+    "helm.sh/hook-delete-policy": "hook-succeeded, before-hook-creation"
+    "helm.sh/hook-weight": "3"
+spec:
+  template:
+    spec:
+      serviceAccountName: storageos-cleanup-2
+      containers:
+      - name: "storageos-operator-data-cleanup"
+        image: "docker.io/bitnami/kubectl:sha256:2c81804f8cb0571e96f28e748a0cffab9fa0f45a2b5290a8f67625e724cce43e"
+        command:
+          - kubectl
+          - -n
+          - default
+          - delete
+          - configmap/operator
+          - configmap/storageos-api-manager-leader
+          - secret/storageos-operator-webhook
+          - secret/storageos-webhook
+          - --ignore-not-found=true
+      restartPolicy: Never
+  backoffLimit: 4

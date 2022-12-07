@@ -36,7 +36,7 @@ spec:
           env:
             - name: DISABLE_WEBHOOKS
               value: "true"
-          image: {{ .Values.global.azure.images.etcdClusterOperatorController.registry}}/{{ .Values.global.azure.images.etcdClusterOperatorController.image}}:{{ .Values.global.azure.images.etcdClusterOperatorController.digest }}
+          image: {{ .Values.global.azure.images.etcdClusterOperatorController.registry}}/{{ .Values.global.azure.images.etcdClusterOperatorController.image}}@{{ .Values.global.azure.images.etcdClusterOperatorController.digest }}
           name: manager
           ports:
             - containerPort: 8080
