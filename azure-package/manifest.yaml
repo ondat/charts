@@ -1,7 +1,7 @@
 applicationName: ondat
 publisher: "Ondat"
 description: "Cloud Native persistent storage for containers - a test package for the marketplace CNAB structure"
-version: 2.9.0 #Must be semver # version of application (version tag for the cnab bundle)
+version: 2.9.1 #Must be semver # version of application (version tag for the cnab bundle)
 restrictions:
   minCores: 2 # minimum of 2 cores per node
   minNodes: 5
