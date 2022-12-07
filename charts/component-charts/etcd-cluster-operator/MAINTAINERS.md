@@ -32,7 +32,7 @@ sed -i templates/*.yml -e '0,/labels:/{/labels:/d;}' -e '0,/metadata:/{s/metadat
 # Set the proxy image
 sed -i templates/Deployment-storageos-etcd-proxy.yml -e 's/image: storageos\/etcd-cluster-operator-proxy.*$/image: {{ .Values.images.etcdClusterOperatorProxy.registry }}\/{{ .Values.images.etcdClusterOperatorProxy.image }}:{{ .Values.images.etcdClusterOperatorProxy.tag }}/g'
 # Set the operator image
-sed -i templates/Deployment-storageos-etcd-controller-manager.yml -e 's/image: storageos\/etcd-cluster-operator-controller.*$/image: {{ .Values.images.etcdClusterOperatorController.registry}}\/{{ .Values.images.etcdClusterOperatorController.image}}:{{ .Values.images.etcdClusterOperatorController.tag }}/g'
+sed -i templates/Deployment-storageos-etcd-controller-manager.yml -e 's/image: storageos\/etcd-cluster-operator-controller.*$/image: {{ .Values.images.etcdClusterOperatorController.registry }}\/{{ .Values.images.etcdClusterOperatorController.image }}:{{ .Values.images.etcdClusterOperatorController.tag }}/g'
 ```
 
 Then create the template for the namespace:
