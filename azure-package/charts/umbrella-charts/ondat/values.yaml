@@ -166,7 +166,7 @@ global:
         registry: docker.io/storageos
         image: node
         tag: v2.9.1
-        digest: sha256:c91d9f10db2382e56bcb7ad304103830baeb8e15f1748ee88cc38752b137e6bf
+        digest: sha256:ee8bc3c13c1bef5762ed467cfd6324da74784c90d8ae3abbe205bf85372b8faa
       metricsExporter:
         registry: docker.io/storageos
         image: metrics-exporter
