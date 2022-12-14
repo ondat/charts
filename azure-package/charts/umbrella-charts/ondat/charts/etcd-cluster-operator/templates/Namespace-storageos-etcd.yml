@@ -1,0 +1,11 @@
+{{- if .Values.cluster.namespace -}}
+{{- if not (lookup "v1" "Namespace" "" .Values.cluster.namespace) }}
+{{- if not (eq .Release.Namespace .Values.cluster.namespace) }}
+apiVersion: v1
+kind: Namespace
+metadata:
+{{- template "etcd-cluster-operator.labels" . }}
+  name: {{ .Values.cluster.namespace }}
+{{- end -}}
+{{- end -}}
+{{- end -}}
