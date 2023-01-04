@@ -1,7 +1,8 @@
 ondat-operator:
-  images:
-    imagePullSecrets:
-      - name: "regsecret"
+  # Only for private registry usages
+  # images:
+  #   imagePullSecrets:
+  #     - name: "regsecret"
 
   # An exhaustive list of configurable options for ondat-operator
   # can be found at https://github.com/ondat/charts/blob/main/charts/ondat-operator/values.yaml
@@ -65,9 +66,10 @@ ondat-operator:
     storageClassName: storageos
 
 etcd-cluster-operator:
-  images:
-    imagePullSecrets:
-      - name: "regsecret"
+  # Only for private registry usages
+  # images:
+  #   imagePullSecrets:
+  #     - name: "regsecret"
 
   # An exhaustive list of configurable options for etcd-cluster-operator
   # can be found at https://github.com/ondat/charts/blob/main/charts/etcd-cluster-operator/values.yaml

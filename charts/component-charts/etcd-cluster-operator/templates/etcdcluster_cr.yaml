@@ -20,10 +20,6 @@ spec:
   podTemplate:
     resources:
 {{ toYaml .Values.cluster.resources | indent 6 }}
-    {{- with .Values.images.imagePullSecrets }}
-    imagePullSecrets:
-      {{- toYaml . | nindent 6 }}
-    {{- end }}
     etcdEnv:
       - name: "ETCD_HEARTBEAT_INTERVAL"
         value: "500"
