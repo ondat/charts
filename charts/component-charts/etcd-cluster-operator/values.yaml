@@ -6,6 +6,8 @@ name: etcd-cluster-operator
 
 # Operator images
 images:
+  # imagePullSecrets:
+  #   - name: ""
   etcdClusterOperatorController:
     registry: docker.io/storageos
     image: etcd-cluster-operator-controller

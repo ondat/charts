@@ -8,6 +8,8 @@ k8sDistro: default
 
 # operator-specific configuation parameters.
 images:
+  # imagePullSecrets:
+  #   - name: ""
   operator:
     registry: docker.io/storageos
     image: operator
