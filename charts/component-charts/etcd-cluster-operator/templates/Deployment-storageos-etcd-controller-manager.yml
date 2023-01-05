@@ -25,6 +25,10 @@ spec:
                 matchLabels:
                   control-plane: etcd-controller-manager
               topologyKey: kubernetes.io/hostname
+      {{- with .Values.images.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - args:
             - --enable-leader-election

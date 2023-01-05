@@ -16,6 +16,10 @@ spec:
       labels:
         control-plane: proxy
     spec:
+      {{- with .Values.images.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - args:
             - --api-port=8080
