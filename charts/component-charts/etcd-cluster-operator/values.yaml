@@ -11,15 +11,15 @@ images:
   etcdClusterOperatorController:
     registry: docker.io/storageos
     image: etcd-cluster-operator-controller
-    tag: v0.4.3
+    tag: v0.4.4
   etcdClusterOperatorProxy:
     registry: docker.io/storageos
     image: etcd-cluster-operator-proxy
-    tag: v0.4.3
+    tag: v0.4.4
   etcd:
     registry: quay.io/coreos
     image: etcd
-    tag: v3.5.4
+    tag: v3.5.6
 
 cluster:
   # Whether to create the etcd cluster resource

@@ -11,7 +11,7 @@ rm templates/*.yml
 Following that, we should obtain the new version and decompile it into the format expected by Helm:
 
 ```shell
-OPERATOR_VERSION=v0.4.3
+OPERATOR_VERSION=v0.4.4
 curl -Lo storageos-etcd-cluster-operator.yaml https://github.com/storageos/etcd-cluster-operator/releases/download/$OPERATOR_VERSION/storageos-etcd-cluster-operator.yaml
 curl -Lo storageos-etcd-cluster.yaml https://github.com/storageos/etcd-cluster-operator/releases/download/$OPERATOR_VERSION/storageos-etcd-cluster.yaml
 yq ea 'select(.kind=="CustomResourceDefinition")' storageos-etcd-cluster-operator.yaml --split-exp='"crds/" + (.metadata.name) + ".yml"'
