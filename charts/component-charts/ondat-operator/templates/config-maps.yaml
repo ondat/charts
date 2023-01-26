@@ -54,8 +54,6 @@ data:
   {{- if .Values.images.kubeScheduler.image }}
   RELATED_IMAGE_KUBE_SCHEDULER: "{{ .Values.images.kubeScheduler.registry}}/{{ .Values.images.kubeScheduler.image }}:{{ .Values.images.kubeScheduler.tag | default .Capabilities.KubeVersion.GitVersion }}"
   {{- end }}
-  {{- if and .Values.images.kubeScheduler.image .Values.images.kubeScheduler.tag }}
-  {{- end }}
   {{- if and .Values.images.metricsExporter.image .Values.images.metricsExporter.tag }}
   RELATED_IMAGE_METRICS_EXPORTER: "{{ .Values.images.metricsExporter.registry}}/{{ .Values.images.metricsExporter.image }}:{{ .Values.images.metricsExporter.tag }}"
   {{- end }}
