@@ -13,7 +13,7 @@ images:
   operator:
     registry: docker.io/storageos
     image: operator
-    tag: v2.9.1
+    tag: v2.10.0
   apiManager:
     registry: docker.io/storageos
     image: api-manager
@@ -66,7 +66,7 @@ images:
   node:
     registry: docker.io/storageos
     image: node
-    tag: v2.9.1
+    tag: v2.10.0
   metricsExporter:
     registry: docker.io/storageos
     image: metrics-exporter
